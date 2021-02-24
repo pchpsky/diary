@@ -6,5 +6,12 @@
 @tailwind utilities;
 
 :root {
-  --primary: #0D1A26;
+  --bgc-main: #0D1A26;
+  --text-primary: white;
+  --green-1: #5D9A0F;
+  --green-2: #29771C;
+}
+
+iframe {
+  height: 0;
 }

@@ -1,0 +1,21 @@
+<div class="w-max h-screen mx-auto flex">
+  <div class="self-center">
+    <div class="inline-flex items-end mb-10">
+      <img
+        src="<%= Routes.static_path(@conn, "/images/logo.png") %>"
+        alt="Diary"
+        class="h-32 inline"
+      />
+      <h1 class="text-6xl pl-7 py-4">Diary</h1>
+    </div>
+
+    <div class="mb-40">
+      <button class="bg-th-green-1 rounded-full p-1 w-full my-2">
+        Sign in
+      </button>
+      <button class="bg-th-green-2 rounded-full p-1 w-full my-2">
+        Sign up
+      </button>
+    </div>
+  </div>
+</div>
