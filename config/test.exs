@@ -19,7 +19,11 @@ config :diary, Diary.Repo,
 # you can enable the server option below.
 config :diary, DiaryWeb.Endpoint,
   http: [port: 4002],
-  server: false
+  server: true
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :diary, :sql_sandbox, true
+
+config :wallaby, otp_app: :diary, screenshot_on_failure: true
