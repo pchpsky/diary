@@ -5,7 +5,8 @@ defmodule DiaryWeb.FeatureCase do
     quote do
       use Wallaby.Feature
       import DiaryWeb.FeatureCase.SetupSession
-      import DiaryWeb.FeatureCase.QueryHelpers
+      import DiaryWeb.QueryHelpers
+      import DiaryWeb.AccountsHelpers
     end
   end
 
@@ -17,21 +18,6 @@ defmodule DiaryWeb.FeatureCase do
           [session: new_session]
         end
       end
-    end
-  end
-
-  defmodule QueryHelpers do
-    alias Wallaby.Query
-
-    @spec link_to(binary) :: Wallaby.Query.t()
-    def link_to(href) do
-      Query.css("a[href='#{href}']")
-    end
-
-    @spec link_to(binary, binary) :: Wallaby.Query.t()
-    def link_to(href, text) do
-      link_to(href)
-      |> Query.text(text)
     end
   end
 end
