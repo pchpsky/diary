@@ -50,10 +50,10 @@ defmodule DiaryWeb.Router do
   scope "/", DiaryWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
-    get "/users/register", UserRegistrationController, :new
-    post "/users/register", UserRegistrationController, :create
-    get "/users/log_in", UserSessionController, :new
-    post "/users/log_in", UserSessionController, :create
+    get "/sign_up", UserRegistrationController, :new
+    post "/sign_up", UserRegistrationController, :create
+    get "/sign_in", UserSessionController, :new
+    post "/sign_in", UserSessionController, :create
     get "/users/reset_password", UserResetPasswordController, :new
     post "/users/reset_password", UserResetPasswordController, :create
     get "/users/reset_password/:token", UserResetPasswordController, :edit

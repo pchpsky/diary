@@ -10,12 +10,8 @@
     </div>
 
     <div class="mb-40">
-      <button class="bg-th-green-1 rounded-full p-1 w-full my-2">
-        Sign in
-      </button>
-      <button class="bg-th-green-2 rounded-full p-1 w-full my-2">
-        Sign up
-      </button>
+      <%= link("Sign in", to: "/sign_in", class: "btn bg-th-green-1 w-full my-2") %>
+      <%= link("Sign up", to: "/sign_up", class: "btn bg-th-green-2 w-full my-2") %>
     </div>
   </div>
 </div>

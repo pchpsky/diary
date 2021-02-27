@@ -5,6 +5,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .btn {
+    @apply font-semibold rounded-full p-2 inline-block text-center
+  }
+}
+
 :root {
   --bgc-main: #0D1A26;
   --text-primary: white;
