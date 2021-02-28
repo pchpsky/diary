@@ -17,8 +17,12 @@ defmodule DiaryWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :title_screen do
+    plug :put_layout, {DiaryWeb.LayoutView, "title.html"}
+  end
+
   scope "/", DiaryWeb do
-    pipe_through :browser
+    pipe_through [:browser, :title_screen]
 
     get "/", TitleController, :index
     # live "/", PageLive, :index
@@ -27,7 +31,7 @@ defmodule DiaryWeb.Router do
   ## Authentication routes
 
   scope "/", DiaryWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through [:browser, :redirect_if_user_is_authenticated, :title_screen]
 
     get "/sign_up", UserRegistrationController, :new
     post "/sign_up", UserRegistrationController, :create

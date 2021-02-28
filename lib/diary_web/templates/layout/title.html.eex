@@ -1,0 +1,7 @@
+<main role="main" class="container mx-auto">
+  <div class="w-72 h-screen mx-auto flex">
+    <div class="self-center w-full">
+      <%= @inner_content %>
+    </div>
+  </div>
+</main>

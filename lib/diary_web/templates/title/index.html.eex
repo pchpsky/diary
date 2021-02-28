@@ -1,26 +1,22 @@
-<div class="w-72 h-screen mx-auto flex">
-  <div class="self-center w-full">
-    <div class="inline-flex items-end mb-8">
-      <img
-        src="<%= Routes.static_path(@conn, "/images/logo.png") %>"
-        alt="Diary"
-        class="h-32 inline"
-      />
-      <h1 class="text-6xl pl-7 py-4">Diary</h1>
-    </div>
+<div class="inline-flex items-end mb-8">
+  <img
+    src="<%= Routes.static_path(@conn, "/images/logo.png") %>"
+    alt="Diary"
+    class="h-32 inline"
+  />
+  <h1 class="text-6xl pl-7 py-4">Diary</h1>
+</div>
 
-    <div class="mb-40">
-      <%= if @current_user do %>
-        <p class="text-center mb-2">
-          Logged in as <%= @current_user.email %>
-        </p>
-        <%= link("Go to Dashboard", to: "/home", class: "btn bg-th-green-1 w-full my-2") %>
-        <%= link("Log out", to: "/users/log_out", method: :delete, class: "btn bg-th-green-2 w-full my-2") %>
-      <% else %>
-        <p class="mb-2">&nbsp;</p>
-        <%= link("Sign in", to: "/sign_in", class: "btn bg-th-green-1 w-full my-2") %>
-        <%= link("Sign up", to: "/sign_up", class: "btn bg-th-green-2 w-full my-2") %>
-      <% end %>
-    </div>
-  </div>
+<div class="mb-40">
+  <%= if @current_user do %>
+    <p class="text-center mb-2">
+      Logged in as <%= @current_user.email %>
+    </p>
+    <%= link("Go to Dashboard", to: "/home", class: "btn bg-th-green-1 w-full my-2") %>
+    <%= link("Log out", to: "/users/log_out", method: :delete, class: "btn bg-th-green-2 w-full my-2") %>
+  <% else %>
+    <p class="mb-2">&nbsp;</p>
+    <%= link("Sign in", to: "/sign_in", class: "btn bg-th-green-1 w-full my-2") %>
+    <%= link("Sign up", to: "/sign_up", class: "btn bg-th-green-2 w-full my-2") %>
+  <% end %>
 </div>
