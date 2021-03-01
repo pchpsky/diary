@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   purge: [
     '../lib/**/*.ex',
@@ -11,7 +13,9 @@ module.exports = {
       'th-bgc-main': 'var(--bgc-main)',
       'th-text-primary': 'var(--text-primary)',
       'th-green-1': 'var(--green-1)',
-      'th-green-2': 'var(--green-2)'
+      'th-green-2': 'var(--green-2)',
+      black: colors.black,
+      grey: colors.coolGray
     },
     extend: {},
   },

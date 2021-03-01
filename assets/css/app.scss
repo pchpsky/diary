@@ -9,6 +9,18 @@
   .btn {
     @apply font-semibold rounded-full p-2 inline-block text-center
   }
+
+  .input {
+    @apply text-black p-3 rounded
+  }
+
+  .checkbox-group {
+    @apply block my-4 w-full pl-2
+  }
+
+  .input-group {
+    @apply block my-4 w-full
+  }
 }
 
 :root {

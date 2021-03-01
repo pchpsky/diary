@@ -4,7 +4,7 @@ defmodule DiaryWeb.AccountsHelpers do
 
   @email_field Query.text_field("Email")
   @password_field Query.text_field("Password")
-  @submit_button Query.button("Log in")
+  @submit_button Query.button("Sign in")
 
   def sign_in(session), do: sign_in(session, create_user())
 

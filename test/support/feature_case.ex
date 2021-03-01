@@ -5,6 +5,7 @@ defmodule DiaryWeb.FeatureCase do
     quote do
       use Wallaby.Feature
       import DiaryWeb.FeatureCase.SetupSession
+      import DiaryWeb.FeatureCase.Assertions
       import DiaryWeb.QueryHelpers
       import DiaryWeb.AccountsHelpers
     end
@@ -18,6 +19,16 @@ defmodule DiaryWeb.FeatureCase do
           [session: new_session]
         end
       end
+    end
+  end
+
+  defmodule Assertions do
+    import Wallaby.Browser
+    import ExUnit.Assertions
+
+    def assert_path(session, path) do
+      assert current_path(session) == path
+      session
     end
   end
 end
