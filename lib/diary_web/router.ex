@@ -22,6 +22,16 @@ defmodule DiaryWeb.Router do
   end
 
   scope "/", DiaryWeb do
+    pipe_through [:browser, :require_authenticated_user]
+
+    get "/home", HomeController, :index
+
+    get "/users/settings", UserSettingsController, :edit
+    put "/users/settings", UserSettingsController, :update
+    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
+  end
+
+  scope "/", DiaryWeb do
     pipe_through [:browser, :title_screen]
 
     get "/", TitleController, :index
@@ -41,14 +51,6 @@ defmodule DiaryWeb.Router do
     post "/users/reset_password", UserResetPasswordController, :create
     get "/users/reset_password/:token", UserResetPasswordController, :edit
     put "/users/reset_password/:token", UserResetPasswordController, :update
-  end
-
-  scope "/", DiaryWeb do
-    pipe_through [:browser, :require_authenticated_user]
-
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings", UserSettingsController, :update
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
   end
 
   scope "/", DiaryWeb do

@@ -6,9 +6,7 @@ defmodule DiaryWeb.AccountsHelpers do
   @password_field Query.text_field("Password")
   @submit_button Query.button("Sign in")
 
-  def sign_in(session), do: sign_in(session, create_user())
-
-  def sign_in(session, attrs) do
+  def sign_in(session, attrs \\ %{}) do
     user = create_user(attrs)
 
     session

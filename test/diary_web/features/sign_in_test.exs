@@ -14,7 +14,6 @@ defmodule DiaryWeb.Features.SignInTest do
       |> visit("/sign_in")
     end
 
-    @tag :skip
     feature "user is redirected to home page", %{session: session} do
       assert_path(session, "/home")
     end
@@ -25,7 +24,6 @@ defmodule DiaryWeb.Features.SignInTest do
       sign_in(session)
     end
 
-    @tag :skip
     feature "user redirected to home page after login", %{session: session} do
       assert_path(session, "/home")
     end
