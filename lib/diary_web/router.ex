@@ -35,6 +35,7 @@ defmodule DiaryWeb.Router do
     pipe_through [:browser, :title_screen]
 
     get "/", TitleController, :index
+    live "/insulin", InsulinLive, :index
     # live "/", PageLive, :index
   end
 

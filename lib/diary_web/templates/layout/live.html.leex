@@ -1,3 +1,4 @@
+<%= live_component @socket, DiaryWeb.HeaderComponent, page: assigns[:page] || :home %>
 <main role="main" class="container mx-auto">
   <p class="alert alert-info" role="alert"
     phx-click="lv:clear-flash"
