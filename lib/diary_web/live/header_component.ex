@@ -11,6 +11,8 @@ defmodule DiaryWeb.HeaderComponent do
   end
 
   defp title(page) do
-    String.capitalize(page)
+    page
+    |> Atom.to_string()
+    |> String.capitalize()
   end
 end

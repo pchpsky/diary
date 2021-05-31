@@ -17,6 +17,6 @@ defmodule Diary.Metrics.Insulin do
   def changeset(insulin, attrs) do
     insulin
     |> cast(attrs, [:units, :medication_id, :taken_at, :notes])
-    |> validate_required([:units, :medication_id, :taken_at])
+    |> validate_required([:units, :taken_at])
   end
 end
