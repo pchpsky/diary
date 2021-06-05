@@ -32,6 +32,10 @@
   --th-insulin: #3857C4;
 }
 
+[x-cloak] {
+  display: none;
+}
+
 iframe {
   height: 0;
 }
