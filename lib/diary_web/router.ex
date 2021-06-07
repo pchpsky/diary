@@ -13,6 +13,10 @@ defmodule DiaryWeb.Router do
     plug :fetch_current_user
   end
 
+  pipeline :api_authenticated do
+    plug DiaryWeb.AuthAccessPipeline
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -63,10 +67,12 @@ defmodule DiaryWeb.Router do
     get "/users/confirm/:token", UserConfirmationController, :confirm
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", DiaryWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", DiaryWeb.Api do
+    pipe_through :api
+
+    post "/users", UserController, :create
+    post "/sessions", SessionController, :create
+  end
 
   # Enables LiveDashboard only for development
   #

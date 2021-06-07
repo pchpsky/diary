@@ -34,7 +34,7 @@ defmodule DiaryWeb.UserSessionControllerTest do
 
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
-      response = html_response(conn, 200)
+      _response = html_response(conn, 200)
       assert redirected_to(conn) == "/"
     end
 
