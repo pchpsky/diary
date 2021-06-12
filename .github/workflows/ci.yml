@@ -114,6 +114,8 @@ jobs:
       - static-code-analysis
       - mix-test
     runs-on: ubuntu-latest
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
     steps:
       - uses: actions/checkout@v2
       - run: heroku run "POOL_SIZE=2 mix ecto.migrate" -a pchpsky-diary
