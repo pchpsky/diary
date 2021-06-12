@@ -1,4 +1,5 @@
 defmodule DiaryWeb.HeaderComponent do
+  @moduledoc false
   use DiaryWeb, :live_component
   alias DiaryWeb.Gettext
 

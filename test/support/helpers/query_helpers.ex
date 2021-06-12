@@ -1,4 +1,5 @@
 defmodule DiaryWeb.QueryHelpers do
+  @moduledoc false
   alias Wallaby.Query
 
   @spec link_to(binary) :: Wallaby.Query.t()

@@ -1,4 +1,5 @@
 defmodule DiaryWeb.AccountsHelpers do
+  @moduledoc false
   use Wallaby.DSL
   import Diary.AccountsFixtures
 

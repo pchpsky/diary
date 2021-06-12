@@ -1,4 +1,5 @@
 defmodule Diary.Metrics.Insulin do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
 

@@ -1,4 +1,5 @@
 defmodule DiaryWeb.PageLive do
+  @moduledoc false
   use DiaryWeb, :live_view
 
   @impl true

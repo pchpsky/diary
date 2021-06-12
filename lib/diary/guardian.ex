@@ -1,4 +1,8 @@
 defmodule Diary.Guardian do
+  @moduledoc """
+  Auth interface
+  """
+
   use Guardian, otp_app: :diary
 
   alias Diary.Accounts

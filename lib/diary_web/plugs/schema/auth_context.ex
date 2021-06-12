@@ -1,4 +1,5 @@
 defmodule DiaryWeb.Schema.AuthContext do
+  @moduledoc false
   @behaviour Plug
 
   import Plug.Conn

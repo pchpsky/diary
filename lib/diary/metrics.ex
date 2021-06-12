@@ -1,4 +1,8 @@
 defmodule Diary.Metrics do
+  @moduledoc """
+  Metrics context
+  """
+
   import Ecto.Query, warn: false
   alias Diary.Repo
   alias Diary.Metrics.Insulin

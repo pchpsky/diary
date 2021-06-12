@@ -1,4 +1,5 @@
 defmodule DiaryWeb.InsulinLive do
+  @moduledoc false
   use DiaryWeb, :live_view
   alias DiaryWeb.InsulinLive.FormComponent
   alias Diary.Metrics

@@ -1,4 +1,5 @@
 defmodule DiaryWeb.Schema do
+  @moduledoc false
   use Absinthe.Schema
 
   alias DiaryWeb.Schema

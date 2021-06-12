@@ -1,4 +1,5 @@
 defmodule DiaryWeb.Schema.UserTypes do
+  @moduledoc false
   use Absinthe.Schema.Notation
 
   alias DiaryWeb.Resolvers

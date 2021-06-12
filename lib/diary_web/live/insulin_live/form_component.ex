@@ -1,4 +1,5 @@
 defmodule DiaryWeb.InsulinLive.FormComponent do
+  @moduledoc false
   use DiaryWeb, :live_component
 
   def update(_assigns, socket) do

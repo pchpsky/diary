@@ -1,4 +1,6 @@
 defmodule Result do
+  @moduledoc false
+
   def ok(v) do
     {:ok, v}
   end

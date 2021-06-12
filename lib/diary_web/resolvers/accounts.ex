@@ -1,4 +1,5 @@
 defmodule DiaryWeb.Resolvers.Accounts do
+  @moduledoc false
   alias Diary.Accounts
   alias Diary.Accounts.User
 

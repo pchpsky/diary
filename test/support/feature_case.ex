@@ -1,4 +1,5 @@
 defmodule DiaryWeb.FeatureCase do
+  @moduledoc false
   use ExUnit.CaseTemplate
 
   using do
@@ -12,6 +13,8 @@ defmodule DiaryWeb.FeatureCase do
   end
 
   defmodule SetupSession do
+    @moduledoc false
+
     defmacro setup_session(session, do: block) do
       quote do
         setup %{session: unquote(session)} do
@@ -23,6 +26,7 @@ defmodule DiaryWeb.FeatureCase do
   end
 
   defmodule Assertions do
+    @moduledoc false
     import Wallaby.Browser
     import ExUnit.Assertions
 
