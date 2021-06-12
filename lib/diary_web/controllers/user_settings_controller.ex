@@ -1,4 +1,6 @@
 defmodule DiaryWeb.UserSettingsController do
+  @dialyzer [{:nowarn_function, update: 2}]
+
   use DiaryWeb, :controller
 
   alias Diary.Accounts
