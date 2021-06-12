@@ -50,6 +50,8 @@ defmodule Diary.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:guardian, "~> 2.0"},
+      {:absinthe, "~> 1.6.4"},
+      {:absinthe_plug, "~> 1.5.8"},
       {:wallaby, "~> 0.28.0", runtime: false, only: :test}
     ]
   end

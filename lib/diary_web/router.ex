@@ -74,6 +74,18 @@ defmodule DiaryWeb.Router do
     post "/sessions", SessionController, :create
   end
 
+  pipeline :graphql do
+    plug DiaryWeb.Schema.AuthContext
+  end
+
+  scope "/graph" do
+    pipe_through :graphql
+
+    forward "/", Absinthe.Plug, schema: DiaryWeb.Schema
+  end
+
+  forward "/graphiql", Absinthe.Plug.GraphiQL, schema: DiaryWeb.Schema
+
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put
