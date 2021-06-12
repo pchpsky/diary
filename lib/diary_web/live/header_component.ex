@@ -17,7 +17,7 @@ defmodule DiaryWeb.HeaderComponent do
   end
 
   def update(assigns, socket) do
-    {:ok, assign(socket, [title: title(assigns.page), page: assigns.page])}
+    {:ok, assign(socket, title: title(assigns.page), page: assigns.page)}
   end
 
   defp title(:insulin) do

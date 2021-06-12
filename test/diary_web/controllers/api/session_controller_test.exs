@@ -5,6 +5,7 @@ defmodule DiaryWeb.Api.SessionControllerTest do
 
   setup do
     user = user_fixture()
+
     %{
       user: user,
       creds: %{email: user.email, password: valid_user_password()}
@@ -14,11 +15,13 @@ defmodule DiaryWeb.Api.SessionControllerTest do
   describe "POST /api/session" do
     @tag :api
     test "when credentials are invalid responds with 401", %{conn: conn, creds: creds} do
-      conn = post(
-        conn,
-        Routes.session_path(conn, :create),
-        %{creds | password: "notavalidpass"}
-      )
+      conn =
+        post(
+          conn,
+          Routes.session_path(conn, :create),
+          %{creds | password: "notavalidpass"}
+        )
+
       assert %{"message" => "Invalid email or password"} = json_response(conn, 401)
     end
 

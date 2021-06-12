@@ -10,6 +10,7 @@ defmodule DiaryWeb.Api.SessionController do
     case Accounts.get_user_by_email_and_password(email, password) do
       %User{} = user ->
         sign_in(conn, user)
+
       _ ->
         render_invalid_login(conn)
     end

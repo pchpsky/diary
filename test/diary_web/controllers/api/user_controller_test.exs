@@ -8,6 +8,7 @@ defmodule DiaryWeb.Api.UserControllerTest do
     test "when user params are valid responds with 200", %{conn: conn} do
       email = unique_user_email()
       password = valid_user_password()
+
       user_params = %{
         "email" => email,
         "password" => password,
@@ -22,6 +23,7 @@ defmodule DiaryWeb.Api.UserControllerTest do
     @tag :api
     test "when user params are invalid responds with 422", %{conn: conn} do
       email = unique_user_email()
+
       user_params = %{
         "email" => email
       }

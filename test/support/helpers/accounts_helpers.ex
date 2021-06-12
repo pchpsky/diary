@@ -23,6 +23,7 @@ defmodule DiaryWeb.AccountsHelpers do
         email: unique_user_email(),
         password: valid_user_password()
       })
+
     user_fixture(users_attrs)
     users_attrs
   end
