@@ -3,22 +3,22 @@ defmodule DiaryWeb.UserRegistrationControllerTest do
 
   import Diary.AccountsFixtures
 
-  describe "GET /users/register" do
+  describe "GET /sign_up" do
     test "renders registration page", %{conn: conn} do
       conn = get(conn, Routes.user_registration_path(conn, :new))
       response = html_response(conn, 200)
       assert response =~ "<h1>Register</h1>"
       assert response =~ "Log in</a>"
-      assert response =~ "Register</a>"
+      assert response =~ "Register</button>"
     end
 
     test "redirects if already logged in", %{conn: conn} do
       conn = conn |> log_in_user(user_fixture()) |> get(Routes.user_registration_path(conn, :new))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/home"
     end
   end
 
-  describe "POST /users/register" do
+  describe "POST /sign_up" do
     @tag :capture_log
     test "creates account and logs the user in", %{conn: conn} do
       email = unique_user_email()
@@ -32,11 +32,9 @@ defmodule DiaryWeb.UserRegistrationControllerTest do
       assert redirected_to(conn) =~ "/"
 
       # Now do a logged in request and assert on the menu
-      conn = get(conn, "/")
+      conn = get(conn, "/home")
       response = html_response(conn, 200)
-      assert response =~ email
-      assert response =~ "Settings</a>"
-      assert response =~ "Log out</a>"
+      assert response =~ "Home"
     end
 
     test "render errors for invalid data", %{conn: conn} do

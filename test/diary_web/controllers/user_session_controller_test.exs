@@ -7,22 +7,21 @@ defmodule DiaryWeb.UserSessionControllerTest do
     %{user: user_fixture()}
   end
 
-  describe "GET /users/log_in" do
+  describe "GET /sign_in" do
     test "renders log in page", %{conn: conn} do
       conn = get(conn, Routes.user_session_path(conn, :new))
       response = html_response(conn, 200)
       assert response =~ "Sign in</h1>"
       assert response =~ "Sign in</button>"
-      # assert response =~ "Register</a>"
     end
 
     test "redirects if already logged in", %{conn: conn, user: user} do
       conn = conn |> log_in_user(user) |> get(Routes.user_session_path(conn, :new))
-      assert redirected_to(conn) == "/"
+      assert redirected_to(conn) == "/home"
     end
   end
 
-  describe "POST /users/log_in" do
+  describe "POST /sign_in" do
     test "logs the user in", %{conn: conn, user: user} do
       conn =
         post(conn, Routes.user_session_path(conn, :create), %{
@@ -33,9 +32,8 @@ defmodule DiaryWeb.UserSessionControllerTest do
       assert redirected_to(conn) =~ "/"
 
       # Now do a logged in request and assert on the menu
-      conn = get(conn, "/")
+      conn = get(conn, "/home")
       _response = html_response(conn, 200)
-      assert redirected_to(conn) == "/"
     end
 
     test "logs the user in with remember me", %{conn: conn, user: user} do
