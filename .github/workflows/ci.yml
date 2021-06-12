@@ -108,3 +108,17 @@ jobs:
             priv/plts
           key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
       - run: mix test --trace --slowest 10
+
+  release:
+    needs:
+      - static-code-analysis
+      - mix-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: POOL_SIZE=2 mix ecto.migrate
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: "pchpsky-diary"
+          heroku_email: "pchpsky@outlook.com"
