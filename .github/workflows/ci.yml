@@ -110,6 +110,7 @@ jobs:
       - run: mix test --trace --slowest 10
 
   release:
+    environment: Release
     needs:
       - static-code-analysis
       - mix-test
