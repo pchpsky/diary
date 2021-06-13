@@ -16,7 +16,11 @@ module.exports = {
       'th-green-2': 'var(--green-2)',
       'th-insulin': 'var(--th-insulin)',
       black: colors.black,
-      grey: colors.coolGray
+      grey: colors.coolGray,
+      blue: colors.blue,
+      white: colors.white,
+      red: colors.red,
+      transparent: colors.transparent,
     },
     extend: {},
   },

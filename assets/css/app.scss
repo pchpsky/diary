@@ -6,20 +6,36 @@
 @tailwind utilities;
 
 @layer components {
-  .btn {
-    @apply font-semibold rounded-full p-2 inline-block text-center
+  a {
+    @apply text-blue-400 hover:underline
   }
 
-  .input {
-    @apply text-black p-3 rounded
+  .btn {
+    @apply font-semibold rounded-full p-2 inline-block text-center hover:no-underline text-white
   }
 
   .checkbox-group {
-    @apply block my-4 w-full pl-2
+    @apply block my-4 pl-2
   }
 
   .input-group {
-    @apply block my-4 w-full
+    @apply block my-4 relative
+  }
+
+  .input-group .label {
+    @apply absolute left-3 -top-2 bg-th-bgc-main px-1 text-xs text-grey-400
+  }
+
+  .input-group .input {
+    @apply p-3 bg-th-bgc-main filter-none border border-grey-400 rounded-md
+  }
+
+  .input-group .input:focus {
+    @apply border-blue-400
+  }
+
+  .input-group .input:focus + .label {
+    @apply text-blue-400
   }
 }
 

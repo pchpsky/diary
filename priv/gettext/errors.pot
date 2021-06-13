@@ -92,3 +92,8 @@ msgstr ""
 
 msgid "must be equal to %{number}"
 msgstr ""
+
+#, elixir-format
+#: lib/diary_web/controllers/user_session_controller.ex:17
+msgid "Invalid email or password"
+msgstr ""

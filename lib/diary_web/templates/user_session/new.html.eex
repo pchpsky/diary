@@ -1,20 +1,18 @@
-<h1 class="text-xl font-bold text-center">Sign in</h1>
+<%= title("Sign in") %>
 
 <%= form_for @conn, Routes.user_session_path(@conn, :create), [as: :user], fn f -> %>
   <%= if @error_message do %>
-    <div class="alert alert-danger">
-      <p><%= @error_message %></p>
-    </div>
+    <%= danger_alert(@error_message) %>
   <% end %>
 
   <div class="input-group">
-    <%= label f, :email, hidden: true %>
-    <%= email_input f, :email, required: true, class: "input w-full", placeholder: "Email" %>
+    <%= email_input f, :email, class: "input w-full" %>
+    <%= label f, :email, class: "label" %>
   </div>
 
   <div class="input-group">
-    <%= label f, :password, hidden: true %>
-    <%= password_input f, :password, required: true, class: "input w-full", placeholder: "Password" %>
+    <%= password_input f, :password, class: "input w-full" %>
+    <%= label f, :password, class: "label" %>
   </div>
 
   <div class="checkbox-group">
@@ -22,10 +20,10 @@
     <%= label f, :remember_me, "Keep me logged in for 60 days" %>
   </div>
 
-  <%= submit "Sign in", class: "btn bg-th-green-1 w-full my-2" %>
+  <%= submit "Sign in", class: "btn bg-th-green-1 w-full" %>
 <% end %>
 
-<p>
-  <%#= link "Register", to: Routes.user_registration_path(@conn, :new) %>
+<p class="text-center p-4">
+  <%= link "Create account", to: Routes.user_registration_path(@conn, :new) %>
   <%#= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
 </p>

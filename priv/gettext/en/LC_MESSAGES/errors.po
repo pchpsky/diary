@@ -95,3 +95,8 @@ msgstr ""
 
 msgid "must be equal to %{number}"
 msgstr ""
+
+#, elixir-format
+#: lib/diary_web/controllers/user_session_controller.ex:17
+msgid "Invalid email or password"
+msgstr "The email and password you entered did not match our records. Please double-check and try again."
