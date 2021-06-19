@@ -13,6 +13,7 @@ config :diary, Diary.Repo,
   password: "admin",
   database: "diary_test#{System.get_env("MIX_TEST_PARTITION")}",
   hostname: "localhost",
+  template: "template0",
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,

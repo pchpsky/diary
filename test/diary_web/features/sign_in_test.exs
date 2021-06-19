@@ -37,7 +37,7 @@ defmodule DiaryWeb.Features.SignInTest do
       |> fill_in(@password_field, with: "testpass")
       |> click(@submit_button)
       |> assert_path("/sign_in")
-      |> assert_text("Invalid email or password")
+      |> assert_text("email and password you entered did not match")
     end
   end
 
@@ -55,7 +55,7 @@ defmodule DiaryWeb.Features.SignInTest do
       |> fill_in(@password_field, with: "testpass")
       |> click(@submit_button)
       |> assert_path("/sign_in")
-      |> assert_text("Invalid email or password")
+      |> assert_text("email and password you entered did not match")
     end
   end
 end

@@ -72,7 +72,7 @@ defmodule DiaryWeb.UserSessionControllerTest do
 
       response = html_response(conn, 200)
       assert response =~ "Sign in</h1>"
-      assert response =~ "Invalid email or password"
+      assert response =~ "email and password you entered did not match"
     end
   end
 
