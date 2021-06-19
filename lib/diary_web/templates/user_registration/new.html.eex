@@ -20,7 +20,7 @@
     <%= label f, :password_confirmation, class: "label" %>
   </div>
 
-  <%= submit "Sign in", class: "btn bg-th-green-1 w-full" %>
+  <%= submit "Submit", class: "btn bg-th-green-1 w-full" %>
 <% end %>
 
 <p class="text-center p-4">

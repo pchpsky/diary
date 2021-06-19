@@ -7,6 +7,7 @@ config :diary, Diary.Repo,
   database: "diary_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
+  template: "template0",
   pool_size: 10
 
 # For development, we disable any cache and enable
