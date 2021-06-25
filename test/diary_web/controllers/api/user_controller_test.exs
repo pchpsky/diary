@@ -4,7 +4,8 @@ defmodule DiaryWeb.Api.UserControllerTest do
   import Diary.AccountsFixtures
 
   describe "POST /api/users" do
-    @tag :api
+    @describetag :api
+
     test "when user params are valid responds with 200", %{conn: conn} do
       email = unique_user_email()
       password = valid_user_password()
@@ -20,7 +21,6 @@ defmodule DiaryWeb.Api.UserControllerTest do
       assert %{"token" => "" <> _, "email" => ^email} = json_response(conn, 200)
     end
 
-    @tag :api
     test "when user params are invalid responds with 422", %{conn: conn} do
       email = unique_user_email()
 
