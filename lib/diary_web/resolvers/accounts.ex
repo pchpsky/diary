@@ -16,7 +16,7 @@ defmodule DiaryWeb.Resolvers.Accounts do
   def login(%{email: email, password: password}, _info) do
     with %User{} = user <- Accounts.get_user_by_email_and_password(email, password),
          {:ok, jwt, _full_claims} <- Diary.Guardian.encode_and_sign(user) do
-      {:ok, %{token: jwt}}
+      {:ok, %{token: jwt, user: %{email: user.email}}}
     else
       _ -> {:error, "Incorrect email or password"}
     end
