@@ -66,6 +66,20 @@ defmodule Diary.AccountsTest do
              } = errors_on(changeset)
     end
 
+    test "validates password confirmation" do
+      email = unique_user_email()
+      password = valid_user_password()
+
+      {:error, changeset} =
+        Accounts.register_user(%{
+          email: email,
+          password: password,
+          password_confirmation: "t" <> password
+        })
+
+      assert(%{password_confirmation: ["does not match confirmation"]} = errors_on(changeset))
+    end
+
     test "validates maximum values for email and password for security" do
       too_long = String.duplicate("db", 100)
       {:error, changeset} = Accounts.register_user(%{email: too_long, password: too_long})
