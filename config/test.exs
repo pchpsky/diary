@@ -27,4 +27,6 @@ config :logger, level: :warn
 
 config :diary, :sql_sandbox, true
 
-config :wallaby, otp_app: :diary, screenshot_on_failure: true
+config :wallaby,
+  otp_app: :diary,
+  screenshot_on_failure: System.get_env("WALLABY_SCREENSHOT_ON_FAILURE")

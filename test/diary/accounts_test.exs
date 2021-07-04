@@ -77,7 +77,7 @@ defmodule Diary.AccountsTest do
           password_confirmation: "t" <> password
         })
 
-      assert(%{password_confirmation: ["does not match confirmation"]} = errors_on(changeset))
+      assert(%{password_confirmation: ["does not match password"]} = errors_on(changeset))
     end
 
     test "validates maximum values for email and password for security" do
