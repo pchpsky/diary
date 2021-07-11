@@ -1,4 +1,4 @@
-defmodule DiaryWeb.Schema.UserTypesTest do
+defmodule DiaryWeb.Schema.AccountsTest do
   use DiaryWeb.ConnCase
 
   import Diary.AccountsFixtures
@@ -49,6 +49,70 @@ defmodule DiaryWeb.Schema.UserTypesTest do
     end
   end
 
+  describe "mutation createUser" do
+    @describetag :graphql
+
+    @create_user_mutation """
+    mutation($email: String!, $password: String!) {
+      user: createUser(email: $email, password: $password) {
+        email
+      }
+    }
+    """
+
+    test "creates user", %{conn: conn} do
+      email = unique_user_email()
+
+      conn =
+        post(conn, "/graph", %{
+          "query" => @create_user_mutation,
+          "variables" => %{
+            "email" => email,
+            "password" => valid_user_password()
+          }
+        })
+
+      response = json_response(conn, 200)
+
+      assert(
+        %{
+          "data" => %{
+            "user" => %{
+              "email" => ^email
+            }
+          }
+        } = response
+      )
+    end
+
+    test "when user already exists returns error", %{conn: conn} do
+      user = user_fixture()
+
+      conn =
+        post(conn, "/graph", %{
+          "query" => @create_user_mutation,
+          "variables" => %{
+            "email" => user.email,
+            "password" => valid_user_password()
+          }
+        })
+
+      response = json_response(conn, 200)
+
+      assert(
+        %{
+          "errors" => [
+            %{
+              "fields" => %{
+                "email" => ["has already been taken"]
+              }
+            }
+          ]
+        } = response
+      )
+    end
+  end
+
   describe "mutation createSession" do
     @describetag :graphql
 
@@ -72,7 +136,7 @@ defmodule DiaryWeb.Schema.UserTypesTest do
       }
     end
 
-    test "returns auth token", %{conn: conn, creds: %{email: email} = creds} do
+    test "returns auth token", %{conn: conn, creds: creds} do
       conn =
         post(conn, "/graph", %{
           "query" => @login_mutation,
@@ -80,6 +144,8 @@ defmodule DiaryWeb.Schema.UserTypesTest do
         })
 
       response = json_response(conn, 200)
+
+      email = creds.email
 
       assert(
         %{

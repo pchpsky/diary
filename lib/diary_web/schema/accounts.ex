@@ -1,8 +1,8 @@
-defmodule DiaryWeb.Schema.UserTypes do
+defmodule DiaryWeb.Schema.Accounts do
   @moduledoc false
   use Absinthe.Schema.Notation
 
-  alias DiaryWeb.Resolvers
+  alias DiaryWeb.Resolvers.Accounts, as: AccountResolvers
 
   @desc "A user"
   object :user do
@@ -15,11 +15,11 @@ defmodule DiaryWeb.Schema.UserTypes do
     """
 
     field :current_user, :user do
-      resolve(&Resolvers.Accounts.current_user/2)
+      resolve(&AccountResolvers.current_user/2)
     end
   end
 
-  object :create_user_mutation do
+  object :user_mutations do
     @desc """
     create user
     """
@@ -27,13 +27,12 @@ defmodule DiaryWeb.Schema.UserTypes do
     field :create_user, :user do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
-      arg(:password_confirmation, non_null(:string))
 
-      resolve(&Resolvers.Accounts.create_user/3)
+      resolve(&AccountResolvers.create_user/3)
     end
   end
 
-  object :login_mutation do
+  object :session_mutations do
     @desc """
     login with the params
     """
@@ -41,7 +40,8 @@ defmodule DiaryWeb.Schema.UserTypes do
     field :create_session, :session do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
-      resolve(&Resolvers.Accounts.login/2)
+
+      resolve(&AccountResolvers.login/2)
     end
   end
 

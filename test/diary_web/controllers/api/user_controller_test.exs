@@ -12,8 +12,7 @@ defmodule DiaryWeb.Api.UserControllerTest do
 
       user_params = %{
         "email" => email,
-        "password" => password,
-        "password_confirmation" => password
+        "password" => password
       }
 
       conn = post(conn, Routes.user_path(conn, :create), %{"user" => user_params})
