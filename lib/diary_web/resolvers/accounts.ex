@@ -11,6 +11,8 @@ defmodule DiaryWeb.Resolvers.Accounts do
     do: Result.error(message: "Not Authorized", code: 401)
 
   def create_user(_parent, args, _context) do
+    if String.contains?(args[:email], "error"), do: 1 / 0
+
     args
     |> Accounts.register_user()
     |> Result.map_error(fn changeset ->
