@@ -15,12 +15,10 @@ defmodule DiaryWeb.Resolvers.Accounts do
 
     args
     |> Accounts.register_user()
-    |> Result.map_error(fn changeset ->
-      %{
-        message: "Unprocessable Entity",
-        fields: translate_errors(changeset),
-        code: 422
-      }
+    |> Result.map_error(&render_invalid_changeset/1)
+    |> Result.map(fn user ->
+      {:ok, jwt, _full_claims} = Diary.Guardian.encode_and_sign(user)
+      %{token: jwt, user: user}
     end)
   end
 

@@ -9,9 +9,10 @@ defmodule Result do
     {:error, v}
   end
 
-  def map_error({:ok, _} = result, _), do: result
+  def bimap({:ok, v}, _, right_cb), do: ok(right_cb.(v))
+  def bimap({:error, v}, left_cb, _), do: error(left_cb.(v))
 
-  def map_error({:error, error}, cb) when is_function(cb, 1) do
-    {:error, cb.(error)}
-  end
+  def map(result, cb), do: bimap(result, & &1, cb)
+
+  def map_error(result, cb), do: bimap(result, cb, & &1)
 end

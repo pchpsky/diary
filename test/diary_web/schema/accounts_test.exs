@@ -54,8 +54,11 @@ defmodule DiaryWeb.Schema.AccountsTest do
 
     @create_user_mutation """
     mutation($email: String!, $password: String!) {
-      user: createUser(email: $email, password: $password) {
-        email
+      session: createUser(email: $email, password: $password) {
+        token
+        user {
+          email
+        }
       }
     }
     """
@@ -77,8 +80,10 @@ defmodule DiaryWeb.Schema.AccountsTest do
       assert(
         %{
           "data" => %{
-            "user" => %{
-              "email" => ^email
+            "session" => %{
+              "user" => %{
+                "email" => ^email
+              }
             }
           }
         } = response

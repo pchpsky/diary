@@ -24,7 +24,7 @@ defmodule DiaryWeb.Schema.Accounts do
     create user
     """
 
-    field :create_user, :user do
+    field :create_user, :session do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
