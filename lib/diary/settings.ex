@@ -8,9 +8,22 @@ defmodule Diary.Settings do
   alias Diary.Settings.Insulin
 
   @doc """
+  Returns all insulins.
+
+  ## Examples
+
+      iex> list_insulins()
+      [%Insulin{}, ...]
+
+  """
+  def list_insulins() do
+    Repo.all(Insulin)
+  end
+
+  @doc """
   Gets a single insulin.
 
-  Raises `Ecto.NoResultsError` if the User does not exist.
+  Raises `Ecto.NoResultsError` if the Insulin does not exist.
 
   ## Examples
 

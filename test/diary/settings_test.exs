@@ -5,6 +5,14 @@ defmodule Diary.SettingsTest do
   alias Diary.Settings.Insulin
   import Diary.SettingsFixtures
 
+  describe "list_insulins/0" do
+    test "returns all insulins" do
+      insulin = insulin_fixture()
+
+      assert [^insulin] = Settings.list_insulins()
+    end
+  end
+
   describe "get_insulin!/1" do
     test "raises if id is invalid" do
       assert_raise Ecto.NoResultsError, fn ->
