@@ -5,7 +5,7 @@ defmodule Diary.Metrics.Insulin do
 
   @derive Inspect
   schema "insulin_metrics" do
-    field :medication_id, :integer
+    field :insulin_id, :integer
     field :notes, :string
     field :taken_at, :naive_datetime
     field :units, :integer
@@ -17,7 +17,7 @@ defmodule Diary.Metrics.Insulin do
   @doc false
   def changeset(insulin, attrs) do
     insulin
-    |> cast(attrs, [:units, :medication_id, :taken_at, :notes])
-    |> validate_required([:units, :taken_at])
+    |> cast(attrs, [:units, :insulin_id, :taken_at, :notes])
+    |> validate_required([:units, :insulin_id, :taken_at])
   end
 end
