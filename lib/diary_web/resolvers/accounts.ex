@@ -7,9 +7,6 @@ defmodule DiaryWeb.Resolvers.Accounts do
   def current_user(_args, %{context: %{current_user: user}}),
     do: Result.ok(user)
 
-  def current_user(_args, _context),
-    do: Result.error(message: "Not Authorized", code: 401)
-
   def create_user(_parent, args, _context) do
     if String.contains?(args[:email], "error"), do: 1 / 0
 

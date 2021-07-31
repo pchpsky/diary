@@ -25,6 +25,8 @@ defmodule DiaryWeb.Schema.Accounts do
     """
 
     field :create_user, :session do
+      config(skip_auth: true)
+
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
@@ -38,6 +40,8 @@ defmodule DiaryWeb.Schema.Accounts do
     """
 
     field :create_session, :session do
+      config(skip_auth: true)
+
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
