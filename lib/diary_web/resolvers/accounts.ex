@@ -4,7 +4,7 @@ defmodule DiaryWeb.Resolvers.Accounts do
   alias Diary.Accounts.User
   import DiaryWeb.Schema.ChangesetHelpers
 
-  def current_user(_args, %{context: %{current_user: user}}),
+  def current_user(_parent, _args, %{context: %{current_user: user}}),
     do: Result.ok(user)
 
   def create_user(_parent, args, _context) do
@@ -19,7 +19,7 @@ defmodule DiaryWeb.Resolvers.Accounts do
     end)
   end
 
-  def login(%{email: email, password: password}, _info) do
+  def login(_parent, %{email: email, password: password}, _resolution) do
     with %User{} = user <- Accounts.get_user_by_email_and_password(email, password),
          {:ok, jwt, _full_claims} <- Diary.Guardian.encode_and_sign(user) do
       {:ok, %{token: jwt, user: %{email: user.email}}}

@@ -15,7 +15,7 @@ defmodule DiaryWeb.Schema.Accounts do
     """
 
     field :current_user, :user do
-      resolve(&AccountResolvers.current_user/2)
+      resolve(&AccountResolvers.current_user/3)
     end
   end
 
@@ -45,7 +45,7 @@ defmodule DiaryWeb.Schema.Accounts do
       arg(:email, non_null(:string))
       arg(:password, non_null(:string))
 
-      resolve(&AccountResolvers.login/2)
+      resolve(&AccountResolvers.login/3)
     end
   end
 

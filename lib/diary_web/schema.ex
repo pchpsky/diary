@@ -5,9 +5,11 @@ defmodule DiaryWeb.Schema do
   alias DiaryWeb.Schema
 
   import_types(Schema.Accounts)
+  import_types(Schema.Settings)
 
   query do
     import_fields(:get_current_user)
+    import_fields(:settings_queries)
   end
 
   mutation do
