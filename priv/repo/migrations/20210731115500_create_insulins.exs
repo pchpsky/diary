@@ -8,6 +8,5 @@ defmodule Diary.Repo.Migrations.CreateInsulins do
 
       timestamps()
     end
-
   end
 end
