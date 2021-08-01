@@ -42,8 +42,8 @@ defmodule Diary.Settings do
       [%Insulin{}, ...]
 
   """
-  def list_insulins() do
-    Repo.all(Insulin)
+  def list_insulins(settings_id) do
+    Repo.all(from i in Insulin, where: i.settings_id == ^settings_id)
   end
 
   @doc """

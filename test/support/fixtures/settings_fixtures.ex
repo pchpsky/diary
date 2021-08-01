@@ -4,7 +4,7 @@ defmodule Diary.SettingsFixtures do
   entities via the `Diary.Settings` context.
   """
 
-  alias Diary.Settings.UserSettings
+  alias Diary.Settings.{UserSettings, Insulin}
 
   def settings_fixture(user_id, attrs \\ %{}) do
     {:ok, settings} =
@@ -15,11 +15,11 @@ defmodule Diary.SettingsFixtures do
     settings
   end
 
-  def insulin_fixture(attrs \\ %{}) do
+  def insulin_fixture(settings_id, attrs \\ %{}) do
     {:ok, insulin} =
-      attrs
-      |> Enum.into(%{name: "insulin", color: "#e8d16e"})
-      |> Diary.Settings.create_insulin()
+      %Insulin{name: "insulin", color: "#e8d16e", settings_id: settings_id}
+      |> Insulin.changeset(attrs)
+      |> Diary.Repo.insert()
 
     insulin
   end

@@ -8,13 +8,14 @@ defmodule Diary.Settings.Insulin do
   schema "insulins" do
     field :color, :string
     field :name, :string
+    field :settings_id, :integer
 
     timestamps()
   end
 
   def changeset(insulin, attrs) do
     insulin
-    |> cast(attrs, [:name, :color])
-    |> validate_required([:name])
+    |> cast(attrs, [:name, :color, :settings_id])
+    |> validate_required([:name, :settings_id])
   end
 end
