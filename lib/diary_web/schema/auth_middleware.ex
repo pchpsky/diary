@@ -1,4 +1,8 @@
 defmodule DiaryWeb.Schema.AuthMiddleware do
+  @moduledoc """
+  Auth middleware for graph
+  """
+
   @behaviour Absinthe.Middleware
 
   def call(resolution, _config) do

@@ -4,6 +4,27 @@ defmodule Diary.SettingsTest do
   alias Diary.Settings
   alias Diary.Settings.Insulin
   import Diary.SettingsFixtures
+  import Diary.AccountsFixtures
+
+  describe "get_settings/1" do
+    setup do
+      %{user: user_fixture()}
+    end
+
+    test "returns user settings", %{user: user} do
+      settings_fixture(user.id, %{blood_glucose_units: :mg_per_dl})
+
+      settings = Settings.get_settings(user.id)
+
+      assert %{blood_glucose_units: :mg_per_dl} = settings
+    end
+
+    test "creates and returns settings if user doesn't have any", %{user: user} do
+      settings = Settings.get_settings(user.id)
+
+      assert %{blood_glucose_units: :mmol_per_l} = settings
+    end
+  end
 
   describe "list_insulins/0" do
     test "returns all insulins" do

@@ -5,7 +5,33 @@ defmodule Diary.Settings do
 
   import Ecto.Query, warn: false
   alias Diary.Repo
-  alias Diary.Settings.Insulin
+  alias Diary.Settings.{Insulin, UserSettings}
+
+  @doc """
+  Returns user settings or creates default.
+
+  ## Examples
+
+      iex> get_settings(user_id)
+      %UserSettings{}
+
+  """
+  def get_settings(user_id) do
+    {:ok, settings} =
+      default_settings()
+      |> UserSettings.changeset(%{user_id: user_id})
+      |> Repo.insert(on_conflict: :nothing)
+
+    if is_nil(settings.id) do
+      Repo.one(from s in UserSettings, where: s.user_id == ^user_id)
+    else
+      settings
+    end
+  end
+
+  defp default_settings do
+    %UserSettings{blood_glucose_units: :mmol_per_l}
+  end
 
   @doc """
   Returns all insulins.

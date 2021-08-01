@@ -25,7 +25,7 @@ defmodule DiaryWeb.Schema.Settings do
     """
 
     field :settings, :settings do
-      resolve(fn _, _, _ -> Result.ok(%{}); end)
+      resolve(fn _, _, _ -> Result.ok(%{}) end)
     end
   end
 end
