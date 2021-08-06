@@ -5,6 +5,7 @@ defmodule DiaryWeb.Schema.Settings do
 
   @desc "User settings"
   object :settings do
+    field :blood_glucose_units, :blood_glucose_units
     field :insulins, list_of(:insulin) do
       @desc "All insulins added by user"
 
@@ -25,7 +26,12 @@ defmodule DiaryWeb.Schema.Settings do
     """
 
     field :settings, :settings do
-      resolve(fn _, _, _ -> Result.ok(%{}) end)
+      resolve(&SettingsResolvers.get_settings/3)
     end
   end
+
+  @desc """
+  Blood glucose units: MG_PER_DL - mg/dL, MMOL_PER_L - mmol/L
+  """
+  enum :blood_glucose_units, values: [:mmol_per_l, :mg_per_dl]
 end
