@@ -9,8 +9,12 @@ defmodule Result do
     {:error, v}
   end
 
-  def bimap({:ok, v}, _, right_cb), do: ok(right_cb.(v))
-  def bimap({:error, v}, left_cb, _), do: error(left_cb.(v))
+  def bimap(result, left_cb, right_cb) do
+    case result do
+      {:ok, v} -> ok(right_cb.(v))
+      {:error, v} -> error(left_cb.(v))
+    end
+  end
 
   def map(result, cb), do: bimap(result, & &1, cb)
 
