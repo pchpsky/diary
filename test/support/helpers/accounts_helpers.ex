@@ -1,4 +1,4 @@
-defmodule DiaryWeb.AccountsHelpers do
+defmodule Diary.AccountsHelpers do
   @moduledoc false
   use Wallaby.DSL
   import Diary.AccountsFixtures

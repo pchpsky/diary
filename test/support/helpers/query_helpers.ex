@@ -1,4 +1,4 @@
-defmodule DiaryWeb.QueryHelpers do
+defmodule Diary.QueryHelpers do
   @moduledoc false
   alias Wallaby.Query
 

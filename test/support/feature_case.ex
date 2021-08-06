@@ -7,8 +7,8 @@ defmodule DiaryWeb.FeatureCase do
       use Wallaby.Feature
       import DiaryWeb.FeatureCase.SetupSession
       import DiaryWeb.FeatureCase.Assertions
-      import DiaryWeb.QueryHelpers
-      import DiaryWeb.AccountsHelpers
+      import Diary.QueryHelpers
+      import Diary.AccountsHelpers
     end
   end
 
