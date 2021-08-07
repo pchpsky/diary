@@ -1,4 +1,5 @@
 defmodule Diary.ApiHelpers do
+  @moduledoc false
   import Diary.AccountsFixtures
   import Diary.Guardian
 
