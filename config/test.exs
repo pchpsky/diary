@@ -28,11 +28,7 @@ config :logger, level: :warn
 config :diary, :sql_sandbox, true
 
 chromedriver =
-  if System.get_env("CHROME_BINARY") do
-    [binary: System.get_env("CHROME_BINARY")]
-  else
-    []
-  end
+  if System.get_env("CHROME_BINARY"), do: [binary: System.get_env("CHROME_BINARY")], else: []
 
 config :wallaby,
   otp_app: :diary,

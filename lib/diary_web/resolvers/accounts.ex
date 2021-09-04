@@ -8,8 +8,6 @@ defmodule DiaryWeb.Resolvers.Accounts do
     do: Result.ok(user)
 
   def create_user(_parent, args, _context) do
-    if String.contains?(args[:email], "error"), do: 1 / 0
-
     args
     |> Accounts.register_user()
     |> Result.map_error(&render_invalid_changeset/1)
