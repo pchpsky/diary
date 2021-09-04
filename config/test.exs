@@ -27,6 +27,14 @@ config :logger, level: :warn
 
 config :diary, :sql_sandbox, true
 
+chromedriver =
+  if System.get_env("CHROME_BINARY") do
+    [binary: System.get_env("CHROME_BINARY")]
+  else
+    []
+  end
+
 config :wallaby,
   otp_app: :diary,
-  screenshot_on_failure: System.get_env("WALLABY_SCREENSHOT_ON_FAILURE")
+  screenshot_on_failure: System.get_env("WALLABY_SCREENSHOT_ON_FAILURE"),
+  chromedriver: chromedriver

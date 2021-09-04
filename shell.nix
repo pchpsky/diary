@@ -9,5 +9,15 @@ let
 in
 
 mkShell {
-  buildInputs = [ elixir inotify-tools nodejs ];
+  buildInputs = [
+    elixir
+    inotify-tools
+    nodejs
+    chromedriver
+    google-chrome
+  ];
+
+  shellHook = ''
+    export CHROME_BINARY=${google-chrome}/bin/google-chrome-stable
+  '';
 }
