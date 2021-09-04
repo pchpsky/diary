@@ -54,7 +54,8 @@ defmodule Diary.MixProject do
       {:absinthe_plug, "~> 1.5.8"},
       {:wallaby, "~> 0.28.0", runtime: false, only: :test},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -75,7 +76,12 @@ defmodule Diary.MixProject do
         "ecto.migrate --quiet",
         "test"
       ],
-      "assets.compile": &compile_assets/1
+      "assets.compile": &compile_assets/1,
+      "assets.deploy": [
+        "cmd --cd assets npm run deploy",
+        "esbuild default --minify",
+        "phx.digest"
+      ]
     ]
   end
 

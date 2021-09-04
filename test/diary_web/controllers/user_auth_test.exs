@@ -138,6 +138,7 @@ defmodule DiaryWeb.UserAuthTest do
       assert get_flash(conn, :error) == "You must log in to access this page."
     end
 
+    @tag :skip
     test "stores the path to redirect to on GET", %{conn: conn} do
       halted_conn =
         %{conn | request_path: "/foo", query_string: ""}
