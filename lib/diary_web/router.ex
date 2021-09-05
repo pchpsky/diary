@@ -28,7 +28,9 @@ defmodule DiaryWeb.Router do
   scope "/", DiaryWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    get "/home", HomeController, :index
+    live "/home", HomeLive, :index
+
+    live "/insulin", InsulinLive, :index
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
@@ -39,7 +41,6 @@ defmodule DiaryWeb.Router do
     pipe_through [:browser, :title_screen]
 
     get "/", TitleController, :index
-    live "/insulin", InsulinLive, :index
     # live "/", PageLive, :index
   end
 
