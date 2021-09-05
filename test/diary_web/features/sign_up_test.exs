@@ -66,8 +66,8 @@ defmodule DiaryWeb.Features.SignUpTest do
       session
       |> visit("/sign_up")
       |> fill_in(@email_field, with: "user@test.com")
-      |> fill_in(@password_field, with: "invalidpass")
-      |> fill_in(@confirmation_field, with: "invalidpass")
+      |> fill_in(@password_field, with: "invldp")
+      |> fill_in(@confirmation_field, with: "invldp")
       |> click(@submit_button)
     end
 
@@ -75,7 +75,7 @@ defmodule DiaryWeb.Features.SignUpTest do
       session
       |> assert_path("/sign_up")
       |> assert_text("Oops, something went wrong! Please check the errors below.")
-      |> assert_text("should be at least 12 character(s)")
+      |> assert_text("should be at least 8 character(s)")
     end
   end
 
@@ -84,8 +84,8 @@ defmodule DiaryWeb.Features.SignUpTest do
       session
       |> visit("/sign_up")
       |> fill_in(@email_field, with: "user@test.com")
-      |> fill_in(@password_field, with: "invalidpass")
-      |> fill_in(@confirmation_field, with: "invalidpass")
+      |> fill_in(@password_field, with: "invldp")
+      |> fill_in(@confirmation_field, with: "invldp")
       |> click(@submit_button)
     end
 
@@ -93,7 +93,7 @@ defmodule DiaryWeb.Features.SignUpTest do
       session
       |> assert_path("/sign_up")
       |> assert_text("Oops, something went wrong! Please check the errors below.")
-      |> assert_text("should be at least 12 character(s)")
+      |> assert_text("should be at least 8 character(s)")
     end
   end
 end

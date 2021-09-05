@@ -33,8 +33,7 @@ defmodule DiaryWeb.UserRegistrationControllerTest do
 
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/home")
-      response = html_response(conn, 200)
-      assert response =~ "Home"
+      html_response(conn, 200)
     end
 
     test "render errors for invalid data", %{conn: conn} do
@@ -42,7 +41,7 @@ defmodule DiaryWeb.UserRegistrationControllerTest do
         post(conn, Routes.user_registration_path(conn, :create), %{
           "user" => %{
             "email" => "with spaces",
-            "password" => "too short",
+            "password" => "short",
             "password_confirmation" => "does not match password"
           }
         })
@@ -50,7 +49,7 @@ defmodule DiaryWeb.UserRegistrationControllerTest do
       response = html_response(conn, 200)
       assert response =~ "Create account</h1>"
       assert response =~ "must have the @ sign and no spaces"
-      assert response =~ "should be at least 12 character"
+      assert response =~ "should be at least 8 character"
       assert response =~ "does not match password"
     end
   end
