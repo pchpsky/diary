@@ -34,18 +34,18 @@ defmodule Diary.MixProject do
   defp deps do
     [
       {:bcrypt_elixir, "~> 2.0"},
-      {:phoenix, "~> 1.5.9"},
+      {:phoenix, "~> 1.6.0-rc.0", override: true},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.15.7"},
+      {:phoenix_live_view, "~> 0.16.0"},
       {:floki, ">= 0.27.0", only: :test},
-      {:phoenix_html, "~> 2.11"},
+      {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phx_gen_auth, "~> 0.6", only: [:dev], runtime: false},
-      {:phoenix_live_dashboard, "~> 0.4"},
-      {:telemetry_metrics, "~> 0.4"},
-      {:telemetry_poller, "~> 0.4"},
+      {:phoenix_live_dashboard, "~> 0.5"},
+      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_poller, "~> 0.5"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
@@ -54,7 +54,8 @@ defmodule Diary.MixProject do
       {:absinthe_plug, "~> 1.5.8"},
       {:wallaby, "~> 0.28.0", runtime: false, only: :test},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev}
     ]
   end
 
@@ -75,7 +76,12 @@ defmodule Diary.MixProject do
         "ecto.migrate --quiet",
         "test"
       ],
-      "assets.compile": &compile_assets/1
+      "assets.compile": &compile_assets/1,
+      "assets.deploy": [
+        "cmd --cd assets npm run deploy",
+        "esbuild default --minify",
+        "phx.digest"
+      ]
     ]
   end
 
