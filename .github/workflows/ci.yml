@@ -3,10 +3,6 @@ on: push
 jobs:
   dependencies:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        elixir: ['1.12.2']
-        otp: ['24.0']
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.9.0
@@ -14,11 +10,15 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout Github repo
         uses: actions/checkout@v2
+      - name: Determine Elixir/OTP versions
+        run: |
+          echo "ELIXIR_VERSION=$(grep -h elixir_version elixir_buildpack.config | awk -F= '{ print $2 }'" >> $GITHUB_ENV
+          echo "OTP_VERSION=$(grep -h erlang_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
       - name: Sets up an Erlang/OTP environment
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: ${{ matrix.elixir }}
-          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ env.ELIXIR_VERSION }}
+          otp-version: ${{ env.OTP_VERSION }}
       - name: Retrieve cached dependencies
         uses: actions/cache@v2
         id: mix-cache
@@ -27,7 +27,7 @@ jobs:
             deps
             _build
             priv/plts
-          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+          key: ${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ hashFiles('mix.lock') }}
       - name: Install dependencies
         if: steps.mix-cache.outputs.cache-hit != 'true'
         run: |
@@ -41,10 +41,6 @@ jobs:
   static-code-analysis:
     needs: dependencies
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        elixir: ['1.12.0']
-        otp: ['24.0']
     steps:
       - name: Cancel previous runs
         uses: styfle/cancel-workflow-action@0.9.0
@@ -52,11 +48,15 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout Github repo
         uses: actions/checkout@v2
+      - name: Determine Elixir/OTP versions
+        run: |
+          echo "ELIXIR_VERSION=$(grep -h elixir_version elixir_buildpack.config | awk -F= '{ print $2 }'" >> $GITHUB_ENV
+          echo "OTP_VERSION=$(grep -h erlang_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
       - name: Sets up an Erlang/OTP environment
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: ${{ matrix.elixir }}
-          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ env.ELIXIR_VERSION }}
+          otp-version: ${{ env.OTP_VERSION }}
       - name: Retrieve cached dependencies
         uses: actions/cache@v2
         id: mix-cache
@@ -65,7 +65,7 @@ jobs:
             deps
             _build
             priv/plts
-          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+          key: ${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ hashFiles('mix.lock') }}
       - run: mix format --check-formatted
       - run: mix credo
       - run: mix dialyzer --no-check --ignore-exit-status
@@ -73,10 +73,6 @@ jobs:
   mix-test:
     needs: dependencies
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        elixir: ['1.12.0']
-        otp: ['24.0']
     services:
       db:
         image: postgres:latest
@@ -93,11 +89,15 @@ jobs:
           access_token: ${{ github.token }}
       - name: Checkout Github repo
         uses: actions/checkout@v2
+      - name: Determine Elixir/OTP versions
+        run: |
+          echo "ELIXIR_VERSION=$(grep -h elixir_version elixir_buildpack.config | awk -F= '{ print $2 }'" >> $GITHUB_ENV
+          echo "OTP_VERSION=$(grep -h erlang_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
       - name: Sets up an Erlang/OTP environment
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: ${{ matrix.elixir }}
-          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ env.ELIXIR_VERSION }}
+          otp-version: ${{ env.OTP_VERSION }}
       - name: Retrieve cached dependencies
         uses: actions/cache@v2
         id: mix-cache
@@ -106,7 +106,7 @@ jobs:
             deps
             _build
             priv/plts
-          key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('mix.lock') }}
+          key: ${{ runner.os }}-${{ env.ELIXIR_VERSION }}-${{ env.OTP_VERSION }}-${{ hashFiles('mix.lock') }}
       - run: mix test --trace --slowest 10
 
   release:
