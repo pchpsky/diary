@@ -78,8 +78,8 @@ defmodule Diary.MixProject do
       ],
       "assets.compile": &compile_assets/1,
       "assets.deploy": [
-        "cmd --cd assets npm run deploy",
         "esbuild default --minify",
+        "cmd --cd assets npm run deploy",
         "phx.digest"
       ]
     ]
