@@ -29,6 +29,7 @@ defmodule DiaryWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     live "/home", HomeLive, :index
+    live "/settings", SettingsLive, :index
 
     live "/insulin", InsulinLive, :index
 
