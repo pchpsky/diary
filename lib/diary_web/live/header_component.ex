@@ -35,10 +35,10 @@ defmodule DiaryWeb.HeaderComponent do
             x-transition:leave-end="transform opacity-0 scale-95"
             class="flex flex-col origin-top-right absolute right-0 mt-1 w-40 rounded bg-th-bgc-main ring-1 ring-grey-800 focus:outline-none z-20"
           >
-            <a class="flex items-center h-8 p-5 pl-2 text-white bg-grey-500 bg-opacity-20 hover:bg-grey-600 hover:bg-opacity-20 border-b border-grey-800" href="#">
+            <a class="flex items-center h-8 p-5 pl-2 text-white bg-grey-500 bg-opacity-20 hover:bg-grey-600 hover:bg-opacity-20 border-b border-grey-800 rounded-t" href="#">
               <%= inline_svg(@socket, "adjustments", class: "h-4 w-4") %><span class="pl-2">User settings</span>
             </a>
-            <%= link(to: "/users/log_out", method: :delete, class: "flex items-center h-8 p-5 pl-2 text-white bg-grey-500 bg-opacity-20 hover:bg-grey-600 hover:bg-opacity-20") do %>
+            <%= link(to: "/users/log_out", method: :delete, class: "flex items-center h-8 p-5 pl-2 text-white bg-grey-500 bg-opacity-20 hover:bg-grey-600 hover:bg-opacity-20 rounded-b") do %>
               <%= inline_svg(@socket, "logout", class: "h-4 w-4") %><span class="pl-2">Log out</span>
             <% end %>
           </div>
