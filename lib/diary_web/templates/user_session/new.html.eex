@@ -23,7 +23,7 @@
   <%= submit "Sign in", class: "btn bg-th-green-1 w-full" %>
 <% end %>
 
-<p class="text-center p-4">
+<p class="text-center p-4 text-blue-400 hover:underline">
   <%= link "Create account", to: Routes.user_registration_path(@conn, :new) %>
   <%#= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
 </p>
