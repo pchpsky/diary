@@ -7,6 +7,6 @@ defmodule DiaryWeb.InsulinLive do
   @impl true
   def mount(_parms, _session, socket) do
     changeset = Metrics.change_insulin(%Metrics.Insulin{})
-    {:ok, assign(socket, page: :insulin, changeset: changeset)}
+    {:ok, assign(socket, page: :insulin, changeset: changeset, back_path: "/home")}
   end
 end

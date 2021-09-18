@@ -6,8 +6,9 @@ defmodule DiaryWeb.HeaderComponent do
 
   def render(assigns) do
     ~H"""
-    <header class="h-12 flex border-b border-grey-900 z-0" style={"background-color: var(--bgc-#{@page}-header)"}>
-      <div class="flex-1">
+    <header class="h-12 flex border-b border-grey-900 z-0" style={"background-color: var(#{header_color(@page)})"}>
+      <div class="flex-1 flex items-center">
+        <.maybe_back_link socket={@socket} back_path={assigns[:back_path]}/>
       </div>
       <div class="flex-none flex items-center justify-center">
         <h1 class="font-semibold text-lg"><%= @title %></h1>
@@ -49,7 +50,18 @@ defmodule DiaryWeb.HeaderComponent do
   end
 
   def update(assigns, socket) do
-    {:ok, assign(socket, title: title(assigns.page), page: assigns.page)}
+    {:ok,
+     assign(socket, title: title(assigns.page), page: assigns.page, back_path: assigns[:back_path])}
+  end
+
+  defp maybe_back_link(assigns) do
+    ~H"""
+    <%= if assigns[:back_path] do %>
+      <%= live_redirect to: assigns[:back_path], class: "ml-3" do %>
+        <%= inline_svg(@socket, "arrow-left", class: "h-6 w-6") %>
+      <% end %>
+    <% end %>
+    """
   end
 
   defp title(nil), do: ""
@@ -64,4 +76,7 @@ defmodule DiaryWeb.HeaderComponent do
     |> Atom.to_string()
     |> String.capitalize()
   end
+
+  defp header_color(nil), do: header_color(:home)
+  defp header_color(page), do: "--bgc-#{page}-header"
 end
