@@ -5,7 +5,8 @@ defmodule Diary.Settings do
 
   import Ecto.Query, warn: false
   alias Diary.Repo
-  alias Diary.Settings.{Insulin, UserSettings}
+  alias Diary.Settings.Insulin
+  alias Diary.Settings.UserSettings
 
   @doc """
   Returns user settings or creates default.
@@ -31,6 +32,13 @@ defmodule Diary.Settings do
 
   defp default_settings do
     %UserSettings{blood_glucose_units: :mmol_per_l}
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for changing user settings.
+  """
+  def change_settings(settings, attrs \\ %{}) do
+    UserSettings.changeset(settings, attrs)
   end
 
   @doc """

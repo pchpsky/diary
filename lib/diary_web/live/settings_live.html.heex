@@ -1,0 +1,16 @@
+<div class="border-b border-grey-800">
+  <h2 class="my-3 px-3 text-xs font-extrabold uppercase">
+    Blood glucose units
+  </h2>
+  <.form let={f} for={@settings_changeset} phx-change="inspect" class="my-2">
+    <div class="radio-button-group">
+      <%= radio_button f, :blood_glucose_units, :mg_per_dl, hidden: true %>
+      <label for="user_settings_blood_glucose_units_mg_per_dl">mg/dL</label>
+    </div>
+
+    <div class="radio-button-group">
+      <%= radio_button f, :blood_glucose_units, :mmol_per_l, hidden: true %>
+      <label for="user_settings_blood_glucose_units_mmol_per_l">mmol/L</label>
+    </div>
+  </.form>
+</div>

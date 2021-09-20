@@ -3,7 +3,7 @@ defmodule DiaryWeb.UserLiveAuth do
 
   alias Diary.Accounts
 
-  def mount(_params, %{"user_token" => token} = _session, socket) do
+  def mount(_params, %{"user_token" => token}, socket) do
     socket =
       assign_new(socket, :current_user, fn ->
         Accounts.get_user_by_session_token(token)

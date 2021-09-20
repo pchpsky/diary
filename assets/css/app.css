@@ -45,6 +45,29 @@
   .input-group .invalid-feedback {
     @apply bg-th-bgc-main mx-3 text-xs text-red-400
   }
+
+  .radio-button-group {
+    @apply active:bg-grey-600 active:bg-opacity-20 rounded
+  }
+
+  .radio-button-group label {
+    @apply flex items-center block p-3
+  }
+
+  .radio-button-group:active label::before {
+    @apply scale-110
+  }
+
+  .radio-button-group label::before {
+    content: "";
+    @apply w-4 h-4 inline-block mr-3 rounded-full ring-2 ring-white border-2 border-th-bgc-main
+  }
+
+  .radio-button-group input[type="radio"]:checked + label::before {
+    --tw-ring-color: var(--green-3);
+    background-color: var(--green-3);
+    border-color: var(--bgc-main);
+  }
 }
 
 :root {
@@ -52,6 +75,7 @@
   --text-primary: white;
   --green-1: #5D9A0F;
   --green-2: #29771C;
+  --green-3: #8bca3b;
 
   --bgc-insulin-header: #3857C4;
   --bgc-home-header: #29771c;
