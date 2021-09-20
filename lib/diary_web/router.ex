@@ -28,10 +28,11 @@ defmodule DiaryWeb.Router do
   scope "/", DiaryWeb do
     pipe_through [:browser, :require_authenticated_user]
 
-    live "/home", HomeLive, :index
-    live "/settings", SettingsLive, :index
-
-    live "/insulin", InsulinLive, :index
+    live_session :default, on_mount: DiaryWeb.UserLiveAuth do
+      live "/home", HomeLive, :index
+      live "/settings", SettingsLive, :index
+      live "/insulin", InsulinLive, :index
+    end
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
