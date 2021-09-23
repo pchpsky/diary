@@ -37,6 +37,7 @@ defmodule Diary.MixProject do
       {:phoenix, "~> 1.6.0-rc.0", override: true},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
+      {:ecto_enum, "~> 1.4"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_live_view, "~> 0.16.3"},
       {:floki, ">= 0.27.0", only: :test},
