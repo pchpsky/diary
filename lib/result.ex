@@ -19,4 +19,11 @@ defmodule Result do
   def map(result, cb), do: bimap(result, & &1, cb)
 
   def map_error(result, cb), do: bimap(result, cb, & &1)
+
+  def fold(result, left_cb, right_cb) do
+    case result do
+      {:ok, v} -> right_cb.(v)
+      {:error, v} -> left_cb.(v)
+    end
+  end
 end
