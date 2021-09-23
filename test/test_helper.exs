@@ -1,4 +1,4 @@
-ExUnit.configure(exclude: :skip)
+ExUnit.configure(exclude: [:skip, :feature])
 ExUnit.start()
 Ecto.Adapters.SQL.Sandbox.mode(Diary.Repo, :manual)
 
