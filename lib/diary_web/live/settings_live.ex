@@ -5,8 +5,6 @@ defmodule DiaryWeb.SettingsLive do
   alias DiaryWeb.Toast
 
   def mount(_arg0, _session, socket) do
-    settings = Settings.get_settings(socket.assigns.current_user.id)
-
     settings_changeset =
       socket.assigns.current_user.id
       |> Settings.get_settings()
