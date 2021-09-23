@@ -41,6 +41,12 @@ defmodule Diary.Settings do
     UserSettings.changeset(settings, attrs)
   end
 
+  def update_settings(settings, attrs) do
+    settings
+    |> UserSettings.changeset(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Returns all insulins.
 
