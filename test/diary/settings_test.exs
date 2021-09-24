@@ -66,8 +66,8 @@ defmodule Diary.SettingsTest do
       %{settings: settings_fixture(user.id)}
     end
 
-    test "requires name" do
-      {:error, changeset} = Settings.create_insulin(%{})
+    test "requires name", %{settings: settings} do
+      {:error, changeset} = Settings.create_insulin(settings.id, %{})
 
       assert %{name: ["can't be blank"]} = errors_on(changeset)
     end
@@ -78,11 +78,14 @@ defmodule Diary.SettingsTest do
       settings_id = settings.id
 
       {:ok, insulin} =
-        Settings.create_insulin(%{
-          name: name,
-          color: color,
-          settings_id: settings_id
-        })
+        Settings.create_insulin(
+          settings.id,
+          %{
+            name: name,
+            color: color,
+            settings_id: settings_id
+          }
+        )
 
       assert %{name: ^name, color: ^color, settings_id: ^settings_id} = insulin
     end
