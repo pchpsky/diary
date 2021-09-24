@@ -9,7 +9,7 @@ defmodule DiaryWeb.Resolvers.Settings do
     |> Result.ok()
   end
 
-  def update_settings(_parent, %{payload: args}, %{context: %{current_user: user}}) do
+  def update_settings(_parent, %{input: args}, %{context: %{current_user: user}}) do
     user.id
     |> Settings.get_settings()
     |> Settings.update_settings(args)
@@ -22,7 +22,7 @@ defmodule DiaryWeb.Resolvers.Settings do
     |> Result.ok()
   end
 
-  def create_insulin(_, %{payload: args}, %{context: %{current_user: user}}) do
+  def create_insulin(_, %{input: args}, %{context: %{current_user: user}}) do
     settings =
       user.id
       |> Settings.get_settings()
@@ -32,7 +32,7 @@ defmodule DiaryWeb.Resolvers.Settings do
     |> Result.map_error(&render_invalid_changeset/1)
   end
 
-  def update_insulin(_, %{id: id, payload: args}, %{context: %{current_user: _user}}) do
+  def update_insulin(_, %{id: id, input: args}, %{context: %{current_user: _user}}) do
     id
     |> Settings.get_insulin()
     |> Result.cond(& &1, %{message: "Insulin not found.", code: 404})

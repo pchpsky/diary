@@ -37,20 +37,20 @@ defmodule DiaryWeb.Schema.Settings do
     """
 
     field :update_settings, :settings do
-      arg(:payload, non_null(:settings_payload))
+      arg(:input, non_null(:settings_input))
 
       resolve(&SettingsResolvers.update_settings/3)
     end
 
     field :create_insulin, :insulin do
-      arg(:payload, non_null(:insulin_payload))
+      arg(:input, non_null(:insulin_input))
 
       resolve(&SettingsResolvers.create_insulin/3)
     end
 
     field :update_insulin, :insulin do
       arg(:id, non_null(:id))
-      arg(:payload, non_null(:insulin_payload))
+      arg(:input, non_null(:insulin_input))
 
       resolve(&SettingsResolvers.update_insulin/3)
     end
@@ -68,16 +68,16 @@ defmodule DiaryWeb.Schema.Settings do
   enum(:blood_glucose_units, values: [:mmol_per_l, :mg_per_dl])
 
   @desc """
-  Settings payload object for update
+  Settings input object for update
   """
-  input_object :settings_payload do
+  input_object :settings_input do
     field :blood_glucose_units, :blood_glucose_units
   end
 
   @desc """
-  Payload for creating/updating insulins
+  Input object for creating/updating insulins
   """
-  input_object :insulin_payload do
+  input_object :insulin_input do
     field :name, :string
     field :color, :string
   end
