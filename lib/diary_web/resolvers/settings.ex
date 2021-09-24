@@ -9,7 +9,7 @@ defmodule DiaryWeb.Resolvers.Settings do
     |> Result.ok()
   end
 
-  def update_settings(_parent, args, %{context: %{current_user: user}}) do
+  def update_settings(_parent, %{payload: args}, %{context: %{current_user: user}}) do
     user.id
     |> Settings.get_settings()
     |> Settings.update_settings(args)

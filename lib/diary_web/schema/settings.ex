@@ -37,7 +37,7 @@ defmodule DiaryWeb.Schema.Settings do
     """
 
     field :update_settings, :settings do
-      arg(:blood_glucose_units, non_null(:blood_glucose_units))
+      arg(:payload, non_null(:settings_payload))
 
       resolve(&SettingsResolvers.update_settings/3)
     end
@@ -47,4 +47,11 @@ defmodule DiaryWeb.Schema.Settings do
   Blood glucose units: MG_PER_DL - mg/dL, MMOL_PER_L - mmol/L
   """
   enum(:blood_glucose_units, values: [:mmol_per_l, :mg_per_dl])
+
+  @desc """
+  Settings payload object for update
+  """
+  input_object :settings_payload do
+    field :blood_glucose_units, :blood_glucose_units
+  end
 end
