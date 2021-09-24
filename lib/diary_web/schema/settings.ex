@@ -31,6 +31,18 @@ defmodule DiaryWeb.Schema.Settings do
     end
   end
 
+  object :settings_mutations do
+    @desc """
+    login with the params
+    """
+
+    field :update_settings, :settings do
+      arg(:blood_glucose_units, non_null(:blood_glucose_units))
+
+      resolve(&SettingsResolvers.update_settings/3)
+    end
+  end
+
   @desc """
   Blood glucose units: MG_PER_DL - mg/dL, MMOL_PER_L - mmol/L
   """

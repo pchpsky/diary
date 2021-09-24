@@ -15,6 +15,7 @@ defmodule DiaryWeb.Schema do
   mutation do
     import_fields(:session_mutations)
     import_fields(:user_mutations)
+    import_fields(:settings_mutations)
   end
 
   def middleware(

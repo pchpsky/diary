@@ -76,6 +76,10 @@ defmodule Diary.Settings do
   """
   def get_insulin!(id), do: Repo.get!(Insulin, id)
 
+  def change_insulin(insulin, attrs \\ %{}) do
+    Insulin.changeset(insulin, attrs)
+  end
+
   @doc """
   Creates an insulin.
 
@@ -88,9 +92,15 @@ defmodule Diary.Settings do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_insulin(attrs) do
-    %Insulin{}
+  def create_insulin(settings_id, attrs) do
+    %Insulin{settings_id: settings_id}
     |> Insulin.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def update_insulin(insulin, attrs) do
+    insulin
+    |> Insulin.changeset(attrs)
+    |> Repo.update()
   end
 end
