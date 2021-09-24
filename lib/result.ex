@@ -9,6 +9,10 @@ defmodule Result do
     {:error, v}
   end
 
+  def cond(v, pred, on_error) do
+    if pred.(v), do: ok(v), else: error(on_error)
+  end
+
   def bimap(result, left_cb, right_cb) do
     case result do
       {:ok, v} -> ok(right_cb.(v))
@@ -24,6 +28,13 @@ defmodule Result do
     case result do
       {:ok, v} -> right_cb.(v)
       {:error, v} -> left_cb.(v)
+    end
+  end
+
+  def flat_map(result, cb) do
+    case result do
+      {:ok, v} -> cb.(v)
+      {:error, e} -> error(e)
     end
   end
 end

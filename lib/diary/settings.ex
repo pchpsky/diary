@@ -57,7 +57,7 @@ defmodule Diary.Settings do
 
   """
   def list_insulins(settings_id) do
-    Repo.all(from i in Insulin, where: i.settings_id == ^settings_id)
+    Repo.all(from i in Insulin, where: i.settings_id == ^settings_id, order_by: i.inserted_at)
   end
 
   @doc """
@@ -75,6 +75,8 @@ defmodule Diary.Settings do
 
   """
   def get_insulin!(id), do: Repo.get!(Insulin, id)
+
+  def get_insulin(id), do: Repo.get(Insulin, id)
 
   def change_insulin(insulin, attrs \\ %{}) do
     Insulin.changeset(insulin, attrs)
@@ -102,5 +104,9 @@ defmodule Diary.Settings do
     insulin
     |> Insulin.changeset(attrs)
     |> Repo.update()
+  end
+
+  def delete_insulin(insulin) do
+    Repo.delete(insulin)
   end
 end

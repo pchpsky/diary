@@ -33,13 +33,32 @@ defmodule DiaryWeb.Schema.Settings do
 
   object :settings_mutations do
     @desc """
-    login with the params
+    Update user settings
     """
 
     field :update_settings, :settings do
       arg(:payload, non_null(:settings_payload))
 
       resolve(&SettingsResolvers.update_settings/3)
+    end
+
+    field :create_insulin, :insulin do
+      arg(:payload, non_null(:insulin_payload))
+
+      resolve(&SettingsResolvers.create_insulin/3)
+    end
+
+    field :update_insulin, :insulin do
+      arg(:id, non_null(:id))
+      arg(:payload, non_null(:insulin_payload))
+
+      resolve(&SettingsResolvers.update_insulin/3)
+    end
+
+    field :delete_insulin, :insulin do
+      arg(:id, non_null(:id))
+
+      resolve(&SettingsResolvers.delete_insulin/3)
     end
   end
 
@@ -53,5 +72,13 @@ defmodule DiaryWeb.Schema.Settings do
   """
   input_object :settings_payload do
     field :blood_glucose_units, :blood_glucose_units
+  end
+
+  @desc """
+  Payload for creating/updating insulins
+  """
+  input_object :insulin_payload do
+    field :name, :string
+    field :color, :string
   end
 end
