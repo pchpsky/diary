@@ -1,8 +1,8 @@
 <div class="border-b border-grey-800">
-  <h2 class="my-3 px-3 text-xs font-extrabold uppercase">
+  <h2 class="p-3 text-xs font-extrabold uppercase">
     Blood glucose units
   </h2>
-  <.form let={f} for={@settings_changeset} phx-change="inspect" class="my-2">
+  <.form let={f} for={@settings_changeset} phx-change="inspect" class="mb-2">
     <div class="radio-button-group">
       <%= radio_button f, :blood_glucose_units, :mmol_per_l, hidden: true %>
       <label for="user_settings_blood_glucose_units_mmol_per_l">mmol/L</label>
@@ -16,8 +16,16 @@
 </div>
 
 <div class="border-b border-grey-800">
-  <h2 class="my-3 px-3 text-xs font-extrabold uppercase">
-    Insulins
-  </h2>
+  <a class="block p-3 active:bg-grey-600 active:bg-opacity-20 text-xs font-extrabold uppercase cursor-pointer">
+    <div class="flex w-full items-center justify-between">
+      Insulins
+      <%= inline_svg(@socket, "chevron-right", class: "h-4 w-4 inline") %>
+    </div>
+  </a>
 
+  <div class="mb-2">
+    <%= for insulin <- @insulins do %>
+      <DiaryWeb.Settings.InsulinLive.view_insulin insulin={insulin} />
+    <% end %>
+  </div>
 </div>

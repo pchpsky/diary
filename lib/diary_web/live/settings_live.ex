@@ -3,18 +3,18 @@ defmodule DiaryWeb.SettingsLive do
 
   alias Diary.Settings
   alias DiaryWeb.Toast
+  import DiaryWeb.IconHelpers
 
   def mount(_arg0, _session, socket) do
-    settings_changeset =
-      socket.assigns.current_user.id
-      |> Settings.get_settings()
-      |> Settings.change_settings()
+    settings = Settings.get_settings(socket.assigns.current_user.id)
+    settings_changeset = Settings.change_settings(settings)
 
     assigns = [
       page: :settings,
       back_path: "/home",
       current_user: socket.assigns.current_user,
-      settings_changeset: settings_changeset
+      settings_changeset: settings_changeset,
+      insulins: Settings.list_insulins(settings.id)
     ]
 
     {:ok, assign(socket, assigns)}

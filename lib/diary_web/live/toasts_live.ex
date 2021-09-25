@@ -1,6 +1,8 @@
 defmodule DiaryWeb.ToastsLive do
   use DiaryWeb, :live_view
 
+  @close_in 3_000
+
   def mount(_, _, socket) do
     if connected?(socket) do
       Phoenix.PubSub.subscribe(Diary.PubSub, "toasts" <> inspect(socket.root_pid))
@@ -25,7 +27,7 @@ defmodule DiaryWeb.ToastsLive do
     toast_id = random_id()
     toasts = socket.assigns.toasts ++ [{toast_id, message}]
 
-    Process.send_after(self(), {:close_toast, toast_id}, 5_000)
+    Process.send_after(self(), {:close_toast, toast_id}, @close_in)
 
     assign(socket, :toasts, toasts)
   end
