@@ -20,7 +20,7 @@ defmodule DiaryWeb.SettingsLive do
     {:ok, assign(socket, assigns)}
   end
 
-  def handle_event("inspect", %{"user_settings" => settings}, socket) do
+  def handle_event("update", %{"user_settings" => settings}, socket) do
     socket.assigns.current_user.id
     |> Settings.get_settings()
     |> Settings.update_settings(settings)
