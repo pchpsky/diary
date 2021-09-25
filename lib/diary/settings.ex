@@ -56,6 +56,8 @@ defmodule Diary.Settings do
       [%Insulin{}, ...]
 
   """
+  def list_insulins(%UserSettings{id: id}), do: list_insulins(id)
+
   def list_insulins(settings_id) do
     Repo.all(from i in Insulin, where: i.settings_id == ^settings_id, order_by: i.inserted_at)
   end

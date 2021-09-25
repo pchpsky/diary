@@ -31,6 +31,7 @@ defmodule DiaryWeb.Router do
     live_session :default, on_mount: DiaryWeb.UserLiveAuth do
       live "/home", HomeLive, :index
       live "/settings", SettingsLive, :index
+      live "/settings/insulins", Settings.InsulinsLive
       live "/insulin", InsulinLive, :index
     end
 

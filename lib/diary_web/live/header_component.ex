@@ -6,7 +6,11 @@ defmodule DiaryWeb.HeaderComponent do
 
   def update(assigns, socket) do
     {:ok,
-     assign(socket, title: title(assigns.page), page: assigns.page, back_path: assigns[:back_path])}
+     assign(socket,
+       title: assigns[:title] || title(assigns.page),
+       page: assigns.page,
+       back_path: assigns[:back_path]
+     )}
   end
 
   defp maybe_back_link(assigns) do
