@@ -17,6 +17,7 @@ module.exports = {
       'th-green-1': 'var(--green-1)',
       'th-green-2': 'var(--green-2)',
       'th-green-3': 'var(--green-3)',
+      'th-grey-1': 'var(--grey-1)',
       black: colors.black,
       grey: colors.coolGray,
       blue: colors.blue,

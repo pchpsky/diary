@@ -8,7 +8,8 @@ defmodule DiaryWeb.Settings.InsulinsLive do
       page: :settings,
       title: "Insulins",
       back_path: "/settings",
-      insulin_changeset: Settings.change_insulin(%Settings.Insulin{color: "#f8e45c"})
+      insulin_changeset: Settings.change_insulin(%Settings.Insulin{color: "#f8e45c"}),
+      selected: nil
     ]
 
     socket
@@ -20,9 +21,11 @@ defmodule DiaryWeb.Settings.InsulinsLive do
 
   def view_insulin(assigns) do
     ~H"""
-    <div class="p-3 flex items-center border-b border-th-bgc-main">
+    <div class="p-3 flex items-center">
       <div class="w-4 h-4 inline-block mr-3 rounded-full" style={"background-color: #{@insulin.color}"}></div>
-      <%= @insulin.name %>
+      <div class="border-b border-th-bgc-main">
+        <%= @insulin.name %>
+      </div>
     </div>
     """
   end
@@ -36,6 +39,16 @@ defmodule DiaryWeb.Settings.InsulinsLive do
       |> assign(insulin_changeset: Settings.change_insulin(%Settings.Insulin{color: "#f8e45c"}))
 
     {:noreply, socket}
+  end
+
+  def handle_event("save", %{"insulin" => attrs}, socket) do
+    {:noreply, assign(socket, insulin_changeset: Settings.change_insulin(%Settings.Insulin{}, attrs))}
+  end
+
+  def handle_event("select", %{"id" => id}, socket) do
+    {id, ""} = Integer.parse(id)
+
+    {:noreply, assign(socket, :selected, id)}
   end
 
   defp load_settings(socket) do
