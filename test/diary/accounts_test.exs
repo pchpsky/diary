@@ -29,8 +29,7 @@ defmodule Diary.AccountsTest do
     test "returns the user if the email and password are valid" do
       %{id: id} = user = user_fixture()
 
-      assert %User{id: ^id} =
-               Accounts.get_user_by_email_and_password(user.email, valid_user_password())
+      assert %User{id: ^id} = Accounts.get_user_by_email_and_password(user.email, valid_user_password())
     end
   end
 
@@ -117,8 +116,7 @@ defmodule Diary.AccountsTest do
       email = unique_user_email()
       password = valid_user_password()
 
-      changeset =
-        Accounts.change_user_registration(%User{}, %{"email" => email, "password" => password})
+      changeset = Accounts.change_user_registration(%User{}, %{"email" => email, "password" => password})
 
       assert changeset.valid?
       assert get_change(changeset, :email) == email
@@ -145,8 +143,7 @@ defmodule Diary.AccountsTest do
     end
 
     test "validates email", %{user: user} do
-      {:error, changeset} =
-        Accounts.apply_user_email(user, valid_user_password(), %{email: "not valid"})
+      {:error, changeset} = Accounts.apply_user_email(user, valid_user_password(), %{email: "not valid"})
 
       assert %{email: ["must have the @ sign and no spaces"]} = errors_on(changeset)
     end
@@ -154,8 +151,7 @@ defmodule Diary.AccountsTest do
     test "validates maximum value for email for security", %{user: user} do
       too_long = String.duplicate("db", 100)
 
-      {:error, changeset} =
-        Accounts.apply_user_email(user, valid_user_password(), %{email: too_long})
+      {:error, changeset} = Accounts.apply_user_email(user, valid_user_password(), %{email: too_long})
 
       assert "should be at most 160 character(s)" in errors_on(changeset).email
     end
@@ -163,15 +159,13 @@ defmodule Diary.AccountsTest do
     test "validates email uniqueness", %{user: user} do
       %{email: email} = user_fixture()
 
-      {:error, changeset} =
-        Accounts.apply_user_email(user, valid_user_password(), %{email: email})
+      {:error, changeset} = Accounts.apply_user_email(user, valid_user_password(), %{email: email})
 
       assert "has already been taken" in errors_on(changeset).email
     end
 
     test "validates current password", %{user: user} do
-      {:error, changeset} =
-        Accounts.apply_user_email(user, "invalid", %{email: unique_user_email()})
+      {:error, changeset} = Accounts.apply_user_email(user, "invalid", %{email: unique_user_email()})
 
       assert %{current_password: ["is not valid"]} = errors_on(changeset)
     end
@@ -285,15 +279,13 @@ defmodule Diary.AccountsTest do
     test "validates maximum values for password for security", %{user: user} do
       too_long = String.duplicate("db", 100)
 
-      {:error, changeset} =
-        Accounts.update_user_password(user, valid_user_password(), %{password: too_long})
+      {:error, changeset} = Accounts.update_user_password(user, valid_user_password(), %{password: too_long})
 
       assert "should be at most 80 character(s)" in errors_on(changeset).password
     end
 
     test "validates current password", %{user: user} do
-      {:error, changeset} =
-        Accounts.update_user_password(user, "invalid", %{password: valid_user_password()})
+      {:error, changeset} = Accounts.update_user_password(user, "invalid", %{password: valid_user_password()})
 
       assert %{current_password: ["is not valid"]} = errors_on(changeset)
     end
