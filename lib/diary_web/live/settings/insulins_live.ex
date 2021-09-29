@@ -2,13 +2,18 @@ defmodule DiaryWeb.Settings.InsulinsLive do
   use DiaryWeb, :live_view
 
   alias Diary.Settings
+  alias DiaryWeb.Toast
 
   def mount(_, _, socket) do
+    if connected?(socket) do
+      Phoenix.PubSub.subscribe(Diary.PubSub, "settings:insulins:" <> inspect(socket.root_pid))
+    end
+
     assigns = [
       page: :settings,
       title: "Insulins",
       back_path: "/settings",
-      insulin_changeset: Settings.change_insulin(%Settings.Insulin{color: "#f8e45c"}),
+      insulin_changeset: Settings.change_insulin(%Settings.Insulin{color: "#ffd841"}),
       selected: nil
     ]
 
@@ -21,9 +26,9 @@ defmodule DiaryWeb.Settings.InsulinsLive do
 
   def view_insulin(assigns) do
     ~H"""
-    <div class="p-3 flex items-center">
+    <div class="p-4 flex items-center">
       <div class="w-4 h-4 inline-block mr-3 rounded-full" style={"background-color: #{@insulin.color}"}></div>
-      <div class="border-b border-th-bgc-main">
+      <div class="border-b border-white border-opacity-0">
         <%= @insulin.name %>
       </div>
     </div>
@@ -32,6 +37,8 @@ defmodule DiaryWeb.Settings.InsulinsLive do
 
   def handle_event("create", %{"insulin" => attrs}, socket) do
     Settings.create_insulin(socket.assigns.settings.id, attrs)
+
+    Toast.push(socket, "Created.")
 
     socket =
       socket
@@ -49,6 +56,14 @@ defmodule DiaryWeb.Settings.InsulinsLive do
     {id, ""} = Integer.parse(id)
 
     {:noreply, assign(socket, :selected, id)}
+  end
+
+  def handle_info({:updated, _id}, socket) do
+    {:noreply, load_insulins(socket)}
+  end
+
+  def handle_info({:deleted, _id}, socket) do
+    {:noreply, load_insulins(socket)}
   end
 
   defp load_settings(socket) do
