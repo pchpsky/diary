@@ -27,7 +27,7 @@ defmodule DiaryWeb.Settings.InsulinsLive do
   def view_insulin(assigns) do
     ~H"""
     <div class="p-4 flex items-center">
-      <div class="w-4 h-4 inline-block mr-3 rounded-full" style={"background-color: #{@insulin.color}"}></div>
+      <div class="w-6 h-6 inline-block mr-3 rounded-full" style={"background-color: #{@insulin.color}"}></div>
       <div class="border-b border-white border-opacity-0">
         <%= @insulin.name %>
       </div>
