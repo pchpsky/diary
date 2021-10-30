@@ -13,6 +13,7 @@ import "../css/app.css"
 //     import socket from "./socket"
 //
 import Alpine from 'alpinejs'
+import Pickr from './Pickr';
 
 window.Alpine = Alpine
 
@@ -24,10 +25,13 @@ import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let hooks = {};
+const hooks = { Pickr };
 let liveSocket = new LiveSocket("/live", Socket, {
-  params: { _csrf_token: csrfToken },
-  hooks: hooks,
+  params: {
+    _csrf_token: csrfToken,
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+  },
+  hooks,
   dom: {
     onBeforeElUpdated(from, to) {
       if (from._x_dataStack) {

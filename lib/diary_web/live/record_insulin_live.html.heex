@@ -1,0 +1,5 @@
+<.form let={f} for={@changeset} class="mb-2 pt-3">
+  <div id="taken-at-pickr" class="pickr flex justify-center" phx-hook="Pickr">
+    <%= datetime_local_input f, :taken_at, class: "bg-th-grey-1 outline-none rounded-full text-center p-3", "data-input": true %>
+  </div>
+</.form>

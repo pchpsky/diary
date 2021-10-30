@@ -1,5 +1,6 @@
 /* This file is for your main application css. */
 @import "../node_modules/nprogress/nprogress.css";
+@import "../node_modules/flatpickr/dist/themes/dark.css";
 
 @tailwind base;
 @tailwind components;
@@ -111,7 +112,6 @@
 iframe {
   height: 0;
 }
-
 
 html {
   font-size: 18px;

@@ -53,6 +53,7 @@ defmodule Diary.MixProject do
       {:guardian, "~> 2.0"},
       {:absinthe, "~> 1.6.4"},
       {:absinthe_plug, "~> 1.5.8"},
+      {:timex, "~> 3.0"},
       {:wallaby, "~> 0.28.0", runtime: false, only: :test},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
