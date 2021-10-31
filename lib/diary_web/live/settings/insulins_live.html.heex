@@ -13,7 +13,7 @@
 <div class="mb-2 border-b border-grey-800">
   <%= for insulin <- @insulins do %>
     <%= if insulin.id == @selected do %>
-      <%= live_component @socket, DiaryWeb.Settings.EditInsulinForm, id: insulin.id, insulin: insulin %>
+      <%= live_component DiaryWeb.Settings.EditInsulinForm, id: insulin.id, insulin: insulin %>
     <% else %>
       <div phx-click="select" phx-value-id={insulin.id} class="cursor-pointer">
         <DiaryWeb.Settings.InsulinsLive.view_insulin insulin={insulin} />

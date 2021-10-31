@@ -3,12 +3,12 @@ defmodule DiaryWeb.SessionViewHelpers do
   Helpers for session views
   """
 
-  import Phoenix.HTML
+  use Phoenix.Component
 
   def title(text) do
     assigns = %{title: text}
 
-    ~E"""
+    ~H"""
     <h1 class="text-4xl font-bold my-2"><%= @title %></h1>
     """
   end
@@ -16,7 +16,7 @@ defmodule DiaryWeb.SessionViewHelpers do
   def danger_alert(message) do
     assigns = %{message: message}
 
-    ~E"""
+    ~H"""
     <div class="bg-red-200 text-black text-sm rounded-md p-2">
       <p><%= @message %></p>
     </div>
