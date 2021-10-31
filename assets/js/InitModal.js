@@ -6,7 +6,7 @@ export default {
 
         setTimeout(() => {
           // This timeout gives time for the animation to complete
-          this.pushEventTo(event.detail.id, "close", {})
+          this.pushEventTo(event.detail.id, "modal:close", {})
         }, 300);
       }
     }
@@ -14,11 +14,14 @@ export default {
     // This listens to modal event from AlpineJs
     this.el.addEventListener("modal-change", handleOpenCloseEvent)
 
-    // This is the close event that comes from the LiveView
-    this.handleEvent('close', data => {
-      if (!document.getElementById(data.id)) return
-
+    // This is the open/close events that come from the LiveView
+    this.handleEvent('modal:close', data => {
       const event = new CustomEvent('close-now')
+      this.el.dispatchEvent(event)
+    })
+
+    this.handleEvent('modal:open', data => {
+      const event = new CustomEvent('open-now')
       this.el.dispatchEvent(event)
     })
   }

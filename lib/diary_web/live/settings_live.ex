@@ -6,6 +6,10 @@ defmodule DiaryWeb.SettingsLive do
   import DiaryWeb.IconHelpers
 
   def mount(_arg0, _session, socket) do
+    if connected?(socket) do
+      Phoenix.PubSub.subscribe(Diary.PubSub, "settings:insulins:" <> inspect(socket.root_pid))
+    end
+
     settings = Settings.get_settings(socket.assigns.current_user.id)
     settings_changeset = Settings.change_settings(settings)
 
@@ -13,6 +17,7 @@ defmodule DiaryWeb.SettingsLive do
       page: :settings,
       back_path: "/home",
       current_user: socket.assigns.current_user,
+      settings: settings,
       settings_changeset: settings_changeset,
       insulins: Settings.list_insulins(settings.id)
     ]
@@ -30,5 +35,17 @@ defmodule DiaryWeb.SettingsLive do
     )
 
     {:noreply, socket}
+  end
+
+  def handle_info({:updated, _id}, socket) do
+    {:noreply, load_insulins(socket)}
+  end
+
+  def handle_info({:deleted, _id}, socket) do
+    {:noreply, load_insulins(socket)}
+  end
+
+  defp load_insulins(socket) do
+    assign(socket, :insulins, Settings.list_insulins(socket.assigns.settings))
   end
 end

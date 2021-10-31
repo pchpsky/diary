@@ -3,9 +3,10 @@ defmodule DiaryWeb.Settings.InsulinModal do
 
   alias Diary.Settings
   alias DiaryWeb.Toast
+  alias DiaryWeb.Modal
 
   def mount(socket) do
-    {:ok, assign(socket, insulin: nil, state: :closed)}
+    {:ok, assign(socket, insulin: nil, changeset: Settings.change_insulin(%Diary.Settings.Insulin{}), state: :closed)}
   end
 
   def handle_event("show", %{"id" => id}, socket) do
@@ -17,34 +18,32 @@ defmodule DiaryWeb.Settings.InsulinModal do
       changeset: Settings.change_insulin(insulin)
     ]
 
-    {:noreply, socket |> assign(assigns)}
+    {:noreply, socket |> assign(assigns) |> Modal.open()}
   end
 
   def handle_event("close", _, socket) do
-    {:noreply, socket |> assign(state: :closed)}
+    {:noreply, socket |> assign(state: :closed) |> Modal.close()}
   end
 
   def handle_event("save", %{"insulin" => attrs}, socket) do
     insulin = socket.assigns.insulin
 
     Settings.update_insulin(socket.assigns.insulin, attrs)
-    Toast.push(socket, "Updated.")
+    Toast.push(socket, "Insulin updated.")
     Phoenix.PubSub.broadcast!(Diary.PubSub, "settings:insulins:" <> inspect(socket.root_pid), {:updated, insulin.id})
 
-    {:noreply, socket |> assign(state: :closed)}
+    {:noreply, socket |> assign(state: :closed) |> Modal.close()}
   end
 
   def render(assigns) do
     ~H"""
     <div id={@id}>
-      <.live_component module={DiaryWeb.Modal} id="insulin" state={@state} parent={@id}>
-        <:header>
-          <h5 class="font-bold mb-4">Edit insulin</h5>
-        </:header>
+      <.live_component module={Modal} id="insulin">
+        <h5 class="font-bold mb-5">Edit insulin</h5>
         <.form let={f} for={@changeset} phx-submit="save" phx-target={@myself}>
           <div class="flex items-center mb-5">
             <div class="flex-none h-6 w-6 mr-3">
-              <%= color_input f, :color, class: "h-6 w-6 bg-th-grey-1" %>
+              <%= color_input f, :color, class: "h-6 w-6 bg-th-bgc-main" %>
             </div>
             <%= text_input f, :name, placeholder: "Name", required: true, class: "flex-grow border-b border-grey-500 bg-th-bgc-main outline-none min-w-0" %>
           </div>

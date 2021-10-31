@@ -1,6 +1,14 @@
 defmodule DiaryWeb.Modal do
   use Phoenix.LiveComponent
 
+  def open(socket) do
+    push_event(socket, "modal:open", %{})
+  end
+
+  def close(socket) do
+    push_event(socket, "modal:close", %{})
+  end
+
   def mount(socket) do
     socket
     |> assign_new(:header, fn -> [] end)
@@ -9,18 +17,11 @@ defmodule DiaryWeb.Modal do
     |> Result.ok()
   end
 
-  def handle_event("close", _, socket) do
+  def handle_event("modal:close", _, socket) do
     {:noreply, assign(socket, :state, :closed)}
   end
 
-  def handle_event("open", _, socket) do
+  def handle_event("modal:open", _, socket) do
     {:noreply, assign(socket, :state, :open)}
-  end
-
-  defp targets(id, target) do
-    [id, target]
-    |> Enum.filter(& &1)
-    |> Enum.map(&"##{&1}")
-    |> Enum.join(",")
   end
 end

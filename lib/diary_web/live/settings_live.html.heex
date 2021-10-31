@@ -16,16 +16,20 @@
 </div>
 
 <div class="border-b border-grey-800">
-  <%= live_redirect to: "/settings/insulins", class: "block p-3 active:bg-grey-600 active:bg-opacity-20 text-xs font-extrabold uppercase cursor-pointer" do %>
-    <div class="flex w-full items-center justify-between">
-      Insulins
-      <%= inline_svg(@socket, "chevron-right", class: "h-4 w-4 inline") %>
-    </div>
-  <% end %>
+  <h2 class="p-3 text-xs font-extrabold uppercase">
+    Insulins
+  </h2>
 
   <div class="mb-2">
     <%= for insulin <- @insulins do %>
-      <DiaryWeb.Settings.InsulinsLive.view_insulin insulin={insulin} />
+      <div class="p-4 flex items-center" phx-click="show" phx-target="#insulin_modal" phx-value-id={insulin.id}>
+        <div class="w-6 h-6 inline-block mr-3 rounded-full" style={"background-color: #{insulin.color}"}></div>
+        <div class="border-b border-white border-opacity-0">
+          <%= insulin.name %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>
+
+<.live_component module={DiaryWeb.Settings.InsulinModal} id="insulin_modal"/>
