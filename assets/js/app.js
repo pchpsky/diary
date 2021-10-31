@@ -14,6 +14,7 @@ import "../css/app.css"
 //
 import Alpine from 'alpinejs'
 import Pickr from './Pickr';
+import InitModal from './InitModal'
 
 window.Alpine = Alpine
 
@@ -25,7 +26,7 @@ import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-const hooks = { Pickr };
+const hooks = { Pickr, InitModal };
 let liveSocket = new LiveSocket("/live", Socket, {
   params: {
     _csrf_token: csrfToken,
