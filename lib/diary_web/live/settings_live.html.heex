@@ -21,15 +21,31 @@
   </h2>
 
   <div class="mb-2">
+    <div class="p-3 flex items-center cursor-pointer" phx-click="show" phx-target="#insulin_modal" phx-value-settings={@settings.id}>
+      <%= inline_svg(@socket, "plus-circle", class: "h-6 w-6 mr-3") %>
+      <div>
+        Add insulin
+      </div>
+    </div>
     <%= for insulin <- @insulins do %>
-      <div class="p-4 flex items-center" phx-click="show" phx-target="#insulin_modal" phx-value-id={insulin.id}>
-        <div class="w-6 h-6 inline-block mr-3 rounded-full" style={"background-color: #{insulin.color}"}></div>
-        <div class="border-b border-white border-opacity-0">
-          <%= insulin.name %>
+      <div class="p-3 flex items-center justify-between">
+        <div class="flex items-center">
+          <div class="w-6 h-6 inline-block mr-3 rounded-full" style={"background-color: #{insulin.color}"}></div>
+          <div class="inline-block">
+            <%= insulin.name %>
+          </div>
+        </div>
+        <div class="flex items-center">
+          <div class="cursor-pointer mr-3" phx-click="show" phx-target="#insulin_modal" phx-value-id={insulin.id}>
+            <%= inline_svg(@socket, "edit", class: "h-6 w-6") %>
+          </div>
+          <div class="cursor-pointer" phx-click="delete_insulin" phx-value-id={insulin.id} data-confirm="Are you sure?">
+            <%= inline_svg(@socket, "trash", class: "h-6 w-6") %>
+          </div>
         </div>
       </div>
     <% end %>
   </div>
 </div>
 
-<.live_component module={DiaryWeb.Settings.InsulinModal} id="insulin_modal"/>
+<.live_component module={DiaryWeb.Settings.InsulinModal} id="insulin_modal" settings_id={@settings.id}/>

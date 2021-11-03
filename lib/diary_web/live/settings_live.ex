@@ -37,7 +37,19 @@ defmodule DiaryWeb.SettingsLive do
     {:noreply, socket}
   end
 
+  def handle_event("delete_insulin", %{"id" => id}, socket) do
+    insulin = Diary.Settings.get_insulin!(id)
+    Settings.delete_insulin(insulin)
+    Toast.push(socket, "Deleted.")
+
+    {:noreply, load_insulins(socket)}
+  end
+
   def handle_info({:updated, _id}, socket) do
+    {:noreply, load_insulins(socket)}
+  end
+
+  def handle_info({:created, _id}, socket) do
     {:noreply, load_insulins(socket)}
   end
 

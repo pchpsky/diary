@@ -13,6 +13,7 @@ mkShell {
     elixir
     inotify-tools
     nodejs
+    nodePackages.npm
     chromedriver
     google-chrome
   ];
