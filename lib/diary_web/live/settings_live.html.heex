@@ -21,7 +21,7 @@
   </h2>
 
   <div class="mb-2">
-    <div class="p-3 flex items-center cursor-pointer" phx-click="show" phx-target="#insulin_modal" phx-value-settings={@settings.id}>
+    <div class="p-3 flex items-center cursor-pointer" phx-click="new_insulin">
       <%= inline_svg(@socket, "plus-circle", class: "h-6 w-6 mr-3") %>
       <div>
         Add insulin
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="flex items-center">
-          <div class="cursor-pointer mr-3" phx-click="show" phx-target="#insulin_modal" phx-value-id={insulin.id}>
+          <div class="cursor-pointer mr-3" phx-click={Modal.JS.open("insulin_#{insulin.id}")}>
             <%= inline_svg(@socket, "edit", class: "h-6 w-6") %>
           </div>
           <div class="cursor-pointer" phx-click="delete_insulin" phx-value-id={insulin.id} data-confirm="Are you sure?">
@@ -44,8 +44,43 @@
           </div>
         </div>
       </div>
+      <.live_component module={DiaryWeb.Modal} id={"insulin_#{insulin.id}"}>
+        <:header>
+          <h5 class="font-bold mb-5">Edit insulin</h5>
+        </:header>
+        <.form let={f} for={Settings.change_insulin(insulin)} phx-submit={"update_insulin_#{insulin.id}"}>
+          <div class="flex items-center mb-5">
+            <div class="flex-none h-6 w-6 mr-3">
+              <%= color_input f, :color, class: "h-6 w-6 bg-th-bgc-main" %>
+            </div>
+            <%= text_input f, :name, placeholder: "Name", required: true, class: "flex-grow border-b border-grey-500 bg-th-bgc-main outline-none min-w-0" %>
+          </div>
+          <div class="flex justify-end">
+            <button type="submit" class="mr-3 w-20 h-6 rounded-full bg-th-green-1 text-sm font-bold">Save</button>
+            <button type="button" class="w-20 h-6 rounded-full border border-grey-500 text-sm font-bold" phx-click={Modal.JS.close("insulin_#{insulin.id}")}>Close</button>
+          </div>
+        </.form>
+      </.live_component>
     <% end %>
   </div>
 </div>
 
-<.live_component module={DiaryWeb.Settings.InsulinModal} id="insulin_modal" settings_id={@settings.id}/>
+<%= if @insulin_changeset do %>
+  <.live_component module={DiaryWeb.Modal} id={"insulin_add"}>
+    <:header>
+      <h5 class="font-bold mb-5">Add insulin</h5>
+    </:header>
+    <.form let={f} for={@insulin_changeset} phx-submit="create_insulin">
+      <div class="flex items-center mb-5">
+        <div class="flex-none h-6 w-6 mr-3">
+          <%= color_input f, :color, class: "h-6 w-6 bg-th-bgc-main" %>
+        </div>
+        <%= text_input f, :name, placeholder: "Name", required: true, class: "flex-grow border-b border-grey-500 bg-th-bgc-main outline-none min-w-0" %>
+      </div>
+      <div class="flex justify-end">
+        <button type="submit" class="mr-3 w-20 h-6 rounded-full bg-th-green-1 text-sm font-bold">Save</button>
+        <button type="button" class="w-20 h-6 rounded-full border border-grey-500 text-sm font-bold" phx-click={Modal.JS.close("insulin_add")}>Close</button>
+      </div>
+    </.form>
+  </.live_component>
+<% end %>
