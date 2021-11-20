@@ -47,6 +47,8 @@ defmodule DiaryWeb do
       use Phoenix.LiveView,
         layout: {DiaryWeb.LayoutView, "live.html"}
 
+      alias Phoenix.LiveView.JS
+
       unquote(view_helpers())
     end
   end
@@ -54,6 +56,7 @@ defmodule DiaryWeb do
   def live_component do
     quote do
       use Phoenix.LiveComponent
+      alias Phoenix.LiveView.JS
 
       unquote(view_helpers())
     end
