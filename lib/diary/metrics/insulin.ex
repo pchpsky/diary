@@ -8,7 +8,7 @@ defmodule Diary.Metrics.Insulin do
     field :insulin_id, :integer
     field :notes, :string
     field :taken_at, :naive_datetime
-    field :units, :integer
+    field :units, :float
     belongs_to :user, Diary.Accounts.User
 
     timestamps()
