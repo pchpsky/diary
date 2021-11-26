@@ -36,9 +36,10 @@ defmodule DiaryWeb.RecordInsulinLive do
   def handle_event("inspect", %{"insulin" => insulin}, socket) do
     Timex.parse!(~s(#{insulin["taken_at_date"]}T#{insulin["taken_at_time"]}), "{YYYY}-{0M}-{0D}T{h24}:{m}")
     |> Timex.to_datetime(socket.assigns[:timezone] || "UTC")
-    |> IO.inspect()
 
-    IO.inspect(insulin)
+    # |> IO.inspect()
+
+    # IO.inspect(insulin)
 
     {:noreply, socket}
   end
