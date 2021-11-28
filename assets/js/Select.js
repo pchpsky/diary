@@ -8,7 +8,13 @@ export default {
     })
 
     this.el.addEventListener('selected', e => {
-      this.el.value = e.detail
+      this.el.value = e.detail.value
+    })
+
+    const selected = document.getElementById(`${this.el.id}_selected`)
+
+    selected.addEventListener('selected', e => {
+      selected.innerText = e.detail.name
     })
   }
 }

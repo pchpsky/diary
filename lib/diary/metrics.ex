@@ -12,4 +12,10 @@ defmodule Diary.Metrics do
   def change_insulin(%Insulin{} = insulin, attrs \\ %{}) do
     Insulin.changeset(insulin, attrs)
   end
+
+  def record_insulin(user_id, data) do
+    %Insulin{user_id: user_id}
+    |> Insulin.changeset(data)
+    |> Repo.insert()
+  end
 end

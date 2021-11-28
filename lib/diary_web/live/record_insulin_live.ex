@@ -33,18 +33,41 @@ defmodule DiaryWeb.RecordInsulinLive do
   end
 
   @impl true
-  def handle_event("inspect", %{"insulin" => insulin}, socket) do
-    Timex.parse!(~s(#{insulin["taken_at_date"]}T#{insulin["taken_at_time"]}), "{YYYY}-{0M}-{0D}T{h24}:{m}")
-    |> Timex.to_datetime(socket.assigns[:timezone] || "UTC")
+  def handle_event("save", %{"insulin" => insulin}, socket) do
+    attrs = insulin_attributes(socket, insulin)
 
-    # |> IO.inspect()
+    Metrics.record_insulin(socket.assigns.current_user.id, attrs)
 
-    # IO.inspect(insulin)
+    DiaryWeb.Toast.push(socket, "Saved.")
 
     {:noreply, socket}
   end
 
+  def handle_event("add_notes", %{"notes" => notes}, socket) do
+    changeset = Ecto.Changeset.put_change(socket.assigns[:changeset], :notes, notes)
+
+    {:noreply, socket |> assign(:changeset, changeset) |> DiaryWeb.Modal.close("record_insulin_notes")}
+  end
+
   def format_time(time) do
     Timex.format!(time, "{WDshort}, {D} {Mshort} {YYYY}, {h24}:{m}")
+  end
+
+  defp insulin_attributes(socket, insulin) do
+    taken_at =
+      Timex.parse!(~s(#{insulin["taken_at_date"]}T#{insulin["taken_at_time"]}), "{YYYY}-{0M}-{0D}T{h24}:{m}")
+      |> Timex.to_datetime(socket.assigns[:timezone] || "UTC")
+      |> Timex.to_naive_datetime()
+
+    %{
+      "insulin_id" => insulin["insulin_id"],
+      "notes" => insulin["notes"],
+      "taken_at" => taken_at,
+      "units" => insulin["units"]
+    }
+  end
+
+  def blank?(val) do
+    val == nil || String.trim(val) == ""
   end
 end

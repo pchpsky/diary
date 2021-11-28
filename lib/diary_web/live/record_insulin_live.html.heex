@@ -1,4 +1,4 @@
-<.form let={f} for={@changeset} class="mb-2 p-3 px-5" phx-submit="inspect">
+<.form let={f} for={@changeset} class="mb-2 p-3 px-5" phx-submit="save">
   <div class="mb-4 flex justify-center" phx-hook="NumberInput" id="insulin-units-input">
     <div class="w-10"></div>
     <%= text_input f, :units, class: "w-44 bg-th-bgc-main outline-none text-center text-7xl text-center", required: true %>
@@ -22,7 +22,7 @@
     <%= date_input f, :taken_at_date, value: Timex.format!(f.data.taken_at, "{YYYY}-{0M}-{0D}"), class: "w-full border-b border-grey-500 bg-th-bgc-main outline-none", "data-input": true, required: true %>
   </div>
 
-  <div class="flex w-full">
+  <div class="mb-4 flex w-full">
     <%= inline_svg(@socket, "syringe", class: "h-6 w-6 mr-2 flex-none") %>
     <.live_component module={DiaryWeb.Select} form={f} field={:insulin_id} id="test" class="w-full border-b border-grey-500 bg-th-bgc-main outline-none" options={@insulins} reduce={&({&1.name, &1.id})}>
       <:option let={insulin}>
@@ -36,8 +36,35 @@
     </.live_component>
   </div>
 
+  <div class="mb-4 w-full">
+    <div class="flex w-full">
+      <%= inline_svg(@socket, "document-text", class: "h-6 w-6 mr-2 flex-none") %>
+      <%= hidden_input f, :notes %>
+      <button type="button" class="border-b border-grey-500 w-full text-left" phx-click={DiaryWeb.Modal.JS.open("record_insulin_notes")}>
+        <%= if blank?(@changeset.changes[:notes]) do %>
+          <span class="text-grey-400">Add notes</span>
+        <% else %>
+          <%= @changeset.changes[:notes] %>
+        <% end %>
+      </button>
+    </div>
+  </div>
 
   <div class="flex fixed bottom-0 inset-x-0 justify-center mb-4">
     <%= submit "Save", class: "font-bold rounded-full bg-th-green-1 px-6 py-1" %>
   </div>
 </.form>
+
+<.live_component module={DiaryWeb.Modal} id="record_insulin_notes">
+  <:header>
+    <h5 class="font-bold mb-3">Edit notes</h5>
+  </:header>
+
+  <form phx-submit="add_notes">
+    <textarea name="notes" class="border rounded-md border-grey-500 bg-th-bgc-main outline-none w-full mb-3 p-2"></textarea>
+    <div class="flex justify-end">
+      <button type="submit" class="mr-3 w-20 h-6 rounded-full bg-th-green-1 text-sm font-bold">Save</button>
+      <button type="button" class="w-20 h-6 rounded-full border border-grey-500 text-sm font-bold" phx-click={DiaryWeb.Modal.JS.close("record_insulin_notes")}>Close</button>
+    </div>
+  </form>
+</.live_component>

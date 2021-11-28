@@ -2,16 +2,22 @@
   <select
     id={input_id(@form, @field)}
     name={input_name(@form, @field)}
-    class={"cursor-pointer #{@class}"}
-    phx-click={toggle(input_id(@form, @field))}
-    phx-click-away={hide(input_id(@form, @field))}
+    class={"hidden"}
     phx-hook="Select"
   >
     <%= Enum.map(@options, @reduce) |> options_for_select(selected(@form, @field)) %>
   </select>
-  <div id={"#{input_id(@form, @field)}_options"} class="absolute top-6 bg-th-grey-1 inset-x-0 rounded-md hidden" >
+  <div
+    id={"#{input_id(@form, @field)}_selected"}
+    class={"cursor-pointer #{@class}"}
+    phx-click={toggle(input_id(@form, @field))}
+    phx-click-away={hide(input_id(@form, @field))}
+  >
+    <%= (selected(@form, @field) || hd(@options)) |> @reduce.() |> elem(0) %>
+  </div>
+  <div id={"#{input_id(@form, @field)}_options"} class="absolute top-7 bg-th-grey-1 inset-x-0 rounded-md hidden" >
     <%= for option <- @options do %>
-      <div phx-click={select(input_id(@form, @field), option |> @reduce.() |> elem(1))} class="p-2 cursor-pointer rounded-md hover:bg-th-grey-2">
+      <div phx-click={select(input_id(@form, @field), option |> @reduce.())} class="p-2 cursor-pointer rounded-md hover:bg-th-grey-2">
         <%= render_slot(@option, option) %>
       </div>
     <% end %>

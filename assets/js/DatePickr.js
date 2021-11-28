@@ -10,6 +10,16 @@ export default {
     })
   },
 
+  updated() {
+    this.pickr.destroy()
+    this.pickr = flatpickr(this.el, {
+      wrap: true,
+      altInput: true,
+      altFormat: "D, j M Y",
+      dateFormat: "Y-m-d",
+    })
+  },
+
   destroyed() {
     this.pickr.destroy()
   }
