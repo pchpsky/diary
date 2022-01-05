@@ -1,0 +1,16 @@
+{
+  "recommendations": [
+    "teabyii.ayu",
+    "jakebecker.elixir-ls",
+    "arrterian.nix-env-selector",
+    "phoenixframework.phoenix",
+    "pkief.material-icon-theme"
+  ]
+
+  // "editor.tokenColorCustomizations"."[Ayu Mirage Bordered]" = {
+  //   strings = "#78b87d";
+  // };
+  // "workbench.colorTheme" = "Ayu Mirage Bordered";
+  // "workbench.iconTheme" = "material-icon-theme";
+  // "editor.bracketPairColorization.enabled" = true;
+}
