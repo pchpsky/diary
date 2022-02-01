@@ -15,6 +15,7 @@
   "dependencies": {
     "alpinejs": "^3.3.1",
     "cleave.js": "^1.6.0",
+    "daisyui": "^1.25.4",
     "flatpickr": "^4.6.9",
     "nprogress": "^0.2.0"
   }
