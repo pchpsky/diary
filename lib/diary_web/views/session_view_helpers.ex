@@ -9,16 +9,20 @@ defmodule DiaryWeb.SessionViewHelpers do
     assigns = %{title: text}
 
     ~H"""
-    <h1 class="text-4xl font-bold my-2"><%= @title %></h1>
+    <h1 class="text-3xl font-bold my-2"><%= @title %></h1>
     """
   end
 
-  def danger_alert(message) do
+  def alert_error(message) do
     assigns = %{message: message}
 
     ~H"""
-    <div class="bg-red-200 text-black text-sm rounded-md p-2">
-      <p><%= @message %></p>
+    <div class="alert alert-error">
+      <label>
+        <p class="text-sm">
+          <%= @message %>
+        </p>
+      </label>
     </div>
     """
   end

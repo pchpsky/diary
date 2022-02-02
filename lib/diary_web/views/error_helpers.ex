@@ -4,17 +4,27 @@ defmodule DiaryWeb.ErrorHelpers do
   """
 
   use Phoenix.HTML
+  use Phoenix.Component
 
   @doc """
   Generates tag for inlined form input errors.
   """
   def error_tag(form, field) do
-    Enum.map(Keyword.get_values(form.errors, field), fn error ->
-      content_tag(:span, translate_error(error),
-        class: "invalid-feedback",
-        phx_feedback_for: input_id(form, field)
-      )
-    end)
+    assigns = %{
+      errors: Keyword.get_values(form.errors, field)
+    }
+
+    ~H"""
+    <%= if Enum.any?(@errors) do %>
+      <label class="label" phx-feedback-for={input_id(form, field)}>
+        <%= Enum.map(@errors, fn error -> %>
+          <span class="label-text-alt">
+            <%= translate_error(error) %>
+          </span>
+        <% end) %>
+      </label>
+    <% end %>
+    """
   end
 
   @doc """

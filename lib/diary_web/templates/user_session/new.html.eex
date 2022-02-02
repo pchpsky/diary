@@ -2,28 +2,34 @@
 
 <%= form_for @conn, Routes.user_session_path(@conn, :create), [as: :user], fn f -> %>
   <%= if @error_message do %>
-    <%= danger_alert(@error_message) %>
+    <%= alert_error(@error_message) %>
   <% end %>
 
-  <div class="input-group">
-    <%= email_input f, :email, class: "input w-full" %>
-    <%= label f, :email, class: "label" %>
+  <div class="form-control">
+    <%= label f, :email, class: "label" do %>
+      <span class="label-text">Email</span>
+    <% end %>
+    <%= email_input f, :email, class: "input input-bordered w-full", placeholder: "email" %>
   </div>
 
-  <div class="input-group">
-    <%= password_input f, :password, class: "input w-full" %>
-    <%= label f, :password, class: "label" %>
+  <div class="form-control">
+  <%= label f, :password, class: "label" do %>
+      <span class="label-text">Password</span>
+    <% end %>
+    <%= password_input f, :password, class: "input input-bordered w-full w-full", placeholder: "password" %>
   </div>
 
-  <div class="checkbox-group">
-    <%= checkbox f, :remember_me %>
-    <%= label f, :remember_me, "Keep me logged in for 60 days" %>
+  <div class="form-control">
+    <%= label f, :remember_me, class: "cursor-pointer label" do %>
+      <span class="label-text">Keep me logged in for 60 days</span>
+      <%= checkbox f, :remember_me, class: "checkbox" %>
+    <% end %>
   </div>
 
-  <%= submit "Sign in", class: "btn bg-th-green-1 w-full" %>
+  <%= submit "Sign in", class: "btn btn-primary btn-block" %>
 <% end %>
 
-<p class="text-center p-4 text-blue-400 hover:underline">
-  <%= link "Create account", to: Routes.user_registration_path(@conn, :new) %>
+<p class="text-center p-4">
+  <%= link "Create account", to: Routes.user_registration_path(@conn, :new), class: "link link-accent" %>
   <%#= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
 </p>

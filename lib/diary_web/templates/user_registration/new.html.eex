@@ -2,31 +2,37 @@
 
 <%= form_for @changeset, Routes.user_registration_path(@conn, :create), fn f -> %>
   <%= if @changeset.action do %>
-    <%= danger_alert("Oops, something went wrong! Please check the errors below.") %>
+    <%= alert_error("Oops, something went wrong! Please check the errors below.") %>
   <% end %>
 
-  <div class="input-group <%= f.errors[:email] && "invalid" %>">
-    <%= email_input f, :email, class: "input w-full" %>
-    <%= label f, :email, class: "label" %>
+  <div class="form-control">
+    <%= label f, :email, class: "label" do %>
+      <span class="label-text">Email</span>
+    <% end %>
+    <%= email_input f, :email, class: "input input-bordered w-full #{f.errors[:email] && "input-error"}", placeholder: "email" %>
     <%= error_tag f, :email %>
   </div>
 
-  <div class="input-group <%= f.errors[:password] && "invalid" %>">
-    <%= password_input f, :password, value: input_value(f, :password), class: "input w-full" %>
-    <%= label f, :password, class: "label" %>
+  <div class="form-control">
+    <%= label f, :password, class: "label" do %>
+      <span class="label-text">Password</span>
+    <% end %>
+    <%= password_input f, :password, class: "input input-bordered w-full #{f.errors[:password] && "input-error"}", placeholder: "password" %>
     <%= error_tag f, :password %>
   </div>
 
-  <div class="input-group <%= f.errors[:password_confirmation] && "invalid" %>">
-    <%= password_input f, :password_confirmation, value: input_value(f, :password_confirmation), class: "input w-full" %>
-    <%= label f, :password_confirmation, class: "label" %>
+  <div class="form-control">
+    <%= label f, :password_confirmation, class: "label" do %>
+      <span class="label-text">Password confirmation</span>
+    <% end %>
+    <%= password_input f, :password_confirmation, class: "input input-bordered w-full #{f.errors[:password_confirmation] && "input-error"}", placeholder: "password confirmation" %>
     <%= error_tag f, :password_confirmation %>
   </div>
 
-  <%= submit "Submit", class: "btn bg-th-green-1 w-full" %>
+  <%= submit "Submit", class: "btn btn-primary btn-block mt-2" %>
 <% end %>
 
-<p class="text-center p-4 text-blue-400 hover:underline">
-  <%= link "Log in", to: Routes.user_session_path(@conn, :new) %>
-  <%# <%= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
+<p class="text-center p-4">
+  <%= link "Log in", to: Routes.user_session_path(@conn, :new), class: "link link-accent" %>
+  <%#= link "Forgot your password?", to: Routes.user_reset_password_path(@conn, :new) %>
 </p>
