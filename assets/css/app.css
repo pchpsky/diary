@@ -7,29 +7,6 @@
 @tailwind utilities;
 
 @layer components {
-  .radio-button-group {
-    @apply active:bg-grey-600 active:bg-opacity-20 rounded
-  }
-
-  .radio-button-group label {
-    @apply flex items-center block p-3
-  }
-
-  .radio-button-group:active label::before {
-    @apply scale-110
-  }
-
-  .radio-button-group label::before {
-    content: "";
-    @apply w-4 h-4 inline-block mr-3 rounded-full ring-2 ring-white border-2 border-th-bgc-main
-  }
-
-  .radio-button-group input[type="radio"]:checked + label::before {
-    --tw-ring-color: var(--green-3);
-    background-color: var(--green-3);
-    border-color: var(--bgc-main);
-  }
-
   input[type="color"]::-webkit-color-swatch-wrapper {
     padding: 0;
   }
