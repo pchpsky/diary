@@ -1,26 +1,24 @@
-<div class="border-b border-grey-800">
-  <h2 class="p-3 text-xs font-extrabold uppercase">
-    Blood glucose units
-  </h2>
-  <.form let={f} for={@settings_changeset} phx-change="update" class="mb-2">
-    <div class="radio-button-group">
-      <%= radio_button f, :blood_glucose_units, :mmol_per_l, hidden: true %>
-      <label for="user_settings_blood_glucose_units_mmol_per_l">mmol/L</label>
+<div class="divider text-xs font-extrabold uppercase mb-1">Blood glucose units</div>
+<div>
+  <.form let={f} for={@settings_changeset} phx-change="update" class="p-3">
+    <div class="form-control">
+      <label class="cursor-pointer label justify-start">
+        <%= radio_button f, :blood_glucose_units, :mmol_per_l, class: "radio mr-3" %>
+        <label for="user_settings_blood_glucose_units_mmol_per_l" class="label-text">mmol/L</label>
+      </label>
     </div>
-
-    <div class="radio-button-group">
-      <%= radio_button f, :blood_glucose_units, :mg_per_dl, hidden: true %>
-      <label for="user_settings_blood_glucose_units_mg_per_dl">mg/dL</label>
+    <div class="form-control">
+      <label class="cursor-pointer label justify-start">
+        <%= radio_button f, :blood_glucose_units, :mg_per_dl, class: "radio mr-3" %>
+        <label for="user_settings_blood_glucose_units_mg_per_dl" class="label-text">mg/dL</label>
+      </label>
     </div>
   </.form>
 </div>
 
-<div class="border-b border-grey-800">
-  <h2 class="p-3 text-xs font-extrabold uppercase">
-    Insulins
-  </h2>
-
-  <div class="mb-2">
+<div class="divider text-xs font-extrabold uppercase mb-1">Insulins</div>
+<div>
+  <div>
     <div class="p-3 flex items-center cursor-pointer" phx-click="new_insulin">
       <%= inline_svg(@socket, "plus-circle", class: "h-6 w-6 mr-3") %>
       <div>
