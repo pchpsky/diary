@@ -28,7 +28,7 @@ defmodule DiaryWeb.Router do
   scope "/", DiaryWeb do
     pipe_through [:browser]
 
-    live_session :default, on_mount: [DiaryWeb.UserAuth, DiaryWeb.LocalesLive] do
+    live_session :default, on_mount: [DiaryWeb.UserAuth, DiaryWeb.LocalesLive, DiaryWeb.NavLive] do
       live "/home", HomeLive
       live "/settings", SettingsLive
       live "/insulin", InsulinLive

@@ -42,12 +42,15 @@ defmodule DiaryWeb do
     end
   end
 
-  def live_view do
+  def live_view(opts \\ []) do
     quote do
-      use Phoenix.LiveView,
-        layout: {DiaryWeb.LayoutView, "live.html"}
-
-      alias Phoenix.LiveView.JS
+      @opts Keyword.merge(
+              [
+                layout: {DiaryWeb.LayoutView, "live.html"}
+              ],
+              unquote(opts)
+            )
+      use Phoenix.LiveView, @opts
 
       unquote(view_helpers())
     end
@@ -56,7 +59,6 @@ defmodule DiaryWeb do
   def live_component do
     quote do
       use Phoenix.LiveComponent
-      alias Phoenix.LiveView.JS
 
       unquote(view_helpers())
     end
@@ -90,15 +92,21 @@ defmodule DiaryWeb do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
+      import DiaryWeb.LiveComponents
       import DiaryWeb.ErrorHelpers
       import DiaryWeb.Gettext
       alias DiaryWeb.Router.Helpers, as: Routes
+      alias Phoenix.LiveView.JS
     end
   end
 
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
   """
+  defmacro __using__({which, opts}) when is_atom(which) do
+    apply(__MODULE__, which, [opts])
+  end
+
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end

@@ -1,3 +1,4 @@
+# TODO: Use icon helper instead
 defmodule DiaryWeb.IconHelpers do
   use Phoenix.Component
 

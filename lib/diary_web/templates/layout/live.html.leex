@@ -1,5 +1,0 @@
-<%= live_component DiaryWeb.HeaderComponent, page: assigns[:page], back_path: assigns[:back_path], title: assigns[:title] %>
-<main role="main" class="container mx-auto">
-  <%= @inner_content %>
-</main>
-<%= live_render @socket, DiaryWeb.ToastsLive, id: "toasts" %>
