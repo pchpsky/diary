@@ -10,7 +10,6 @@ defmodule DiaryWeb.Router do
     plug :put_root_layout, {DiaryWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :fetch_current_user
   end
 
   pipeline :api_authenticated do
@@ -23,12 +22,13 @@ defmodule DiaryWeb.Router do
 
   pipeline :title_screen do
     plug :put_layout, {DiaryWeb.LayoutView, "title.html"}
+    plug :fetch_current_user
   end
 
   scope "/", DiaryWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through [:browser]
 
-    live_session :default, on_mount: [DiaryWeb.UserLiveAuth, DiaryWeb.LocalesLive] do
+    live_session :default, on_mount: [DiaryWeb.UserAuth, DiaryWeb.LocalesLive] do
       live "/home", HomeLive
       live "/settings", SettingsLive
       live "/insulin", InsulinLive
