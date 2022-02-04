@@ -16,7 +16,6 @@
     border-radius: 50%;
   }
 
-
   /* firefox */
   input[type=color]::-moz-focus-inner {
     border: none;

@@ -3,7 +3,6 @@ defmodule DiaryWeb.RecordInsulinLive do
 
   alias Diary.Metrics
   alias Diary.Settings
-  import DiaryWeb.IconHelpers
 
   @impl true
   def mount(_params, _session, socket) do

@@ -4,7 +4,6 @@ defmodule DiaryWeb.SettingsLive do
   alias Diary.Settings
   alias DiaryWeb.Toast
   alias DiaryWeb.Modal
-  import DiaryWeb.IconHelpers
 
   def mount(_arg0, _session, socket) do
     settings = Settings.get_settings(socket.assigns.current_user.id)

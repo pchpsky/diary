@@ -26,7 +26,7 @@
     <h2 class="card-title">Insulins</h2>
     <div>
       <div class="py-3 flex items-center cursor-pointer" phx-click="new_insulin">
-        <%= inline_svg(@socket, "plus-circle", class: "h-6 w-6 mr-3") %>
+        <.icon name={:plus_circle} class="h-6 w-6 mr-3" outlined={true}/>
         <div>
           Add insulin
         </div>
@@ -41,10 +41,10 @@
           </div>
           <div class="flex items-center">
             <div class="cursor-pointer mr-3" phx-click={Modal.JS.open("insulin_#{insulin.id}")}>
-              <%= inline_svg(@socket, "edit", class: "h-6 w-6") %>
+              <.icon name={:pencil} class="h-6 w-6"/>
             </div>
             <div class="cursor-pointer" phx-click="delete_insulin" phx-value-id={insulin.id} data-confirm="Are you sure?">
-              <%= inline_svg(@socket, "trash", class: "h-6 w-6") %>
+              <.icon name={:trash} class="h-6 w-6"/>
             </div>
           </div>
         </div>
