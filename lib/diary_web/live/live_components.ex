@@ -56,7 +56,7 @@ defmodule DiaryWeb.LiveComponents do
 
   defp breadcrumbs_title(%{page: :home} = assigns) do
     ~H"""
-    <.icon name={:home} class="h-6 w-6" />
+    <.icon name={:home} class="h-6 w-6"/>
     """
   end
 
@@ -76,23 +76,22 @@ defmodule DiaryWeb.LiveComponents do
     """
   end
 
-  defp breadcrumb_item(%{name: :home} = assigns) do
-    ~H"""
-    <li>
-      <%= live_redirect to: "/home" do %>
-        <.icon name={:home} />
-      <% end %>
-    </li>
-    """
-  end
+  def card(assigns) do
+    assigns =
+      assigns
+      |> assign_new(:class, fn -> "card bg-base-100 shadow-lg" end)
 
-  defp breadcrumb_item(%{name: :insulin} = assigns) do
     ~H"""
-    <li>
-      <%= live_redirect to: "/home" do %>
-        <.icon name={:home} />
-      <% end %>
-    </li>
+    <div class={@class}>
+      <div class="card-body">
+        <%= if assigns[:title] do %>
+          <h2 class="card-title"><%= render_slot(@title) %></h2>
+        <% end %>
+        <div>
+          <%= render_slot(@inner_block) %>
+        </div>
+      </div>
+    </div>
     """
   end
 end
