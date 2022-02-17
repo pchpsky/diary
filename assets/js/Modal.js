@@ -3,15 +3,11 @@ export default {
     this.modalId = this.el.id.replace(/^modal_/, "");
 
     this.onClose = event => {
-      this.__liveSocket.execJS(this.el, this.el.dataset.jsHide)
-      setTimeout(() => {
-        this.el.classList.add("hidden");
-      }, 300);
+      this.el.checked = false;
     }
 
     this.onOpen = event => {
-      this.el.classList.remove("hidden");
-      this.__liveSocket.execJS(this.el, this.el.dataset.jsShow)
+      this.el.checked = true;
     }
 
     this.handleEvent(`modal:open:${this.modalId}`, this.onOpen)

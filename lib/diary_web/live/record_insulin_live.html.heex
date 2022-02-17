@@ -55,16 +55,14 @@
   </div>
 </.form>
 
-<.live_component module={DiaryWeb.Modal} id="record_insulin_notes">
-  <:header>
-    <h5 class="font-bold mb-3">Edit notes</h5>
-  </:header>
+<.modal id="record_insulin_notes">
+  <.modal_title>Edit notes</.modal_title>
 
   <form phx-submit="add_notes">
-    <textarea name="notes" class="border rounded-md border-grey-500 bg-th-bgc-main outline-none w-full mb-3 p-2"></textarea>
-    <div class="flex justify-end">
-      <button type="submit" class="mr-3 w-20 h-6 rounded-full bg-th-green-1 text-sm font-bold">Save</button>
-      <button type="button" class="w-20 h-6 rounded-full border border-grey-500 text-sm font-bold" phx-click={DiaryWeb.Modal.JS.close("record_insulin_notes")}>Close</button>
-    </div>
+    <textarea name="notes" class="textarea textarea-bordered w-full"></textarea>
+    <.modal_actions>
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="button" class="btn" phx-click={DiaryWeb.Modal.JS.close("record_insulin_notes")}>Close</button>
+    </.modal_actions>
   </form>
-</.live_component>
+</.modal>

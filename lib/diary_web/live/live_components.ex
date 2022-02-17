@@ -80,17 +80,43 @@ defmodule DiaryWeb.LiveComponents do
     assigns =
       assigns
       |> assign_new(:class, fn -> "card bg-base-100 shadow-lg" end)
+      |> assign_new(:title, fn -> [] end)
 
     ~H"""
     <div class={@class}>
       <div class="card-body">
-        <%= if assigns[:title] do %>
-          <h2 class="card-title"><%= render_slot(@title) %></h2>
+        <%= for title <- @title do %>
+          <h2 class={"card-title only:mb-0 #{title[:class]}"}><%= render_slot(title) %></h2>
         <% end %>
-        <div>
-          <%= render_slot(@inner_block) %>
-        </div>
+        <%= render_slot(@inner_block) %>
       </div>
+    </div>
+    """
+  end
+
+  def modal(assigns) do
+    ~H"""
+    <input type="checkbox" id={"modal_#{@id}"} class="modal-toggle" phx-hook="Modal">
+    <div class="modal" phx-window-keydown={DiaryWeb.Modal.JS.close(@id)} phx-key="escape">
+      <div class="modal-box" phx-click-away={DiaryWeb.Modal.JS.close(@id)}>
+        <%= render_slot(@inner_block) %>
+      </div>
+    </div>
+    """
+  end
+
+  def modal_actions(assigns) do
+    ~H"""
+    <div class="modal-action">
+      <%= render_slot(@inner_block) %>
+    </div>
+    """
+  end
+
+  def modal_title(assigns) do
+    ~H"""
+    <div class="modal-title mb-4 only:mb-0">
+      <%= render_slot(@inner_block) %>
     </div>
     """
   end

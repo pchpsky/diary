@@ -64,6 +64,14 @@ defmodule DiaryWeb do
     end
   end
 
+  def component do
+    quote do
+      use Phoenix.Component
+
+      unquote(view_helpers())
+    end
+  end
+
   def router do
     quote do
       use Phoenix.Router

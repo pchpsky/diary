@@ -1,7 +1,9 @@
-<div class="fixed bottom-5 left-1/2 transform w-4/5 -translate-x-1/2">
+<div class="stack fixed bottom-5 left-1/2 transform w-4/5 -translate-x-1/2">
   <%= for {id, message} <- @toasts do %>
-    <div id={"toast-#{id}"} class="bg-grey-700 rounded mb-4 last:mb-0 py-1 px-3" phx-click="close" phx-value-target={id}>
-      <%= message %>
+    <div id={"toast-#{id}"} class="bg-base-100 shadow-md card card-compact" phx-click="close" phx-value-target={id}>
+      <div class="card-body">
+        <%= message %>
+      </div>
     </div>
   <% end %>
 

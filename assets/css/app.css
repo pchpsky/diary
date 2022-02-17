@@ -27,6 +27,10 @@
     border: none;
     border-radius: 50%;
   }
+
+  .modal-title {
+    @apply font-bold text-lg
+  }
 }
 
 :root {
