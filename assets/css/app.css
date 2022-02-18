@@ -31,6 +31,12 @@
   .modal-title {
     @apply font-bold text-lg
   }
+
+  .input.active {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px hsl(var(--b1)), 0 0 0 4px hsla(var(--bc) / .2);
+  }
 }
 
 :root {

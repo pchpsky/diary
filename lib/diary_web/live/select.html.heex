@@ -1,4 +1,4 @@
-<div class="w-full relative">
+<div class={"dropdown dropdown-open #{@class}"}>
   <select
     id={input_id(@form, @field)}
     name={input_name(@form, @field)}
@@ -7,19 +7,20 @@
   >
     <%= Enum.map(@options, @reduce) |> options_for_select(selected(@form, @field)) %>
   </select>
-  <div
+  <label
+    tabindex="0"
     id={"#{input_id(@form, @field)}_selected"}
-    class={"cursor-pointer #{@class}"}
+    class="cursor-pointer block flex h-full items-center w-full"
     phx-click={toggle(input_id(@form, @field))}
     phx-click-away={hide(input_id(@form, @field))}
   >
     <%= (selected(@form, @field) || hd(@options)) |> @reduce.() |> elem(0) %>
-  </div>
-  <div id={"#{input_id(@form, @field)}_options"} class="absolute top-7 bg-th-grey-1 inset-x-0 rounded-md hidden" >
+  </label>
+  <ul id={"#{input_id(@form, @field)}_options"} class="p-2 shadow menu dropdown-content bg-base-100 rounded-box hidden" >
     <%= for option <- @options do %>
-      <div phx-click={select(input_id(@form, @field), option |> @reduce.())} class="p-2 cursor-pointer rounded-md hover:bg-th-grey-2">
-        <%= render_slot(@option, option) %>
-      </div>
+      <li phx-click={select(input_id(@form, @field), option |> @reduce.())}>
+        <a ><%= render_slot(@option, option) %></a>
+      </li>
     <% end %>
-  </div>
+  </ul>
 </div>
