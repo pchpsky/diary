@@ -9,6 +9,14 @@ defmodule Diary.Metrics do
 
   def get_insulin!(id), do: Repo.get!(Insulin, id)
 
+  def list_insulins(user_id) do
+    Repo.all(
+      from i in Insulin,
+        where: i.user_id == ^user_id,
+        order_by: [desc: i.taken_at]
+    )
+  end
+
   def change_insulin(%Insulin{} = insulin, attrs \\ %{}) do
     Insulin.changeset(insulin, attrs)
   end

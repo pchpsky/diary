@@ -79,11 +79,11 @@ defmodule DiaryWeb.LiveComponents do
   def card(assigns) do
     assigns =
       assigns
-      |> assign_new(:class, fn -> "card bg-base-100 shadow-lg" end)
+      |> assign_new(:class, fn -> "" end)
       |> assign_new(:title, fn -> [] end)
 
     ~H"""
-    <div class={@class}>
+    <div class={"card bg-base-100 shadow-lg #{@class}"}>
       <div class="card-body">
         <%= for title <- @title do %>
           <h2 class={"card-title only:mb-0 #{title[:class]}"}><%= render_slot(title) %></h2>
