@@ -5,7 +5,7 @@ defmodule Diary.Metrics.Insulin do
 
   @derive Inspect
   schema "insulin_metrics" do
-    field :insulin_id, :integer
+    belongs_to :insulin, Diary.Settings.Insulin
     field :notes, :string
     field :taken_at, :naive_datetime
     field :units, :float

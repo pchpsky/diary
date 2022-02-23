@@ -1,14 +1,51 @@
-<div class="container max-w-screen-md mx-auto">
-  <.card>
-    <%= for {date, records} <- @records do %>
-      <%= if date != @today do %>
-        <.day_divider date={date} today={@today} />
+<.card>
+  <%= for {date, records} <- @records do %>
+    <%= if date != @today do %>
+      <.day_divider date={date} today={@today} />
+    <% end %>
+    <div class="">
+      <%= for record <- records do %>
+        <div class="flex my-4 items-center justify-between" phx-click="show_details" phx-value-id={record.id}>
+          <div class="flex items-center">
+            <div class="w-5 h-5 inline-block mr-2 rounded-full" style={"background-color: #{record.insulin.color}"}></div>
+            <div><span class="font-bold"><%= record.units %></span> units of <%= record.insulin.name %></div>
+          </div>
+          <div class="flex items-center">
+            <%= if record.notes do %>
+              <.icon name={:document_text} class="h-5 w-5 mr-2"/>
+            <% end %>
+            <div class="w-16">
+              <%= record.taken_at |> to_local_time(@tz) |> Timex.format!("{h24}:{m}") %>
+            </div>
+          </div>
+        </div>
       <% end %>
-      <div class="">
-        <%= for record <- records do %>
-          <.show_insulin record={record} />
-        <% end %>
+    </div>
+  <% end %>
+</.card>
+
+<%= if @selected_record do %>
+  <.modal id="insulin_record_details">
+    <.modal_title>
+      <%= @selected_record.taken_at |> to_local_time(@tz) |> Timex.format!("{WDshort}, {D} {Mshort}, {h24}:{m}") %>
+    </.modal_title>
+
+    <div class="flex items-center mt-5 mb-3">
+      <div class="w-5 h-5 inline-block mr-2 rounded-full" style={"background-color: #{@selected_record.insulin.color}"}></div>
+      <div><span class="font-bold"><%= @selected_record.units %></span> units of <%= @selected_record.insulin.name %></div>
+    </div>
+    <%= if @selected_record.notes do %>
+      <div class="form-control">
+        <label for="notes" class="label">
+          <span class="label-text">Notes</span>
+        </label>
+        <textarea class="textarea textarea-bordered" rows={@selected_record.notes |> String.trim() |> String.split("\n") |> length() |> max(3) |> min(6)} readonly><%= @selected_record.notes %></textarea>
       </div>
     <% end %>
-  </.card>
-</div>
+
+    <.modal_actions>
+      <button class="btn btn-primary">Edit</button>
+      <button class="btn btn-secondary">delete</button>
+    </.modal_actions>
+  </.modal>
+<% end %>
