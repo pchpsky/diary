@@ -56,6 +56,7 @@ defmodule DiaryWeb.UserConfirmationControllerTest do
   end
 
   describe "GET /users/confirm/:token" do
+    @describetag :skip
     test "confirms the given token once", %{conn: conn, user: user} do
       token =
         extract_user_token(fn url ->

@@ -7,6 +7,8 @@ defmodule DiaryWeb.UserSettingsControllerTest do
   setup :register_and_log_in_user
 
   describe "GET /users/settings" do
+    @describetag :skip
+
     test "renders settings page", %{conn: conn} do
       conn = get(conn, Routes.user_settings_path(conn, :edit))
       response = html_response(conn, 200)
@@ -21,6 +23,7 @@ defmodule DiaryWeb.UserSettingsControllerTest do
   end
 
   describe "PUT /users/settings (change password form)" do
+    @describetag :skip
     test "updates the user password and resets tokens", %{conn: conn, user: user} do
       new_password_conn =
         put(conn, Routes.user_settings_path(conn, :update), %{
@@ -60,6 +63,7 @@ defmodule DiaryWeb.UserSettingsControllerTest do
   end
 
   describe "PUT /users/settings (change email form)" do
+    @describetag :skip
     @tag :capture_log
     test "updates the user email", %{conn: conn, user: user} do
       conn =
@@ -90,6 +94,7 @@ defmodule DiaryWeb.UserSettingsControllerTest do
   end
 
   describe "GET /users/settings/confirm_email/:token" do
+    @describetag :skip
     setup %{user: user} do
       email = unique_user_email()
 

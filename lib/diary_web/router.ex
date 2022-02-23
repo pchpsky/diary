@@ -50,7 +50,7 @@ defmodule DiaryWeb.Router do
   ## Authentication routes
 
   scope "/", DiaryWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated, :title_screen]
+    pipe_through [:browser, :fetch_current_user, :redirect_if_user_is_authenticated, :title_screen]
 
     get "/sign_up", UserRegistrationController, :new
     post "/sign_up", UserRegistrationController, :create
