@@ -26,4 +26,8 @@ defmodule Diary.Metrics do
     |> Insulin.changeset(data)
     |> Repo.insert()
   end
+
+  def delete_insulin(user_id, id) do
+    Repo.delete_all(from i in Insulin, where: i.id == ^id and i.user_id == ^user_id)
+  end
 end

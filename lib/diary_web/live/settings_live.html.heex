@@ -3,13 +3,13 @@
   <.form let={f} for={@settings_changeset} phx-change="update">
     <div class="form-control">
       <label class="cursor-pointer label justify-start">
-        <%= radio_button f, :blood_glucose_units, :mmol_per_l, class: "radio mr-3" %>
+        <%= radio_button(f, :blood_glucose_units, :mmol_per_l, class: "radio mr-3") %>
         <label for="user_settings_blood_glucose_units_mmol_per_l" class="label-text">mmol/L</label>
       </label>
     </div>
     <div class="form-control">
       <label class="cursor-pointer label justify-start">
-        <%= radio_button f, :blood_glucose_units, :mg_per_dl, class: "radio mr-3" %>
+        <%= radio_button(f, :blood_glucose_units, :mg_per_dl, class: "radio mr-3") %>
         <label for="user_settings_blood_glucose_units_mg_per_dl" class="label-text">mg/dL</label>
       </label>
     </div>
@@ -33,10 +33,15 @@
       </div>
       <div class="flex items-center">
         <div class="btn btn-sm btn-ghost btn-circle mr-2" phx-click={Modal.JS.open("insulin_#{insulin.id}")}>
-          <.icon name={:pencil} class="h-5 w-5"/>
+          <.icon name={:pencil} class="h-5 w-5" />
         </div>
-        <div class="btn btn-sm btn-ghost btn-circle" phx-click="delete_insulin" phx-value-id={insulin.id} data-confirm="Are you sure?">
-          <.icon name={:trash} class="h-5 w-5"/>
+        <div
+          class="btn btn-sm btn-ghost btn-circle"
+          phx-click="delete_insulin"
+          phx-value-id={insulin.id}
+          data-confirm="Are you sure?"
+        >
+          <.icon name={:trash} class="h-5 w-5" />
         </div>
       </div>
     </div>
@@ -44,8 +49,8 @@
       <.modal_title>Edit insulin</.modal_title>
       <.form let={f} for={Settings.change_insulin(insulin)} phx-submit={"update_insulin_#{insulin.id}"}>
         <div class="flex items-center mb-5">
-          <%= color_input f, :color, class: "btn btn-ghost btn-circle btn-sm mr-3" %>
-          <%= text_input f, :name, placeholder: "Name", required: true, class: "input input-bordered flex-grow" %>
+          <%= color_input(f, :color, class: "btn btn-ghost btn-circle btn-sm mr-3") %>
+          <%= text_input(f, :name, placeholder: "Name", required: true, class: "input input-bordered flex-grow") %>
         </div>
         <.modal_actions>
           <button type="submit" class="btn btn-primary">Save</button>
@@ -57,12 +62,12 @@
 </.card>
 
 <%= if @insulin_changeset do %>
-  <.modal id={"insulin_add"}>
+  <.modal id="insulin_add">
     <.modal_title>Add insulin</.modal_title>
     <.form let={f} for={@insulin_changeset} phx-submit="create_insulin">
       <div class="flex items-center mb-5">
-        <%= color_input f, :color, class: "btn btn-ghost btn-circle btn-sm mr-3" %>
-        <%= text_input f, :name, placeholder: "Name", required: true, class: "input input-bordered flex-grow" %>
+        <%= color_input(f, :color, class: "btn btn-ghost btn-circle btn-sm mr-3") %>
+        <%= text_input(f, :name, placeholder: "Name", required: true, class: "input input-bordered flex-grow") %>
       </div>
       <.modal_actions>
         <button type="submit" class="btn btn-primary">Save</button>

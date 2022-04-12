@@ -6,17 +6,19 @@
     <div class="navbar-end">
       <div class="dropdown dropdown-end">
         <div tabindex="0" class="btn btn-square btn-ghost">
-          <.icon name={:cog} class="h-6 w-6"/>
+          <.icon name={:cog} class="h-6 w-6" />
         </div>
         <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-200 rounded-lg w-52">
           <li>
             <%= live_redirect to: "/settings" do %>
-              <.icon name={:adjustments}/><span class="pl-2">User settings</span>
+              <.icon name={:adjustments} />
+              <span class="pl-2">User settings</span>
             <% end %>
           </li>
           <li>
             <%= link to: "/users/log_out", method: :delete do %>
-              <.icon name={:logout}/><span class="pl-2">Log out</span>
+              <.icon name={:logout} />
+              <span class="pl-2">Log out</span>
             <% end %>
           </li>
         </ul>
@@ -24,5 +26,5 @@
     </div>
   </nav>
   <%= @inner_content %>
-  <%= live_render @socket, DiaryWeb.ToastsLive, id: "toasts" %>
+  <%= live_render(@socket, DiaryWeb.ToastsLive, id: "toasts") %>
 </div>

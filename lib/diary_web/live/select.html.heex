@@ -1,10 +1,5 @@
 <div class={"dropdown dropdown-open #{@class}"}>
-  <select
-    id={input_id(@form, @field)}
-    name={input_name(@form, @field)}
-    class={"hidden"}
-    phx-hook="Select"
-  >
+  <select id={input_id(@form, @field)} name={input_name(@form, @field)} class="hidden" phx-hook="Select">
     <%= Enum.map(@options, @reduce) |> options_for_select(selected(@form, @field)) %>
   </select>
   <label
@@ -16,10 +11,10 @@
   >
     <%= (selected(@form, @field) || hd(@options)) |> @reduce.() |> elem(0) %>
   </label>
-  <ul id={"#{input_id(@form, @field)}_options"} class="p-2 shadow menu dropdown-content bg-base-100 rounded-box hidden" >
+  <ul id={"#{input_id(@form, @field)}_options"} class="p-2 shadow menu dropdown-content bg-base-100 rounded-box hidden">
     <%= for option <- @options do %>
       <li phx-click={select(input_id(@form, @field), option |> @reduce.())}>
-        <a ><%= render_slot(@option, option) %></a>
+        <a><%= render_slot(@option, option) %></a>
       </li>
     <% end %>
   </ul>
