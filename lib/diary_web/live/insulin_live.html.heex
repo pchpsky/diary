@@ -1,4 +1,4 @@
-<.card>
+<.card class="mb-10">
   <%= for {date, records} <- @records do %>
     <%= if date != @today do %>
       <.day_divider date={date} today={@today} />
@@ -66,3 +66,11 @@
     </.modal_actions>
   </.modal>
 <% end %>
+
+<div class="flex fixed bottom-0 inset-x-0 justify-center mb-3">
+  <%= live_redirect to: "/insulin/record" do %>
+    <button type="button" class="btn btn-primary btn-wide">
+      New Record
+    </button>
+  <% end %>
+</div>
