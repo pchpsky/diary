@@ -2,9 +2,6 @@ defmodule DiaryWeb.LiveComponents do
   import Phoenix.LiveView
   import Phoenix.LiveView.Helpers
 
-  alias LiveBeatsWeb.Router.Helpers, as: Routes
-  alias Phoenix.LiveView.JS
-
   def icon(%{name: :syringe} = assigns) do
     assigns = assign_new(assigns, :class, fn -> "w-4 h-4 inline-block" end)
 
