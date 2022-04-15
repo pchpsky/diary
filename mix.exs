@@ -34,7 +34,7 @@ defmodule Diary.MixProject do
   defp deps do
     [
       {:bcrypt_elixir, "~> 2.0"},
-      {:phoenix, "~> 1.6.2", override: true},
+      {:phoenix, "~> 1.6.6", override: true},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.7"},
       {:ecto_enum, "~> 1.4"},
