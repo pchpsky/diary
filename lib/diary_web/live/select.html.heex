@@ -1,6 +1,7 @@
 <div class={"dropdown dropdown-open #{@class}"}>
   <select id={input_id(@form, @field)} name={input_name(@form, @field)} class="hidden" phx-hook="Select">
-    <%= Enum.map(@options, @reduce) |> options_for_select(selected(@form, @field, @options, @reduce) |> @reduce.() |> elem(1)) %>
+    <%= Enum.map(@options, @reduce)
+    |> options_for_select(selected(@form, @field, @options, @reduce) |> @reduce.() |> elem(1)) %>
   </select>
   <label
     tabindex="0"
@@ -9,7 +10,7 @@
     phx-click={toggle(input_id(@form, @field))}
     phx-click-away={hide(input_id(@form, @field))}
   >
-    <%= (selected(@form, @field, @options, @reduce)) |> @reduce.() |> elem(0) %>
+    <%= selected(@form, @field, @options, @reduce) |> @reduce.() |> elem(0) %>
   </label>
   <ul id={"#{input_id(@form, @field)}_options"} class="p-2 shadow menu dropdown-content bg-base-100 rounded-box hidden">
     <%= for option <- @options do %>

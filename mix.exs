@@ -56,7 +56,7 @@ defmodule Diary.MixProject do
       {:timex, "~> 3.7"},
       {:heroicons, "~> 0.2.2"},
       {:wallaby, "~> 0.28.0", runtime: false, only: :test},
-      {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:esbuild, "~> 0.2", runtime: Mix.env() == :dev}
     ]
