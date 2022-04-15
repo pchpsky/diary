@@ -61,7 +61,9 @@
     <% end %>
 
     <.modal_actions>
-      <button class="btn btn-primary">Edit</button>
+      <%= live_redirect to: "/insulin/#{@selected_record.id}/edit" do %>
+        <button class="btn btn-primary">Edit</button>
+      <% end %>
       <button
         class="btn btn-secondary"
         phx-click="delete"

@@ -9,6 +9,8 @@ defmodule Diary.Metrics do
 
   def get_insulin!(id), do: Repo.get!(Insulin, id)
 
+  def get_insulin(id), do: Repo.get(Insulin, id)
+
   def list_insulins(user_id) do
     Repo.all(
       from i in Insulin,
@@ -25,6 +27,12 @@ defmodule Diary.Metrics do
     %Insulin{user_id: user_id}
     |> Insulin.changeset(data)
     |> Repo.insert()
+  end
+
+  def update_insulin(insulin, data) do
+    insulin
+    |> Insulin.changeset(data)
+    |> Repo.update()
   end
 
   def delete_insulin(user_id, id) do

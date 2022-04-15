@@ -33,6 +33,7 @@ defmodule DiaryWeb.Router do
       live "/settings", SettingsLive
       live "/insulin", InsulinLive
       live "/insulin/record", RecordInsulinLive
+      live "/insulin/:id/edit", EditInsulinLive
     end
 
     get "/users/settings", UserSettingsController, :edit

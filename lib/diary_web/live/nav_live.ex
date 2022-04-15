@@ -10,6 +10,7 @@ defmodule DiaryWeb.NavLive do
       DiaryWeb.SettingsLive -> [:settings]
       DiaryWeb.InsulinLive -> [:insulin]
       DiaryWeb.RecordInsulinLive -> [:insulin, :record]
+      DiaryWeb.EditInsulinLive -> [:insulin, :edit]
       _ -> []
     end
   end

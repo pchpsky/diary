@@ -1,31 +1,30 @@
-defmodule DiaryWeb.RecordInsulinLive do
+defmodule DiaryWeb.EditInsulinLive do
   use DiaryWeb, :live_view
 
   alias Diary.Metrics
   alias Diary.Settings
 
   @impl true
-  def mount(_params, _session, socket) do
-    now =
-      case socket.assigns[:timezone] do
-        nil -> Timex.now()
-        tz -> Timex.now(tz)
-      end
+  def mount(%{"id" => id}, _session, socket) do
+    with {:ok, id} <- Ecto.Type.cast(:id, id),
+         insulin when not is_nil(insulin) <- Metrics.get_insulin(id) do
+      changeset =
+        insulin
+        |> Diary.Repo.preload(:insulin)
+        |> Metrics.change_insulin()
 
-    changeset =
-      Metrics.change_insulin(%Metrics.Insulin{
-        user_id: socket.assigns.current_user.id,
-        taken_at: now,
-        units: 10.0
-      })
+      insulins = Settings.get_settings(socket.assigns.current_user.id) |> Settings.list_insulins()
 
-    insulins = Settings.get_settings(socket.assigns.current_user.id) |> Settings.list_insulins()
-
-    {:ok,
-     assign(socket,
-       changeset: changeset,
-       insulins: insulins
-     )}
+      {:ok,
+       assign(socket,
+         changeset: changeset,
+         insulins: insulins,
+         insulin: insulin
+       )}
+    else
+      _ ->
+        {:ok, push_redirect(socket, to: "/insulin")}
+    end
   end
 
   @impl true
@@ -36,10 +35,10 @@ defmodule DiaryWeb.RecordInsulinLive do
   end
 
   @impl true
-  def handle_event("save", %{"insulin" => insulin}, socket) do
-    attrs = insulin_attributes(socket, insulin)
+  def handle_event("save", %{"insulin" => insulin_params}, socket) do
+    attrs = insulin_attributes(socket, insulin_params)
 
-    Metrics.record_insulin(socket.assigns.current_user.id, attrs)
+    Metrics.update_insulin(socket.assigns.insulin, attrs)
 
     DiaryWeb.Toast.push(socket, "Saved.")
 

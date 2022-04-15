@@ -6,8 +6,12 @@ defmodule DiaryWeb.Select do
     {:ok, socket}
   end
 
-  def selected(form, field) do
-    form.data |> Map.get(field)
+  def selected(form, field, options, reduce) do
+    id = form.data |> Map.get(field)
+
+    Enum.find(options, hd(options), fn option ->
+      option |> reduce.() |> elem(1) == id
+    end)
   end
 
   def hide(js \\ %Phoenix.LiveView.JS{}, id) do
