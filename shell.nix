@@ -20,5 +20,6 @@ mkShell {
 
   shellHook = ''
     export CHROME_BINARY=${google-chrome}/bin/google-chrome-stable
+    alias server="mix phx.server"
   '';
 }
