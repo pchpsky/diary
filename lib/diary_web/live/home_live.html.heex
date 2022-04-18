@@ -1,0 +1,21 @@
+<div phx-click="redirect" phx-value-to="/insulin">
+  <.card class="card-compact px-2">
+    <div class="flex items-center justify-between">
+      <div class="text-base">
+        <div class="mb-3 font-bold opacity-60">
+          Insulin
+        </div>
+        <div class="w-7 h-7 mr-1 inline-block rounded-full" style={"background-color: #{@latest_insulin.insulin.color}"}>
+        </div>
+        <span class="text-4xl font-bold"><%= @latest_insulin.units %></span> units of
+        <span class="font-semibold"><%= @latest_insulin.insulin.name %></span>
+        <div class="mt-2 text-xs opacity-60">
+          <%= @latest_insulin.taken_at |> to_local_time(@timezone) |> format_time() %>
+        </div>
+      </div>
+      <div>
+        <%= live_redirect("Record", to: "/insulin/record", class: "btn btn-sm") %>
+      </div>
+    </div>
+  </.card>
+</div>

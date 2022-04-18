@@ -7,7 +7,7 @@ defmodule DiaryWeb.LocalesLive do
         {:cont, assign(socket, timezone: tz)}
 
       _ ->
-        {:cont, socket}
+        {:cont, assign(socket, timezone: "UTC")}
     end
   end
 end

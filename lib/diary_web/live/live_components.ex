@@ -92,6 +92,7 @@ defmodule DiaryWeb.LiveComponents do
       assigns
       |> assign_new(:class, fn -> "" end)
       |> assign_new(:title, fn -> [] end)
+      |> assign_new(:actions, fn -> [] end)
 
     ~H"""
     <div class={"card bg-base-100 shadow-lg #{@class}"}>
@@ -100,6 +101,9 @@ defmodule DiaryWeb.LiveComponents do
           <h2 class={"card-title only:mb-0 #{title[:class]}"}><%= render_slot(title) %></h2>
         <% end %>
         <%= render_slot(@inner_block) %>
+        <%= for actions <- @actions do %>
+          <div class={"card-actions #{actions[:class]}"}><%= render_slot(actions) %></div>
+        <% end %>
       </div>
     </div>
     """

@@ -19,6 +19,15 @@ defmodule Diary.Metrics do
     )
   end
 
+  def latest_insulin(user_id) do
+    Repo.one(
+      from i in Insulin,
+        where: i.user_id == ^user_id,
+        order_by: [desc: i.taken_at],
+        limit: 1
+    )
+  end
+
   def change_insulin(%Insulin{} = insulin, attrs \\ %{}) do
     Insulin.changeset(insulin, attrs)
   end
