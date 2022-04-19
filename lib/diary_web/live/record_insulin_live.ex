@@ -6,11 +6,7 @@ defmodule DiaryWeb.RecordInsulinLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    now =
-      case socket.assigns[:timezone] do
-        nil -> Timex.now()
-        tz -> Timex.now(tz)
-      end
+    now = Timex.now(socket.assigns[:tz])
 
     changeset =
       Metrics.change_insulin(%Metrics.Insulin{
@@ -55,7 +51,7 @@ defmodule DiaryWeb.RecordInsulinLive do
   defp insulin_attributes(socket, insulin) do
     taken_at =
       Timex.parse!(~s(#{insulin["taken_at_date"]}T#{insulin["taken_at_time"]}), "{YYYY}-{0M}-{0D}T{h24}:{m}")
-      |> Timex.to_datetime(socket.assigns[:timezone] || "UTC")
+      |> Timex.to_datetime(socket.assigns[:tz])
       |> Timex.to_naive_datetime()
 
     %{

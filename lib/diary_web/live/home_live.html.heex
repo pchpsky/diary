@@ -14,7 +14,7 @@
           <span class="text-4xl font-bold"><%= @latest_insulin.units %></span>
           <span class="font-semibold">IU of <%= @latest_insulin.insulin.name %></span>
           <div class="mt-2 text-xs opacity-60">
-            <%= @latest_insulin.taken_at |> to_local_time(@timezone) |> format_time() %>
+            <%= @latest_insulin.taken_at |> to_local_datetime(@tz) |> format_time() %>
           </div>
         <% else %>
           <span class="text-4xl font-bold">--</span>

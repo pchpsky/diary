@@ -23,7 +23,7 @@
               <.icon name={:document_text} class="h-5 w-5 mr-2" />
             <% end %>
             <div class="w-16">
-              <%= record.taken_at |> to_local_time(@tz) |> Timex.format!("{h24}:{m}") %>
+              <%= record.taken_at |> to_local_datetime(@tz) |> Timex.format!("{h24}:{m}") %>
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@
 <%= if @selected_record do %>
   <.modal id="insulin_record_details">
     <.modal_title>
-      <%= @selected_record.taken_at |> to_local_time(@tz) |> Timex.format!("{WDshort}, {D} {Mshort}, {h24}:{m}") %>
+      <%= @selected_record.taken_at |> to_local_datetime(@tz) |> Timex.format!("{WDshort}, {D} {Mshort}, {h24}:{m}") %>
     </.modal_title>
 
     <div class="flex items-center mt-5 mb-3">

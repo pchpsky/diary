@@ -3,6 +3,7 @@ defmodule DiaryWeb.EditInsulinLive do
 
   alias Diary.Metrics
   alias Diary.Settings
+  import Diary.Time
 
   @impl true
   def mount(%{"id" => id}, _session, socket) do
@@ -10,6 +11,7 @@ defmodule DiaryWeb.EditInsulinLive do
          insulin when not is_nil(insulin) <- Metrics.get_insulin(id) do
       changeset =
         insulin
+        |> Map.update!(:taken_at, &to_local_datetime(&1, socket.assigns[:tz]))
         |> Diary.Repo.preload(:insulin)
         |> Metrics.change_insulin()
 
@@ -54,7 +56,7 @@ defmodule DiaryWeb.EditInsulinLive do
   defp insulin_attributes(socket, insulin) do
     taken_at =
       Timex.parse!(~s(#{insulin["taken_at_date"]}T#{insulin["taken_at_time"]}), "{YYYY}-{0M}-{0D}T{h24}:{m}")
-      |> Timex.to_datetime(socket.assigns[:timezone] || "UTC")
+      |> Timex.to_datetime(socket.assigns[:tz])
       |> Timex.to_naive_datetime()
 
     %{

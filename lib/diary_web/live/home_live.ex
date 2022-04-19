@@ -2,6 +2,7 @@ defmodule DiaryWeb.HomeLive do
   use DiaryWeb, :live_view
 
   alias Diary.Metrics
+  import Diary.Time
 
   @impl true
   def mount(_parms, _session, socket) do
@@ -14,12 +15,6 @@ defmodule DiaryWeb.HomeLive do
 
   defp format_time(time) do
     Timex.format!(time, "{h24}:{m} - {WDshort}, {D} {Mshort}")
-  end
-
-  defp to_local_time(dt, timezone) do
-    dt
-    |> Timex.to_datetime()
-    |> Timex.to_datetime(timezone || "UTC")
   end
 
   @impl true

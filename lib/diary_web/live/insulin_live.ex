@@ -2,11 +2,12 @@ defmodule DiaryWeb.InsulinLive do
   @moduledoc false
   use DiaryWeb, :live_view
   alias Diary.Metrics
+  import Diary.Time
 
   @impl true
   def mount(_parms, _session, socket) do
     user_id = socket.assigns.current_user.id
-    tz = socket.assigns[:timezone] || "UTC"
+    tz = socket.assigns[:tz]
 
     grouped =
       user_id
@@ -14,13 +15,7 @@ defmodule DiaryWeb.InsulinLive do
       |> Diary.Repo.preload(:insulin)
       |> group_by_local_date(tz)
 
-    {:ok, assign(socket, records: grouped, selected_record: nil, today: Timex.today(tz), tz: tz)}
-  end
-
-  defp to_local_time(dt, timezone) do
-    dt
-    |> Timex.to_datetime()
-    |> Timex.to_datetime(timezone || "UTC")
+    {:ok, assign(socket, records: grouped, selected_record: nil, today: Timex.today(tz))}
   end
 
   @impl true
@@ -40,7 +35,7 @@ defmodule DiaryWeb.InsulinLive do
 
   def handle_event("delete", %{"id" => id}, socket) do
     user_id = socket.assigns.current_user.id
-    tz = socket.assigns[:timezone] || "UTC"
+    tz = socket.assigns[:tz]
 
     Metrics.delete_insulin(user_id, id)
 
@@ -61,7 +56,7 @@ defmodule DiaryWeb.InsulinLive do
 
   defp group_by_local_date(records, tz) do
     records
-    |> Enum.group_by(&Timex.to_date(to_local_time(&1.taken_at, tz)))
+    |> Enum.group_by(&to_local_date(&1.taken_at, tz))
     |> Enum.sort_by(&elem(&1, 0), &(Date.compare(&1, &2) == :gt))
   end
 
