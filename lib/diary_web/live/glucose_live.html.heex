@@ -1,0 +1,82 @@
+<.card class="mb-10">
+  <%= for {date, records} <- @records do %>
+    <%= if date != @today do %>
+      <.day_divider date={date} today={@today} />
+    <% end %>
+    <div class="">
+      <%= for record <- records do %>
+        <div
+          class="flex my-4 items-center justify-between cursor-pointer"
+          phx-click="show_details"
+          phx-value-id={record.id}
+        >
+          <div class="flex items-center">
+            <div>
+              <span class="font-bold"><%= GlucoseUnitsIso.from_default(record.units, @glucose_units) %></span>
+              <%= format_units(@glucose_units) %>
+            </div>
+          </div>
+          <div class="flex items-center">
+            <%= if record.notes do %>
+              <.icon name={:document_text} class="h-5 w-5 mr-2" />
+            <% end %>
+            <div class="w-16">
+              <%= record.measured_at |> to_local_datetime(@tz) |> Timex.format!("{h24}:{m}") %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</.card>
+
+<%= if @selected_record do %>
+  <.modal id="glucose_record_details">
+    <.modal_title>
+      <%= @selected_record.measured_at |> to_local_datetime(@tz) |> Timex.format!("{WDshort}, {D} {Mshort}, {h24}:{m}") %>
+    </.modal_title>
+
+    <div class="flex items-center mt-5 mb-3">
+      <div>
+        <span class="font-bold"><%= GlucoseUnitsIso.from_default(@selected_record.units, @glucose_units) %></span>
+        <%= format_units(@glucose_units) %>
+      </div>
+    </div>
+    <%= if @selected_record.notes do %>
+      <div class="form-control">
+        <label for="notes" class="label">
+          <span class="label-text">Notes</span>
+        </label>
+        <textarea
+          class="textarea textarea-bordered"
+          rows={@selected_record.notes |> String.trim() |> String.split("\n") |> length() |> max(3) |> min(6)}
+          readonly
+        >
+          <%= @selected_record.notes %>
+        </textarea>
+      </div>
+    <% end %>
+
+    <.modal_actions>
+      <%= live_redirect to: "/glucose/#{@selected_record.id}/edit" do %>
+        <button class="btn btn-primary">Edit</button>
+      <% end %>
+      <button
+        class="btn btn-secondary"
+        phx-click="delete"
+        phx-value-id={@selected_record.id}
+        data-confirm="Are you sure?"
+      >
+        delete
+      </button>
+    </.modal_actions>
+  </.modal>
+<% end %>
+
+<div class="flex fixed bottom-0 inset-x-0 justify-center mb-3">
+  <%= live_redirect to: "/glucose/record" do %>
+    <button type="button" class="btn btn-primary btn-wide">
+      New Record
+    </button>
+  <% end %>
+</div>

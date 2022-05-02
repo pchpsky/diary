@@ -1,55 +1,53 @@
-defmodule DiaryWeb.InsulinLive do
+defmodule DiaryWeb.GlucoseLive do
   use DiaryWeb, :live_view
 
   alias Diary.Metrics
+  alias Diary.Metrics.GlucoseUnitsIso
+  alias Diary.Settings
   import Diary.Time
 
   @impl true
-  def mount(_parms, _session, socket) do
+  def mount(_params, _session, socket) do
     user_id = socket.assigns.current_user.id
-    tz = socket.assigns[:tz]
+    tz = socket.assigns.tz
+    glucose_units = Settings.get_glucose_units(user_id)
 
     grouped =
       user_id
-      |> Metrics.list_insulins()
-      |> Diary.Repo.preload(:insulin)
-      |> Metrics.group_by_local_date(:taken_at, tz)
+      |> Metrics.list_glucose()
+      |> Metrics.group_by_local_date(:measured_at, tz)
 
-    {:ok, assign(socket, records: grouped, selected_record: nil, today: Timex.today(tz))}
+    {:ok, assign(socket, records: grouped, selected_record: nil, today: Timex.today(tz), glucose_units: glucose_units)}
   end
 
   @impl true
   def handle_event("show_details", %{"id" => id}, socket) do
-    record =
-      id
-      |> Metrics.get_insulin!()
-      |> Diary.Repo.preload(:insulin)
+    record = Metrics.get_glucose!(id)
 
     socket =
       socket
       |> assign(:selected_record, record)
-      |> DiaryWeb.Modal.open("insulin_record_details")
+      |> DiaryWeb.Modal.open("glucose_record_details")
 
     {:noreply, socket}
   end
 
   def handle_event("delete", %{"id" => id}, socket) do
     user_id = socket.assigns.current_user.id
-    tz = socket.assigns[:tz]
+    tz = socket.assigns.tz
 
     Metrics.delete_insulin(user_id, id)
 
     new_records =
       user_id
-      |> Metrics.list_insulins()
-      |> Diary.Repo.preload(:insulin)
-      |> Metrics.group_by_local_date(:taken_at, tz)
+      |> Metrics.list_glucose()
+      |> Metrics.group_by_local_date(:measured_at, tz)
 
     socket =
       socket
       |> assign(:selected_record, nil)
       |> assign(:records, new_records)
-      |> DiaryWeb.Modal.close("insulin_record_details")
+      |> DiaryWeb.Modal.close("insulin_glucose_details")
 
     {:noreply, socket}
   end
@@ -63,4 +61,7 @@ defmodule DiaryWeb.InsulinLive do
     <% end %>
     """
   end
+
+  defp format_units(:mmol_per_l), do: "mmol/L"
+  defp format_units(:mg_per_dl), do: "mg/dL"
 end

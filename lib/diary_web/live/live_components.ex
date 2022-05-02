@@ -64,6 +64,7 @@ defmodule DiaryWeb.LiveComponents do
   defp breadcrumbs_link_to(:home), do: "/home"
   defp breadcrumbs_link_to(:insulin), do: "/insulin"
   defp breadcrumbs_link_to(:settings), do: "/settings"
+  defp breadcrumbs_link_to(:glucose), do: "/glucose"
 
   defp breadcrumbs_title(%{page: :home} = assigns) do
     ~H"""

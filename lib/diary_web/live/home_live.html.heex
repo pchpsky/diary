@@ -18,10 +18,44 @@
           </div>
         <% else %>
           <span class="text-4xl font-bold">--</span>
+          <div class="mt-2 text-xs opacity-60">
+            &nbsp;
+          </div>
         <% end %>
       </div>
       <div>
         <%= live_redirect("Record", to: "/insulin/record", class: "btn btn-sm") %>
+      </div>
+    </div>
+  </.card>
+</div>
+<div phx-click="redirect" phx-value-to="/glucose">
+  <.card class="card-compact px-1">
+    <div class="flex items-center justify-between">
+      <div class="text-base">
+        <div class="mb-3 font-bold opacity-60">
+          Blood glucose
+        </div>
+        <%= if nil && @latest_glucose do %>
+          <div
+            class="w-7 h-7 mr-0 inline-block rounded-full"
+            style={"background-color: #{@latest_insulin.insulin.color}"}
+          >
+          </div>
+          <span class="text-4xl font-bold"><%= @latest_insulin.units %></span>
+          <span class="font-semibold">IU of <%= @latest_insulin.insulin.name %></span>
+          <div class="mt-2 text-xs opacity-60">
+            <%= @latest_insulin.taken_at |> to_local_datetime(@tz) |> format_time() %>
+          </div>
+        <% else %>
+          <span class="text-4xl font-bold">-- TODO</span>
+          <div class="mt-2 text-xs opacity-60">
+            &nbsp;
+          </div>
+        <% end %>
+      </div>
+      <div>
+        <%= live_redirect("Record", to: "/glucose/record", class: "btn btn-sm") %>
       </div>
     </div>
   </.card>

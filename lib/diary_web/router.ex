@@ -31,9 +31,14 @@ defmodule DiaryWeb.Router do
     live_session :default, on_mount: [DiaryWeb.UserAuth, DiaryWeb.LocalesLive, DiaryWeb.NavLive] do
       live "/home", HomeLive
       live "/settings", SettingsLive
+
       live "/insulin", InsulinLive
       live "/insulin/record", RecordInsulinLive
       live "/insulin/:id/edit", EditInsulinLive
+
+      live "/glucose", GlucoseLive
+      live "/glucose/record", RecordGlucoseLive
+      live "/glucose/:id/edit", EditGlucoseLive
     end
 
     get "/users/settings", UserSettingsController, :edit

@@ -34,6 +34,10 @@ defmodule Diary.Settings do
     %UserSettings{blood_glucose_units: :mmol_per_l}
   end
 
+  def get_glucose_units(user_id) do
+    get_settings(user_id).blood_glucose_units
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for changing user settings.
   """
