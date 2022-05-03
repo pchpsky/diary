@@ -36,19 +36,16 @@
         <div class="mb-3 font-bold opacity-60">
           Blood glucose
         </div>
-        <%= if nil && @latest_glucose do %>
-          <div
-            class="w-7 h-7 mr-0 inline-block rounded-full"
-            style={"background-color: #{@latest_insulin.insulin.color}"}
-          >
-          </div>
-          <span class="text-4xl font-bold"><%= @latest_insulin.units %></span>
-          <span class="font-semibold">IU of <%= @latest_insulin.insulin.name %></span>
+        <%= if @latest_glucose do %>
+          <span class="text-4xl font-bold">
+            <%= Diary.Metrics.GlucoseUnitsIso.from_default(@latest_glucose.units, @glucose_units) %>
+          </span>
+          <span class="font-semibold"><%= format_units(@glucose_units) %></span>
           <div class="mt-2 text-xs opacity-60">
-            <%= @latest_insulin.taken_at |> to_local_datetime(@tz) |> format_time() %>
+            <%= @latest_glucose.measured_at |> to_local_datetime(@tz) |> format_time() %>
           </div>
         <% else %>
-          <span class="text-4xl font-bold">-- TODO</span>
+          <span class="text-4xl font-bold">--</span>
           <div class="mt-2 text-xs opacity-60">
             &nbsp;
           </div>
