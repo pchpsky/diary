@@ -103,6 +103,7 @@ defmodule DiaryWeb do
       import DiaryWeb.LiveComponents
       import DiaryWeb.ErrorHelpers
       import DiaryWeb.Gettext
+      import DiaryWeb.Icons
       alias DiaryWeb.Router.Helpers, as: Routes
       alias Phoenix.LiveView.JS
     end

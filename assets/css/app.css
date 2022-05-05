@@ -37,6 +37,22 @@
     outline-offset: 2px;
     box-shadow: 0 0 0 2px hsl(var(--b1)), 0 0 0 4px hsla(var(--bc) / .2);
   }
+
+  .glucose-status-radio~.glucose-status-radio-icon {
+    @apply btn btn-circle
+  }
+
+  .glucose-status-radio~.glucose-status-radio-label {
+    @apply text-center text-xs
+  }
+
+  .glucose-status-radio:checked~.glucose-status-radio-icon {
+    @apply btn-accent
+  }
+
+  .glucose-status-radio:checked~.glucose-status-radio-label {
+    @apply text-accent
+  }
 }
 
 :root {

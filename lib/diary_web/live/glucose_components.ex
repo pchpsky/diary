@@ -1,5 +1,32 @@
 defmodule DiaryWeb.GlucoseComponents do
   use DiaryWeb, :component
+  import Phoenix.LiveView.Helpers
+
+  def status_icon(assigns) do
+    name =
+      case assigns.name do
+        :general ->
+          :person
+
+        :fasting ->
+          :fork_knife
+
+        :pre_meal ->
+          :pot_food
+
+        :post_meal ->
+          :plate_utensils
+
+        :before_sleep ->
+          :moon
+      end
+
+    assigns = assign(assigns, :name, name)
+
+    ~H"""
+    <.icon {assigns_to_attributes(assigns)} />
+    """
+  end
 
   def glucose_form(assigns) do
     ~H"""
@@ -59,6 +86,14 @@ defmodule DiaryWeb.GlucoseComponents do
         </div>
       </div>
 
+      <div class="flex justify-between">
+        <.glucose_status_radio form={f} status={:general} />
+        <.glucose_status_radio form={f} status={:fasting} />
+        <.glucose_status_radio form={f} status={:pre_meal} />
+        <.glucose_status_radio form={f} status={:post_meal} />
+        <.glucose_status_radio form={f} status={:before_sleep} />
+      </div>
+
       <div class="flex fixed bottom-0 inset-x-0 justify-center mb-3">
         <%= submit("Save", class: "btn btn-primary btn-wide") %>
       </div>
@@ -77,6 +112,26 @@ defmodule DiaryWeb.GlucoseComponents do
     </.modal>
     """
   end
+
+  defp glucose_status_radio(assigns) do
+    ~H"""
+    <div>
+      <label for={"glucose-status-#{@status}"} class="cursor-pointer flex flex-col items-center">
+        <%= radio_button(@form, :status, @status, id: "glucose-status-#{@status}", class: "glucose-status-radio hidden") %>
+        <div class="glucose-status-radio-icon !w-14 !h-14">
+          <DiaryWeb.GlucoseComponents.status_icon name={@status} class="h-8 w-8" />
+        </div>
+        <div class="glucose-status-radio-label mt-2"><%= glucose_status_title(@status) %></div>
+      </label>
+    </div>
+    """
+  end
+
+  defp glucose_status_title(:general), do: "General"
+  defp glucose_status_title(:fasting), do: "Fasting"
+  defp glucose_status_title(:pre_meal), do: "Pre-meal"
+  defp glucose_status_title(:post_meal), do: "Post-meal"
+  defp glucose_status_title(:before_sleep), do: "Before sleep"
 
   defp blank?(val) do
     val == nil || String.trim(val) == ""

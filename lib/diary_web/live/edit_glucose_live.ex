@@ -64,8 +64,7 @@ defmodule DiaryWeb.EditGlucoseLive do
       "notes" => glucose["notes"],
       "measured_at" => measured_at,
       "units" => glucose["units"] |> String.to_float() |> GlucoseUnitsIso.to_default(socket.assigns.glucose_units),
-      # TODO: set status
-      "status" => "general"
+      "status" => glucose["status"]
     }
   end
 end
