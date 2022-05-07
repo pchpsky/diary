@@ -1,0 +1,1 @@
+call "%~dp0\diary" eval Diary.Release.migrate

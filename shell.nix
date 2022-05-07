@@ -14,6 +14,7 @@ mkShell {
     nodePackages.npm
     chromedriver
     google-chrome
+    flyctl
   ];
 
   shellHook = ''
