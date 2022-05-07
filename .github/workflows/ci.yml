@@ -1,5 +1,8 @@
 on: push
 
+env:
+  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
 jobs:
   dependencies:
     runs-on: ubuntu-latest
@@ -12,8 +15,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Determine Elixir/OTP versions
         run: |
-          echo "ELIXIR_VERSION=$(grep -h elixir_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
-          echo "OTP_VERSION=$(grep -h erlang_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
+          echo "ELIXIR_VERSION=1.13.4" >> $GITHUB_ENV
+          echo "OTP_VERSION=24.2" >> $GITHUB_ENV
       - name: Sets up an Erlang/OTP environment
         uses: erlef/setup-beam@v1
         with:
@@ -50,8 +53,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Determine Elixir/OTP versions
         run: |
-          echo "ELIXIR_VERSION=$(grep -h elixir_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
-          echo "OTP_VERSION=$(grep -h erlang_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
+          echo "ELIXIR_VERSION=1.13.4" >> $GITHUB_ENV
+          echo "OTP_VERSION=24.2" >> $GITHUB_ENV
       - name: Sets up an Erlang/OTP environment
         uses: erlef/setup-beam@v1
         with:
@@ -91,8 +94,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Determine Elixir/OTP versions
         run: |
-          echo "ELIXIR_VERSION=$(grep -h elixir_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
-          echo "OTP_VERSION=$(grep -h erlang_version elixir_buildpack.config | awk -F= '{ print $2 }')" >> $GITHUB_ENV
+          echo "ELIXIR_VERSION=1.13.4" >> $GITHUB_ENV
+          echo "OTP_VERSION=24.2" >> $GITHUB_ENV
       - name: Sets up an Erlang/OTP environment
         uses: erlef/setup-beam@v1
         with:
@@ -118,8 +121,5 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
