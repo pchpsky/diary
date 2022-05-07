@@ -15,6 +15,8 @@ mkShell {
     chromedriver
     google-chrome
     flyctl
+    wireguard-tools
+    openresolv
   ];
 
   shellHook = ''
