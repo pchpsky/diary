@@ -37,6 +37,9 @@
           Blood glucose
         </div>
         <%= if @latest_glucose do %>
+          <div class="w-7 h-7 mr-0 inline-block">
+            <DiaryWeb.GlucoseComponents.status_icon name={@latest_glucose.status} class="w-full h-full" />
+          </div>
           <span class="text-4xl font-bold">
             <%= Diary.Metrics.GlucoseUnitsIso.from_default(@latest_glucose.units, @glucose_units) %>
           </span>

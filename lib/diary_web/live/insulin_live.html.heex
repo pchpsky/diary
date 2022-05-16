@@ -14,7 +14,7 @@
             <div class="w-5 h-5 inline-block mr-2 rounded-full" style={"background-color: #{record.insulin.color}"}>
             </div>
             <div>
-              <span class="font-bold"><%= record.units %></span> units of
+              <span class="font-bold"><%= record.units %></span> IU of
               <span class="font-semibold"><%= record.insulin.name %></span>
             </div>
           </div>
@@ -42,7 +42,7 @@
       <div class="w-5 h-5 inline-block mr-2 rounded-full" style={"background-color: #{@selected_record.insulin.color}"}>
       </div>
       <div>
-        <span class="font-bold"><%= @selected_record.units %></span> units of <%= @selected_record.insulin.name %>
+        <span class="font-bold"><%= @selected_record.units %></span> IU of <%= @selected_record.insulin.name %>
       </div>
     </div>
     <%= if @selected_record.notes do %>

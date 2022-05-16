@@ -11,6 +11,7 @@
           phx-value-id={record.id}
         >
           <div class="flex items-center">
+            <DiaryWeb.GlucoseComponents.status_icon name={record.status} class="w-5 h-5 inline-block mr-2" />
             <div>
               <span class="font-bold"><%= GlucoseUnitsIso.from_default(record.units, @glucose_units) %></span>
               <%= format_units(@glucose_units) %>
@@ -37,6 +38,7 @@
     </.modal_title>
 
     <div class="flex items-center mt-5 mb-3">
+      <DiaryWeb.GlucoseComponents.status_icon name={@selected_record.status} class="w-5 h-5 inline-block mr-2" />
       <div>
         <span class="font-bold"><%= GlucoseUnitsIso.from_default(@selected_record.units, @glucose_units) %></span>
         <%= format_units(@glucose_units) %>
