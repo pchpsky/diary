@@ -49,8 +49,8 @@
       <.modal_title>Edit insulin</.modal_title>
       <.form let={f} for={Settings.change_insulin(insulin)} phx-submit={"update_insulin_#{insulin.id}"}>
         <div class="flex items-center mb-5">
-          <%= color_input(f, :color, class: "btn btn-ghost btn-circle btn-sm mr-3") %>
-          <%= text_input(f, :name, placeholder: "Name", required: true, class: "input input-bordered flex-grow") %>
+          <%= color_input(f, :color, class: "btn btn-ghost btn-circle btn-sm mr-3", id: "insulin_color_#{insulin.id}") %>
+          <%= text_input(f, :name, placeholder: "Name", required: true, class: "input input-bordered flex-grow", id: "insulin_name_#{insulin.id}") %>
         </div>
         <.modal_actions>
           <button type="submit" class="btn btn-primary">Save</button>
