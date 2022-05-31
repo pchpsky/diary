@@ -14,9 +14,10 @@ defmodule Diary.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Diary.PubSub},
       # Start the Endpoint (http/https)
-      DiaryWeb.Endpoint
+      DiaryWeb.Endpoint,
       # Start a worker by calling: Diary.Worker.start_link(arg)
       # {Diary.Worker, arg}
+      Diary.Telegram.Supervisor
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

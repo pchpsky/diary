@@ -8,15 +8,17 @@ defmodule DiaryWeb.SettingsLive do
   def mount(_arg0, _session, socket) do
     settings = Settings.get_settings(socket.assigns.current_user.id)
     settings_changeset = Settings.change_settings(settings)
+    tg_connection = Diary.Telegram.get_user_connection(socket.assigns.current_user.id)
+    tg_start_url = Diary.Telegram.make_start_url(socket.assigns.current_user.id)
 
     assigns = [
-      page: :settings,
-      back_path: "/home",
       current_user: socket.assigns.current_user,
       settings: settings,
       settings_changeset: settings_changeset,
       insulins: Settings.list_insulins(settings.id),
-      insulin_changeset: new_insulin_changeset()
+      insulin_changeset: new_insulin_changeset(),
+      tg_start_url: tg_start_url,
+      tg_connection: tg_connection
     ]
 
     {:ok, assign(socket, assigns)}
@@ -68,6 +70,13 @@ defmodule DiaryWeb.SettingsLive do
 
   def handle_event("new_insulin", _, socket) do
     {:noreply, socket |> assign(:insulin_changeset, new_insulin_changeset()) |> Modal.open("insulin_add")}
+  end
+
+  def handle_event("disconnect_tg", _, socket) do
+    Diary.Telegram.disconnect(socket.assigns.current_user.id)
+    Toast.push(socket, "Disconnected from Telegram.")
+
+    {:noreply, assign(socket, tg_connection: nil)}
   end
 
   defp load_insulins(socket) do

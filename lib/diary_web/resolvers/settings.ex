@@ -13,7 +13,7 @@ defmodule DiaryWeb.Resolvers.Settings do
     user.id
     |> Settings.get_settings()
     |> Settings.update_settings(args)
-    |> Result.map_error(&render_invalid_changeset/1)
+    |> Result.Error.map(&render_invalid_changeset/1)
   end
 
   def list_insulins(settings, _args, %{context: %{current_user: _user}}) do
@@ -29,17 +29,17 @@ defmodule DiaryWeb.Resolvers.Settings do
 
     settings.id
     |> Settings.create_insulin(args)
-    |> Result.map_error(&render_invalid_changeset/1)
+    |> Result.Error.map(&render_invalid_changeset/1)
   end
 
   def update_insulin(_, %{id: id, input: args}, %{context: %{current_user: _user}}) do
     id
     |> Settings.get_insulin()
     |> Result.cond(& &1, %{message: "Insulin not found.", code: 404})
-    |> Result.flat_map(fn insulin ->
+    |> Result.and_then(fn insulin ->
       insulin
       |> Settings.update_insulin(args)
-      |> Result.map_error(&render_invalid_changeset/1)
+      |> Result.Error.map(&render_invalid_changeset/1)
     end)
   end
 
@@ -47,10 +47,10 @@ defmodule DiaryWeb.Resolvers.Settings do
     id
     |> Settings.get_insulin()
     |> Result.cond(& &1, %{message: "Insulin not found.", code: 404})
-    |> Result.flat_map(fn insulin ->
+    |> Result.and_then(fn insulin ->
       insulin
       |> Settings.delete_insulin()
-      |> Result.map_error(&render_invalid_changeset/1)
+      |> Result.Error.map(&render_invalid_changeset/1)
     end)
   end
 end

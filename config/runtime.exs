@@ -20,6 +20,22 @@ if System.get_env("PHX_SERVER") do
   config :diary, DiaryWeb.Endpoint, server: true
 end
 
+telegram_bot_token =
+  System.get_env("TELEGRAM_BOT_TOKEN") ||
+    raise """
+    environment variable TELEGRAM_BOT_TOKEN is missing.
+    """
+
+telegram_bot_uname =
+  System.get_env("TELEGRAM_BOT_UNAME") ||
+    raise """
+    environment variable TELEGRAM_BOT_UNAME is missing.
+    """
+
+config :diary, Diary.Telegram,
+  token: telegram_bot_token,
+  uname: telegram_bot_uname
+
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you

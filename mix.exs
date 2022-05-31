@@ -55,6 +55,7 @@ defmodule Diary.MixProject do
       {:absinthe_plug, "~> 1.5.8"},
       {:timex, "~> 3.7"},
       {:heroicons, "~> 0.2.2"},
+      {:telegram, git: "https://github.com/visciang/telegram.git", tag: "0.20.1"},
       {:wallaby, "~> 0.28.0", runtime: false, only: :test},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},

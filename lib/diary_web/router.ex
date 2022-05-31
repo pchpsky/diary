@@ -81,6 +81,7 @@ defmodule DiaryWeb.Router do
 
     post "/users", UserController, :create
     post "/sessions", SessionController, :create
+    post "/telegram/:token", TelegramUpdatesController, :handle
   end
 
   pipeline :graphql do
