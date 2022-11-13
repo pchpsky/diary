@@ -1,6 +1,5 @@
 defmodule DiaryWeb.Icons do
-  import Phoenix.LiveView
-  import Phoenix.LiveView.Helpers
+  use Phoenix.Component
 
   def icon(%{name: :syringe} = assigns) do
     assigns = assign_new(assigns, :class, fn -> "w-4 h-4 inline-block" end)

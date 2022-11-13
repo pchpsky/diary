@@ -2,7 +2,6 @@ defmodule DiaryWeb.UserAuth do
   @moduledoc false
   import Plug.Conn
   import Phoenix.Controller
-  alias Phoenix.LiveView
 
   alias Diary.Accounts
   alias DiaryWeb.Router.Helpers, as: Routes
@@ -13,15 +12,6 @@ defmodule DiaryWeb.UserAuth do
   @max_age 60 * 60 * 24 * 60
   @remember_me_cookie "_diary_web_user_remember_me"
   @remember_me_options [sign: true, max_age: @max_age, same_site: "Lax"]
-
-  def on_mount(:default, _params, session, socket) do
-    with %{"user_token" => token} <- session,
-         %Accounts.User{} = user <- Accounts.get_user_by_session_token(token) do
-      {:cont, LiveView.assign_new(socket, :current_user, fn -> user end)}
-    else
-      _ -> {:halt, LiveView.redirect(socket, to: "/sign_in")}
-    end
-  end
 
   @doc """
   Logs the user in.

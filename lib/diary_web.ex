@@ -33,6 +33,8 @@ defmodule DiaryWeb do
         root: "lib/diary_web/templates",
         namespace: DiaryWeb
 
+      import Phoenix.Component
+
       # Import convenience functions from controllers
       import Phoenix.Controller,
         only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
@@ -46,7 +48,7 @@ defmodule DiaryWeb do
     quote do
       @opts Keyword.merge(
               [
-                layout: {DiaryWeb.LayoutView, "live.html"}
+                layout: {DiaryWeb.LayoutView, :live}
               ],
               unquote(opts)
             )
@@ -79,6 +81,7 @@ defmodule DiaryWeb do
       import Plug.Conn
       import Phoenix.Controller
       import Phoenix.LiveView.Router
+      import Phoenix.Component
     end
   end
 

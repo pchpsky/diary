@@ -1,6 +1,7 @@
 defmodule DiaryWeb.LiveComponents do
-  import Phoenix.LiveView
-  import Phoenix.LiveView.Helpers
+  use Phoenix.Component
+
+  attr :breadcrumbs, :list, required: true
 
   def breadcrumbs(assigns) do
     ~H"""
