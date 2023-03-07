@@ -28,6 +28,8 @@ defmodule DiaryWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint DiaryWeb.Endpoint
+
+      use DiaryWeb, :verified_routes
     end
   end
 

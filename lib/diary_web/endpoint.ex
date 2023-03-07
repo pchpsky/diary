@@ -1,7 +1,7 @@
 defmodule DiaryWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :diary
 
-  if Application.get_env(:diary, :sql_sandbox) do
+  if Application.compile_env(:diary, :sql_sandbox) do
     plug Phoenix.Ecto.SQL.Sandbox
   end
 
@@ -28,7 +28,7 @@ defmodule DiaryWeb.Endpoint do
     at: "/",
     from: :diary,
     gzip: false,
-    only: ~w(assets fonts images icons favicon.ico robots.txt)
+    only: DiaryWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

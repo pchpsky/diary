@@ -7,7 +7,6 @@ defmodule Diary.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:phoenix] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -33,33 +32,34 @@ defmodule Diary.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:bcrypt_elixir, "~> 2.0"},
-      {:phoenix, "~> 1.6.6", override: true},
+      {:bcrypt_elixir, "~> 3.0"},
+      {:phoenix, "~> 1.7", override: true},
+      {:phoenix_view, "~> 2.0"},
       {:phoenix_ecto, "~> 4.1"},
-      {:ecto_sql, "~> 3.7"},
+      {:ecto_sql, "~> 3.9"},
       {:ecto_enum, "~> 1.4"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_view, "~> 0.18.3"},
+      {:phoenix_live_view, "~> 0.18"},
       {:floki, ">= 0.27.0", only: :test},
       {:phoenix_html, "~> 3.0"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:phx_gen_auth, "~> 0.6", only: [:dev], runtime: false},
       {:phoenix_live_dashboard, "~> 0.7.2"},
       {:telemetry_metrics, "~> 0.6"},
-      {:telemetry_poller, "~> 0.5"},
-      {:gettext, "~> 0.11"},
+      {:telemetry_poller, "~> 1.0"},
+      {:gettext, "~> 0.22"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:guardian, "~> 2.0"},
-      {:absinthe, "~> 1.6.4"},
+      {:guardian, "~> 2.3"},
+      {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5.8"},
       {:timex, "~> 3.7"},
-      {:heroicons, "~> 0.2.2"},
-      {:telegram, git: "https://github.com/visciang/telegram.git", tag: "0.20.1"},
-      {:wallaby, "~> 0.28.0", runtime: false, only: :test},
+      {:heroicons, "~> 0.5"},
+      {:telegram, git: "https://github.com/visciang/telegram.git", tag: "0.22.4"},
+      {:wallaby, "~> 0.30", runtime: false, only: :test},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
-      {:esbuild, "~> 0.2", runtime: Mix.env() == :dev}
+      {:esbuild, "~> 0.6", runtime: Mix.env() == :dev}
     ]
   end
 

@@ -10,14 +10,14 @@
         </div>
         <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-200 rounded-lg w-52">
           <li>
-            <%= live_redirect to: "/settings" do %>
-              <.icon name={:adjustments} />
+            <.link navigate={~p"/settings"}>
+              <.icon name={:adjustments_vertical} />
               <span class="pl-2">User settings</span>
-            <% end %>
+            </.link>
           </li>
           <li>
             <%= link to: "/users/log_out", method: :delete do %>
-              <.icon name={:logout} />
+              <.icon name={:arrow_right_on_rectangle} solid />
               <span class="pl-2">Log out</span>
             <% end %>
           </li>

@@ -24,6 +24,8 @@ defmodule DiaryWeb do
       import Plug.Conn
       import DiaryWeb.Gettext
       alias DiaryWeb.Router.Helpers, as: Routes
+
+      unquote(verified_routes())
     end
   end
 
@@ -98,7 +100,7 @@ defmodule DiaryWeb do
       use Phoenix.HTML
 
       # Import LiveView helpers (live_render, live_component, live_patch, etc)
-      import Phoenix.LiveView.Helpers
+      import Phoenix.Component
 
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
@@ -109,6 +111,19 @@ defmodule DiaryWeb do
       import DiaryWeb.Icons
       alias DiaryWeb.Router.Helpers, as: Routes
       alias Phoenix.LiveView.JS
+
+      unquote(verified_routes())
+    end
+  end
+
+  def static_paths, do: ~w(assets fonts images favicon.ico robots.txt)
+
+  def verified_routes do
+    quote do
+      use Phoenix.VerifiedRoutes,
+        endpoint: DiaryWeb.Endpoint,
+        router: DiaryWeb.Router,
+        statics: DiaryWeb.static_paths()
     end
   end
 

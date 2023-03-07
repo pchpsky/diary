@@ -11,12 +11,14 @@ defmodule DiaryWeb.ErrorHelpers do
   """
   def error_tag(form, field) do
     assigns = %{
-      errors: Keyword.get_values(form.errors, field)
+      errors: Keyword.get_values(form.errors, field),
+      form: form,
+      field: field
     }
 
     ~H"""
     <%= if Enum.any?(@errors) do %>
-      <label class="label" phx-feedback-for={input_id(form, field)}>
+      <label class="label" phx-feedback-for={input_id(@form, @field)}>
         <%= Enum.map(@errors, fn error -> %>
           <span class="label-text-alt">
             <%= translate_error(error) %>

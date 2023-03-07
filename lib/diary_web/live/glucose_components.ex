@@ -1,6 +1,5 @@
 defmodule DiaryWeb.GlucoseComponents do
   use DiaryWeb, :component
-  import Phoenix.LiveView.Helpers
 
   def status_icon(assigns) do
     name =
@@ -30,7 +29,7 @@ defmodule DiaryWeb.GlucoseComponents do
 
   def glucose_form(assigns) do
     ~H"""
-    <.form let={f} for={@changeset} class="mb-2 p-3 px-5" phx-submit="save">
+    <.form :let={f} for={@changeset} class="mb-2 p-3 px-5" phx-submit="save">
       <div class="mb-4 flex justify-center" phx-hook="NumberInput" id="glucose-units-input">
         <div class="w-10"></div>
         <%= text_input(f, :units,

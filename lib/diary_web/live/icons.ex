@@ -122,15 +122,11 @@ defmodule DiaryWeb.Icons do
   def icon(assigns) do
     assigns =
       assigns
-      |> assign_new(:outlined, fn -> false end)
       |> assign_new(:class, fn -> "w-4 h-4 inline-block" end)
+      |> assign_new(:solid, fn -> true end)
 
     ~H"""
-    <%= if @outlined do %>
-      <%= apply(Heroicons.Outline, @name, [assigns_to_attributes(assigns, [:outlined, :name])]) %>
-    <% else %>
-      <%= apply(Heroicons.Solid, @name, [assigns_to_attributes(assigns, [:outlined, :name])]) %>
-    <% end %>
+    <%= apply(Heroicons, @name, [assigns]) %>
     """
   end
 end
