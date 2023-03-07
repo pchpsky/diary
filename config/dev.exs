@@ -77,7 +77,3 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-
-config :diary, Diary.Telegram,
-  token: System.get_env("TELEGRAM_BOT_TOKEN"),
-  uname: System.get_env("TELEGRAM_BOT_UNAME")

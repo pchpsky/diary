@@ -33,3 +33,7 @@ config :wallaby,
   otp_app: :diary,
   screenshot_on_failure: System.get_env("WALLABY_SCREENSHOT_ON_FAILURE"),
   chromedriver: chromedriver
+
+config :diary, Diary.Telegram,
+  token: System.get_env("TELEGRAM_BOT_TOKEN", "TELEGRAM_BOT_TOKEN"),
+  uname: System.get_env("TELEGRAM_BOT_UNAME", "TELEGRAM_BOT_UNAME")
