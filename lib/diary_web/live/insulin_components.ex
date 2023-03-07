@@ -3,7 +3,7 @@ defmodule DiaryWeb.InsulinComponents do
 
   def insulin_form(assigns) do
     ~H"""
-    <.form let={f} for={@changeset} class="mb-2 p-3 px-5" phx-submit="save">
+    <.form :let={f} for={@changeset} class="mb-2 p-3 px-5" phx-submit="save">
       <div class="mb-4 flex justify-center" phx-hook="NumberInput" id="insulin-units-input">
         <div class="w-10"></div>
         <%= text_input(f, :units,
@@ -52,7 +52,7 @@ defmodule DiaryWeb.InsulinComponents do
           options={@insulins}
           reduce={&{&1.name, &1.id}}
         >
-          <:option let={insulin}>
+          <:option :let={insulin}>
             <div class="flex items-center">
               <div class="w-5 h-5 inline-block mr-3 rounded-full" style={"background-color: #{insulin.color}"}></div>
               <div class="inline-block">
