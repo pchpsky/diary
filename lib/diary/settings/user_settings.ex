@@ -1,13 +1,9 @@
 defmodule Diary.Settings.UserSettings do
-  import EctoEnum
-
-  defenum(BloodGlucoseUnits, mmol_per_l: 0, mg_per_dl: 1)
-
   use Ecto.Schema
   import Ecto.Changeset
 
   schema "user_settings" do
-    field :blood_glucose_units, BloodGlucoseUnits
+    field :blood_glucose_units, Ecto.Enum, values: [mmol_per_l: 0, mg_per_dl: 1]
     field :user_id, :integer
 
     timestamps()

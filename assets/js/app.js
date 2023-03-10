@@ -30,7 +30,7 @@ import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-const hooks = { Pickr, TimePickr, DatePickr, Modal, NumberInput, Select };
+const hooks = { TimePickr, DatePickr, Modal, NumberInput, Select };
 let liveSocket = new LiveSocket("/live", Socket, {
   params: {
     _csrf_token: csrfToken,
