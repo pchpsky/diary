@@ -12,8 +12,7 @@ import "../css/app.css"
 //     import {Socket} from "phoenix"
 //     import socket from "./socket"
 //
-import Alpine from 'alpinejs'
-import Pickr from './Pickr';
+import Alpine from 'alpinejs';
 import TimePickr from './TimePickr';
 import DatePickr from './DatePickr';
 import NumberInput from './NumberInput';

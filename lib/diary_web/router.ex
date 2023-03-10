@@ -21,7 +21,7 @@ defmodule DiaryWeb.Router do
   end
 
   pipeline :title_screen do
-    plug :put_layout, {DiaryWeb.LayoutView, "title.html"}
+    plug :put_layout, {DiaryWeb.LayoutView, :title}
     plug :fetch_current_user
   end
 
