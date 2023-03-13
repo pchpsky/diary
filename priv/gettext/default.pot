@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 
-#, elixir-format
 #: lib/diary_web/live/page_live.html.leex:2
+#, elixir-format
 msgid "Welcome to %{name}!"
 msgstr ""

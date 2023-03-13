@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 
-#, elixir-format
 #: lib/diary_web/live/header_component.ex:25
+#, elixir-format
 msgid "Insulin"
 msgstr ""
