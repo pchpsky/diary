@@ -51,13 +51,18 @@ defmodule DiaryWeb.LiveComponents do
     """
   end
 
-  def card(assigns) do
-    assigns =
-      assigns
-      |> assign_new(:class, fn -> "" end)
-      |> assign_new(:title, fn -> [] end)
-      |> assign_new(:actions, fn -> [] end)
+  attr :class, :string, default: ""
+  slot :inner_block, required: true
 
+  slot :title do
+    attr :class, :string
+  end
+
+  slot :actions do
+    attr :class, :string
+  end
+
+  def card(assigns) do
     ~H"""
     <div class={"card bg-base-100 shadow-lg #{@class}"}>
       <div class="card-body">
@@ -73,6 +78,9 @@ defmodule DiaryWeb.LiveComponents do
     """
   end
 
+  attr :id, :string, required: true
+  slot :inner_block, required: true
+
   def modal(assigns) do
     ~H"""
     <input type="checkbox" id={"modal_#{@id}"} class="modal-toggle" phx-hook="Modal" />
@@ -84,6 +92,8 @@ defmodule DiaryWeb.LiveComponents do
     """
   end
 
+  slot :inner_block, required: true
+
   def modal_actions(assigns) do
     ~H"""
     <div class="modal-action">
@@ -91,6 +101,8 @@ defmodule DiaryWeb.LiveComponents do
     </div>
     """
   end
+
+  slot :inner_block, required: true
 
   def modal_title(assigns) do
     ~H"""

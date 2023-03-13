@@ -1,4 +1,5 @@
 defmodule DiaryWeb.GlucoseComponents do
+  import Phoenix.Component
   use DiaryWeb, :component
 
   def status_icon(assigns) do
@@ -27,6 +28,8 @@ defmodule DiaryWeb.GlucoseComponents do
     """
   end
 
+  attr :changeset, :map, required: true
+
   def glucose_form(assigns) do
     ~H"""
     <.form :let={f} for={@changeset} class="mb-2 p-3 px-5" phx-submit="save">
@@ -39,10 +42,10 @@ defmodule DiaryWeb.GlucoseComponents do
         ) %>
         <div class="flex flex-col justify-between my-3 ml-2">
           <button type="button" phx-click={JS.dispatch("inc", to: "#glucose_units")}>
-            <.icon name={:plus_circle} class="h-8 w-8" outlined={true} />
+            <.icon name={:plus_circle} class="h-8 w-8" solid={false} />
           </button>
           <button type="button" phx-click={JS.dispatch("dec", to: "#glucose_units")}>
-            <.icon name={:minus_circle} class="h-8 w-8" outlined={true} />
+            <.icon name={:minus_circle} class="h-8 w-8" solid={false} />
           </button>
         </div>
       </div>

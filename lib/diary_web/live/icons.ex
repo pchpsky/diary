@@ -1,9 +1,11 @@
 defmodule DiaryWeb.Icons do
   use Phoenix.Component
 
-  def icon(%{name: :syringe} = assigns) do
-    assigns = assign_new(assigns, :class, fn -> "w-4 h-4 inline-block" end)
+  attr :name, :atom, required: true
+  attr :class, :string, default: "w-4 h-4 inline-block"
+  attr :solid, :boolean, default: true
 
+  def icon(%{name: :syringe} = assigns) do
     ~H"""
     <svg
       aria-hidden="true"
@@ -25,8 +27,6 @@ defmodule DiaryWeb.Icons do
   end
 
   def icon(%{name: :plate_utensils} = assigns) do
-    assigns = assign_new(assigns, :class, fn -> "w-4 h-4 inline-block" end)
-
     ~H"""
     <svg
       aria-hidden="true"
@@ -49,8 +49,6 @@ defmodule DiaryWeb.Icons do
   end
 
   def icon(%{name: :fork_knife} = assigns) do
-    assigns = assign_new(assigns, :class, fn -> "w-4 h-4 inline-block" end)
-
     ~H"""
     <svg
       aria-hidden="true"
@@ -73,8 +71,6 @@ defmodule DiaryWeb.Icons do
   end
 
   def icon(%{name: :pot_food} = assigns) do
-    assigns = assign_new(assigns, :class, fn -> "w-4 h-4 inline-block" end)
-
     ~H"""
     <svg
       aria-hidden="true"
@@ -97,8 +93,6 @@ defmodule DiaryWeb.Icons do
   end
 
   def icon(%{name: :person} = assigns) do
-    assigns = assign_new(assigns, :class, fn -> "w-4 h-4 inline-block" end)
-
     ~H"""
     <svg
       aria-hidden="true"
@@ -120,11 +114,6 @@ defmodule DiaryWeb.Icons do
   end
 
   def icon(assigns) do
-    assigns =
-      assigns
-      |> assign_new(:class, fn -> "w-4 h-4 inline-block" end)
-      |> assign_new(:solid, fn -> true end)
-
     ~H"""
     <%= apply(Heroicons, @name, [assigns]) %>
     """

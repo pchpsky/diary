@@ -13,10 +13,10 @@ defmodule DiaryWeb.InsulinComponents do
         ) %>
         <div class="flex flex-col justify-between my-3 ml-2">
           <button type="button" phx-click={JS.dispatch("inc", to: "#insulin_units")}>
-            <.icon name={:plus_circle} class="h-8 w-8" outlined={true} />
+            <.icon name={:plus_circle} class="h-8 w-8" solid={false} />
           </button>
           <button type="button" phx-click={JS.dispatch("dec", to: "#insulin_units")}>
-            <.icon name={:minus_circle} class="h-8 w-8" outlined={true} />
+            <.icon name={:minus_circle} class="h-8 w-8" solid={false} />
           </button>
         </div>
       </div>
