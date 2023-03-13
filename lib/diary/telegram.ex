@@ -6,13 +6,11 @@ defmodule Diary.Telegram do
   alias Diary.Repo
   alias Diary.Telegram.UserConnection
 
-  @uname Application.compile_env(:diary, [__MODULE__, :uname])
-  @token Application.compile_env(:diary, [__MODULE__, :token])
-
   def make_start_url(user_id) do
+    bot_uname = Application.fetch_env!(:diary, __MODULE__)[:uname]
     token = Diary.Telegram.UserTokenLookup.issue_token(user_id)
 
-    "https://t.me/#{@uname}?start=#{token}"
+    "https://t.me/#{bot_uname}?start=#{token}"
   end
 
   def lookup_token(token) do
@@ -56,7 +54,8 @@ defmodule Diary.Telegram do
   end
 
   defp request(method, request) do
-    {:ok, _} = Telegram.Api.request(@token, method, request)
+    token = Application.fetch_env!(:diary, __MODULE__)[:token]
+    {:ok, _} = Telegram.Api.request(token, method, request)
   end
 
   defp find_or_create_connection(user_id, chat_id) do
