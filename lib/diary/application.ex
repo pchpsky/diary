@@ -17,7 +17,8 @@ defmodule Diary.Application do
       DiaryWeb.Endpoint,
       # Start a worker by calling: Diary.Worker.start_link(arg)
       # {Diary.Worker, arg}
-      Diary.Telegram.Supervisor
+      Diary.Telegram.Supervisor,
+      Diary.GoogleIdToken.KeysManager
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -5,7 +5,9 @@ defmodule Diary.Accounts do
 
   import Ecto.Query, warn: false
   alias Diary.Repo
-  alias Diary.Accounts.{User, UserToken, UserNotifier}
+  alias Diary.Accounts.User
+  alias Diary.Accounts.UserToken
+  alias Diary.Accounts.UserNotifier
 
   ## Database getters
 

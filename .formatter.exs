@@ -1,6 +1,6 @@
 [
   plugins: [Phoenix.LiveView.HTMLFormatter],
-  import_deps: [:ecto, :ecto_sql, :phoenix, :phoenix_html, :phoenix_live_view],
+  import_deps: [:ecto, :ecto_sql, :phoenix, :phoenix_html, :phoenix_live_view, :absinthe],
   inputs: [
     "*.{heex,ex,exs}",
     "priv/*/seeds.exs",

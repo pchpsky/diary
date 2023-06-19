@@ -2,6 +2,7 @@ defmodule DiaryWeb.Resolvers.Accounts do
   @moduledoc false
   alias Diary.Accounts
   alias Diary.Accounts.User
+  alias Diary.GoogleIdToken
   import DiaryWeb.Schema.ChangesetHelpers
 
   def current_user(_parent, _args, %{context: %{current_user: user}}),
@@ -15,6 +16,16 @@ defmodule DiaryWeb.Resolvers.Accounts do
       {:ok, jwt, _full_claims} = Diary.Guardian.encode_and_sign(user)
       %{token: jwt, user: user}
     end)
+  end
+
+  def login_by_google_id_token(_parent, args, _context) do
+    {:ok, claims} = GoogleIdToken.verify(args["id_token"])
+
+    user = Accounts.get_user_by_email(claims["email"])
+
+    {:ok, jwt, _full_claims} = Diary.Guardian.encode_and_sign(user)
+
+    Result.ok(%{token: jwt, user: user})
   end
 
   def login(_parent, %{email: email, password: password}, _resolution) do

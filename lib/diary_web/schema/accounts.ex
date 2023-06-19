@@ -15,7 +15,7 @@ defmodule DiaryWeb.Schema.Accounts do
     """
 
     field :current_user, :user do
-      resolve(&AccountResolvers.current_user/3)
+      resolve &AccountResolvers.current_user/3
     end
   end
 
@@ -25,12 +25,12 @@ defmodule DiaryWeb.Schema.Accounts do
     """
 
     field :create_user, :session do
-      config(skip_auth: true)
+      config skip_auth: true
 
-      arg(:email, non_null(:string))
-      arg(:password, non_null(:string))
+      arg :email, non_null(:string)
+      arg :password, non_null(:string)
 
-      resolve(&AccountResolvers.create_user/3)
+      resolve &AccountResolvers.create_user/3
     end
   end
 
@@ -40,18 +40,26 @@ defmodule DiaryWeb.Schema.Accounts do
     """
 
     field :create_session, :session do
-      config(skip_auth: true)
+      config skip_auth: true
 
-      arg(:email, non_null(:string))
-      arg(:password, non_null(:string))
+      arg :email, non_null(:string)
+      arg :password, non_null(:string)
 
-      resolve(&AccountResolvers.login/3)
+      resolve &AccountResolvers.login/3
+    end
+
+    field :create_session_by_google_id_token, :session do
+      config skip_auth: true
+
+      arg :id_token, non_null(:string)
+
+      resolve &AccountResolvers.login_by_google_id_token/3
     end
   end
 
   @desc "session value"
   object :session do
-    field(:token, :string)
-    field(:user, :user)
+    field :token, :string
+    field :user, :user
   end
 end
