@@ -2,9 +2,9 @@ defmodule Diary.GoogleIdToken do
   alias Diary.GoogleIdToken.KeysManager
 
   def verify(id_token) do
-    {:ok, keys} = KeysManager.get_keys()
+    keys = KeysManager.get_keys()
 
-    %{"kid" => kid} = Joken.peek_header("id_token")
+    {:ok, %{"kid" => kid}} = Joken.peek_header(id_token)
 
     key = Enum.find(keys, fn key -> key["kid"] == kid end)
 
