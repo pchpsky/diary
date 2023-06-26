@@ -49,6 +49,12 @@ defmodule DiaryWeb.Schema.Settings do
       resolve &SettingsResolvers.create_insulin/3
     end
 
+    field :create_insulins, list_of(:insulin) do
+      arg :input, non_null(list_of(:insulin_input))
+
+      resolve &SettingsResolvers.create_insulins/3
+    end
+
     field :update_insulin, :insulin do
       arg :id, non_null(:id)
       arg :input, non_null(:insulin_input)
@@ -79,8 +85,8 @@ defmodule DiaryWeb.Schema.Settings do
   Input object for creating/updating insulins
   """
   input_object :insulin_input do
-    field :name, :string
-    field :color, :string
+    field :name, non_null(:string)
+    field :color, non_null(:string)
     field :default_dose, :integer
   end
 end

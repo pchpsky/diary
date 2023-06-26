@@ -32,6 +32,16 @@ defmodule DiaryWeb.Resolvers.Settings do
     |> Result.Error.map(&render_invalid_changeset/1)
   end
 
+  def create_insulins(_, %{input: args}, %{context: %{current_user: user}}) do
+    settings =
+      user.id
+      |> Settings.get_settings()
+
+    settings.id
+    |> Settings.create_insulins(args)
+    |> Result.Error.map(fn {pos, changeset} -> render_invalid_changeset(changeset, "Invalid insulin at #{pos}") end)
+  end
+
   def update_insulin(_, %{id: id, input: args}, %{context: %{current_user: _user}}) do
     id
     |> Settings.get_insulin()

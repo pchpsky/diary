@@ -94,7 +94,7 @@ defmodule Result.Error do
     result
   end
 
-  @spec map(Result.t(Result.error_val(), Result.ok_val()), (Result.ok_val() -> term())) ::
+  @spec map(Result.t(Result.error_val(), Result.ok_val()), (Result.error_val() -> term())) ::
           Result.t(Result.error_val(), term())
   def map(result, cb) do
     and_then(result, fn value ->

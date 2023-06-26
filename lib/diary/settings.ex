@@ -106,6 +106,32 @@ defmodule Diary.Settings do
     |> Repo.insert()
   end
 
+  def create_insulins(settings_id, insulins) do
+    insert_result =
+      insulins
+      |> Enum.with_index()
+      |> Enum.reduce(
+        Ecto.Multi.new(),
+        fn {attrs, pos}, multi ->
+          Ecto.Multi.insert(
+            multi,
+            pos,
+            Insulin.changeset(%Insulin{settings_id: settings_id}, attrs)
+          )
+        end
+      )
+      |> Repo.transaction()
+
+    case insert_result do
+      {:error, failed_at, error, _} ->
+        Result.error({failed_at, error})
+
+      otherwise ->
+        otherwise
+    end
+    |> Result.map(&Map.values/1)
+  end
+
   def update_insulin(insulin, attrs) do
     insulin
     |> Insulin.changeset(attrs)
