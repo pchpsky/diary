@@ -16,6 +16,7 @@ defmodule DiaryWeb.Schema.SettingsTest do
           id
           name
           color
+          defaultDose
         }
       }
     }
@@ -40,7 +41,7 @@ defmodule DiaryWeb.Schema.SettingsTest do
           "data" => %{
             "settings" => %{
               "bloodGlucoseUnits" => "MG_PER_DL",
-              "insulins" => [%{"id" => ^insulin_id}]
+              "insulins" => [%{"id" => ^insulin_id, "defaultDose" => 10}]
             }
           }
         } = response

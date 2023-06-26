@@ -17,7 +17,7 @@ defmodule Diary.SettingsFixtures do
 
   def insulin_fixture(settings_id, attrs \\ %{}) do
     {:ok, insulin} =
-      %Insulin{name: "insulin", color: "#e8d16e", settings_id: settings_id}
+      %Insulin{name: "insulin", color: "#e8d16e", default_dose: 10, settings_id: settings_id}
       |> Insulin.changeset(attrs)
       |> Diary.Repo.insert()
 

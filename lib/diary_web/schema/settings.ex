@@ -19,6 +19,7 @@ defmodule DiaryWeb.Schema.Settings do
     field :id, :id
     field :name, :string
     field :color, :string
+    field :default_dose, :integer
   end
 
   object :settings_queries do
@@ -80,5 +81,6 @@ defmodule DiaryWeb.Schema.Settings do
   input_object :insulin_input do
     field :name, :string
     field :color, :string
+    field :default_dose, :integer
   end
 end
