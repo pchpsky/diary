@@ -1,3 +1,4 @@
+- [ ] add onboarding completion to user model
 - [ ] add default dose to insulin settings
 - [ ] show default dose when creating a new record
 - [ ] rework toasts

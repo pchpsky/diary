@@ -37,6 +37,12 @@ defmodule DiaryWeb.Resolvers.Accounts do
     end
   end
 
+  def complete_onboarding(_parent, %{completed_at: completed_at}, %{context: %{current_user: user}}) do
+    user
+    |> Accounts.complete_onboarding(completed_at)
+    |> Result.map_error(&render_invalid_changeset/1)
+  end
+
   defp create_user_for_google_id_token(email) do
     password = gen_password()
     {:ok, user} = Accounts.register_user(%{email: email, password: password})

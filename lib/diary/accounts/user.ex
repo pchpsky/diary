@@ -9,6 +9,7 @@ defmodule Diary.Accounts.User do
     field :password, :string, virtual: true
     field :hashed_password, :string
     field :confirmed_at, :naive_datetime
+    field :onboarding_completed_at, :naive_datetime
 
     timestamps()
   end
@@ -110,6 +111,13 @@ defmodule Diary.Accounts.User do
   def confirm_changeset(user) do
     now = NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second)
     change(user, confirmed_at: now)
+  end
+
+  @doc """
+  Completes the onboarding by setting `onboarding_completed_at`.
+  """
+  def complete_onboarding_changeset(user, completed_at) do
+    cast(user, %{onboarding_completed_at: completed_at}, [:onboarding_completed_at])
   end
 
   @doc """

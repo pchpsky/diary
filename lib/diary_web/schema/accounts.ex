@@ -4,9 +4,12 @@ defmodule DiaryWeb.Schema.Accounts do
 
   alias DiaryWeb.Resolvers.Accounts, as: AccountResolvers
 
+  import_types Absinthe.Type.Custom
+
   @desc "A user"
   object :user do
-    field :email, :string
+    field :email, non_null(:string)
+    field :onboarding_completed_at, :naive_datetime
   end
 
   object :get_current_user do
@@ -31,6 +34,12 @@ defmodule DiaryWeb.Schema.Accounts do
       arg :password, non_null(:string)
 
       resolve &AccountResolvers.create_user/3
+    end
+
+    field :complete_onboarding, :user do
+      arg :completed_at, non_null(:naive_datetime)
+
+      resolve &AccountResolvers.complete_onboarding/3
     end
   end
 

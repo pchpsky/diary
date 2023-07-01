@@ -287,6 +287,15 @@ defmodule Diary.Accounts do
     |> Ecto.Multi.delete_all(:tokens, UserToken.user_and_contexts_query(user, ["confirm"]))
   end
 
+  @doc """
+  Completes the onboarding process for the given user.
+  """
+  def complete_onboarding(user, completed_at) do
+    user
+    |> User.complete_onboarding_changeset(completed_at)
+    |> Repo.update()
+  end
+
   ## Reset password
 
   @doc """

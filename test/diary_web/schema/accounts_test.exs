@@ -2,6 +2,7 @@ defmodule DiaryWeb.Schema.AccountsTest do
   use DiaryWeb.ConnCase
 
   import Diary.AccountsFixtures
+  import Diary.ApiHelpers
   import Diary.Guardian
 
   describe "query currentUser" do
@@ -175,6 +176,50 @@ defmodule DiaryWeb.Schema.AccountsTest do
       response = json_response(conn, 200)
 
       assert([%{"message" => "Incorrect email or password"}] = response["errors"])
+    end
+  end
+
+  describe "mutation completeOnboarding" do
+    @describetag :graphql
+
+    @onboarding_mutation """
+    mutation($onboardingCompletedAt: NaiveDateTime!) {
+      user: completeOnboarding(completedAt: $onboardingCompletedAt) {
+        email
+        onboardingCompletedAt
+      }
+    }
+    """
+
+    setup %{conn: conn} do
+      user = user_fixture()
+      conn = sign_in(conn, user)
+      %{user: user, conn: conn}
+    end
+
+    test "completes onboarding", %{conn: conn} do
+      completed_at =
+        NaiveDateTime.utc_now()
+        |> NaiveDateTime.truncate(:second)
+        |> NaiveDateTime.to_iso8601()
+
+      conn =
+        post(conn, "/graph", %{
+          "query" => @onboarding_mutation,
+          "variables" => %{
+            "onboardingCompletedAt" => completed_at
+          }
+        })
+
+      response = json_response(conn, 200)
+
+      assert %{
+               "data" => %{
+                 "user" => %{
+                   "onboardingCompletedAt" => ^completed_at
+                 }
+               }
+             } = response
     end
   end
 end

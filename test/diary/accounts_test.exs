@@ -418,6 +418,17 @@ defmodule Diary.AccountsTest do
     end
   end
 
+  describe "complete_onboarding/2" do
+    setup do
+      %{user: user_fixture()}
+    end
+
+    test "sets onboarding_completed_at", %{user: user} do
+      assert {:ok, _} = Accounts.complete_onboarding(user, ~N[2020-01-01 00:00:00])
+      assert Repo.get!(User, user.id).onboarding_completed_at
+    end
+  end
+
   describe "deliver_user_reset_password_instructions/2" do
     setup do
       %{user: user_fixture()}
