@@ -7,7 +7,7 @@ defmodule DiaryWeb.Schema.Settings do
   object :settings do
     field :blood_glucose_units, :blood_glucose_units
 
-    field :insulins, list_of(:insulin) do
+    field :insulins, non_null(list_of(:insulin)) do
       @desc "All insulins added by user"
 
       resolve &SettingsResolvers.list_insulins/3
@@ -16,9 +16,9 @@ defmodule DiaryWeb.Schema.Settings do
 
   @desc "Insulin added by user"
   object :insulin do
-    field :id, :id
-    field :name, :string
-    field :color, :string
+    field :id, non_null(:id)
+    field :name, non_null(:string)
+    field :color, non_null(:string)
     field :default_dose, :integer
   end
 
@@ -27,7 +27,7 @@ defmodule DiaryWeb.Schema.Settings do
     Get user settings
     """
 
-    field :settings, :settings do
+    field :settings, non_null(:settings) do
       resolve &SettingsResolvers.get_settings/3
     end
   end
@@ -37,32 +37,32 @@ defmodule DiaryWeb.Schema.Settings do
     Update user settings
     """
 
-    field :update_settings, :settings do
+    field :update_settings, non_null(:settings) do
       arg :input, non_null(:settings_input)
 
       resolve &SettingsResolvers.update_settings/3
     end
 
-    field :create_insulin, :insulin do
+    field :create_insulin, non_null(:insulin) do
       arg :input, non_null(:insulin_input)
 
       resolve &SettingsResolvers.create_insulin/3
     end
 
-    field :create_insulins, list_of(:insulin) do
+    field :create_insulins, non_null(list_of(:insulin)) do
       arg :input, non_null(list_of(:insulin_input))
 
       resolve &SettingsResolvers.create_insulins/3
     end
 
-    field :update_insulin, :insulin do
+    field :update_insulin, non_null(:insulin) do
       arg :id, non_null(:id)
       arg :input, non_null(:insulin_input)
 
       resolve &SettingsResolvers.update_insulin/3
     end
 
-    field :delete_insulin, :insulin do
+    field :delete_insulin, non_null(:insulin) do
       arg :id, non_null(:id)
 
       resolve &SettingsResolvers.delete_insulin/3
@@ -78,7 +78,7 @@ defmodule DiaryWeb.Schema.Settings do
   Settings input object for update
   """
   input_object :settings_input do
-    field :blood_glucose_units, :blood_glucose_units
+    field :blood_glucose_units, non_null(:blood_glucose_units)
   end
 
   @desc """
