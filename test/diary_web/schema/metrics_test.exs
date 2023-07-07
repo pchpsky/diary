@@ -49,4 +49,46 @@ defmodule DiaryWeb.Schema.MetricsTest do
       assert %{"id" => "" <> _} = response["data"]["insulinRecord"]
     end
   end
+
+  describe "mutation recordGlucose" do
+    @describetag :graphql
+
+    @record_glucose_mutation """
+    mutation($input: GlucoseRecordInput!) {
+      glucoseRecord: recordGlucose(input: $input) {
+        id
+        status
+        units
+        measuredAt
+        notes
+      }
+    }
+    """
+
+    setup %{conn: conn} do
+      user = user_fixture()
+      conn = sign_in(conn, user)
+
+      %{user: user, conn: conn}
+    end
+
+    test "creates glucose record", %{conn: conn} do
+      input = %{
+        "units" => 10.0,
+        "status" => "GENERAL",
+        "measuredAt" => "2023-01-01T00:00:00Z",
+        "notes" => "Some notes"
+      }
+
+      conn =
+        post(conn, "/graph", %{
+          "query" => @record_glucose_mutation,
+          "variables" => %{"input" => input}
+        })
+
+      response = json_response(conn, 200)
+
+      assert %{"id" => "" <> _} = response["data"]["glucoseRecord"]
+    end
+  end
 end

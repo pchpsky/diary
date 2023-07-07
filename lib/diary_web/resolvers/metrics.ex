@@ -10,4 +10,12 @@ defmodule DiaryWeb.Resolvers.Metrics do
     |> Metrics.record_insulin(args[:input])
     |> Result.Error.map(&render_invalid_changeset/1)
   end
+
+  def record_glucose(_parent, args, ctx) do
+    ctx
+    |> current_user()
+    |> Map.get(:id)
+    |> Metrics.record_glucose(args[:input])
+    |> Result.Error.map(&render_invalid_changeset/1)
+  end
 end

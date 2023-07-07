@@ -19,6 +19,7 @@ defmodule DiaryWeb.Schema do
     import_fields :user_mutations
     import_fields :settings_mutations
     import_fields :insulin_metrics_mutations
+    import_fields :glucose_metrics_mutations
   end
 
   def middleware(
