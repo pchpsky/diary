@@ -4,8 +4,6 @@ defmodule DiaryWeb.Schema.Accounts do
 
   alias DiaryWeb.Resolvers.Accounts, as: AccountResolvers
 
-  import_types Absinthe.Type.Custom
-
   @desc "A user"
   object :user do
     field :email, non_null(:string)

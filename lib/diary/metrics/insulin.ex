@@ -19,5 +19,6 @@ defmodule Diary.Metrics.Insulin do
     insulin
     |> cast(attrs, [:units, :insulin_id, :taken_at, :notes])
     |> validate_required([:units, :insulin_id, :taken_at])
+    |> foreign_key_constraint(:insulin_id)
   end
 end

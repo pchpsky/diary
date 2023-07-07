@@ -4,18 +4,21 @@ defmodule DiaryWeb.Schema do
 
   alias DiaryWeb.Schema
 
-  import_types(Schema.Accounts)
-  import_types(Schema.Settings)
+  import_types Absinthe.Type.Custom
+  import_types Schema.Accounts
+  import_types Schema.Settings
+  import_types Schema.Metrics
 
   query do
-    import_fields(:get_current_user)
-    import_fields(:settings_queries)
+    import_fields :get_current_user
+    import_fields :settings_queries
   end
 
   mutation do
-    import_fields(:session_mutations)
-    import_fields(:user_mutations)
-    import_fields(:settings_mutations)
+    import_fields :session_mutations
+    import_fields :user_mutations
+    import_fields :settings_mutations
+    import_fields :insulin_metrics_mutations
   end
 
   def middleware(
