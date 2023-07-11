@@ -30,6 +30,10 @@ defmodule DiaryWeb.ConnCase do
       @endpoint DiaryWeb.Endpoint
 
       use DiaryWeb, :verified_routes
+
+      def execute_query(conn, query, variables \\ %{}) do
+        post(conn, "/graph", %{query: query, variables: variables})
+      end
     end
   end
 

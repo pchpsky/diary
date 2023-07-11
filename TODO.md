@@ -4,3 +4,5 @@
 - [ ] rework toasts
 - [ ] add proper error handling to create_session_by_google_id_token
 - [ ] implement token expiration and refreshing
+- [ ] add soft delete to isnsulins
+- [ ] refactor insulin records query

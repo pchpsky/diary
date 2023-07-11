@@ -11,6 +11,7 @@ defmodule DiaryWeb.Schema.Metrics do
     field :units, non_null(:float)
     field :taken_at, non_null(:naive_datetime)
     field :notes, :string
+    field :cursor, non_null(:string)
   end
 
   @desc "A glucose record"
@@ -20,6 +21,15 @@ defmodule DiaryWeb.Schema.Metrics do
     field :measured_at, non_null(:naive_datetime)
     field :status, non_null(:glucose_record_status)
     field :notes, :string
+  end
+
+  object :insulin_metrics_queries do
+    field :insulin_records, list_of(:insulin_record) do
+      arg :limit, :integer
+      arg :cursor, :string
+
+      resolve &MetricsResolvers.insulin_records/3
+    end
   end
 
   object :insulin_metrics_mutations do
