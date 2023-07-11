@@ -1,6 +1,7 @@
 defmodule DiaryWeb.Schema.Metrics do
   @moduledoc false
   use Absinthe.Schema.Notation
+  import Absinthe.Resolution.Helpers
 
   alias DiaryWeb.Resolvers.Metrics, as: MetricsResolvers
 
@@ -8,6 +9,15 @@ defmodule DiaryWeb.Schema.Metrics do
   object :insulin_record do
     field :id, non_null(:id)
     field :insulin_id, non_null(:id)
+
+    field :insulin, non_null(:insulin) do
+      resolve fn record, _, _ ->
+        batch({MetricsResolvers, :insulins_by_id}, record.insulin_id, fn batch_results ->
+          {:ok, Map.fetch!(batch_results, record.insulin_id)}
+        end)
+      end
+    end
+
     field :units, non_null(:float)
     field :taken_at, non_null(:naive_datetime)
     field :notes, :string

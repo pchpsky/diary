@@ -14,6 +14,10 @@ defmodule DiaryWeb.Schema.MetricsTest do
       insulinRecords(limit: $limit, cursor: $cursor) {
         id
         insulinId
+        insulin {
+          name
+          color
+        }
         units
         takenAt
         notes
