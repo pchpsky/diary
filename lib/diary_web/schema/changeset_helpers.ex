@@ -6,6 +6,8 @@ defmodule DiaryWeb.Schema.ChangesetHelpers do
   def render_invalid_changeset(%Ecto.Changeset{} = changeset),
     do: render_invalid_changeset(changeset, "Unprocessable Entity")
 
+  def render_invalid_changeset(v), do: v
+
   def render_invalid_changeset(%Ecto.Changeset{} = changeset, message) do
     %{
       message: message,

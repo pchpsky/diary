@@ -34,7 +34,7 @@ defmodule DiaryWeb.Schema.Metrics do
   end
 
   object :insulin_metrics_queries do
-    field :insulin_records, list_of(:insulin_record) do
+    field :insulin_records, non_null(list_of(non_null(:insulin_record))) do
       arg :limit, :integer
       arg :cursor, :string
 
@@ -47,6 +47,13 @@ defmodule DiaryWeb.Schema.Metrics do
       arg :input, non_null(:insulin_record_input)
 
       resolve &MetricsResolvers.record_insulin/3
+    end
+
+    field :update_insulin_record, non_null(:insulin_record) do
+      arg :id, non_null(:id)
+      arg :input, non_null(:insulin_record_input)
+
+      resolve &MetricsResolvers.update_insulin/3
     end
 
     field :delete_insulin_record, non_null(:insulin_record) do

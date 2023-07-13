@@ -20,6 +20,20 @@ defmodule DiaryWeb.Resolvers.Metrics do
     |> Result.Error.map(&render_invalid_changeset/1)
   end
 
+  def update_insulin(_parent, %{id: id, input: input}, ctx) do
+    user_id = ctx |> current_user() |> Map.get(:id)
+
+    Metrics.Insulin
+    |> where([i], i.id == ^id and i.user_id == ^user_id)
+    |> Diary.Repo.one()
+    |> Result.cond(&(&1 != nil), "Insulin record not found")
+    |> Result.and_then(fn insulin ->
+      insulin
+      |> Metrics.update_insulin(input)
+      |> Result.Error.map(&render_invalid_changeset/1)
+    end)
+  end
+
   def insulin_records(_parent, args, ctx) do
     user = current_user(ctx)
 

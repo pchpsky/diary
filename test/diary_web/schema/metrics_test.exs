@@ -158,6 +158,14 @@ defmodule DiaryWeb.Schema.MetricsTest do
 
       refute Metrics.get_insulin(insulin_record.id)
     end
+
+    test "when record not found returns error", %{conn: conn} do
+      conn = execute_query(conn, @delete_insulin_mutation, %{"id" => "12345"})
+
+      response = json_response(conn, 200)
+
+      assert %{"errors" => [_]} = response
+    end
   end
 
   describe "mutation recordGlucose" do
