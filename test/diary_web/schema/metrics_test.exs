@@ -5,6 +5,7 @@ defmodule DiaryWeb.Schema.MetricsTest do
   import Diary.ApiHelpers
   import Diary.SettingsFixtures
   import Diary.MetricsFixtures
+  alias Diary.Metrics
 
   describe "query insulinRecords" do
     @describetag :graphql
@@ -118,6 +119,44 @@ defmodule DiaryWeb.Schema.MetricsTest do
       response = json_response(conn, 200)
 
       assert %{"id" => "" <> _} = response["data"]["insulinRecord"]
+    end
+  end
+
+  describe "mutation deleteInsulinRecord" do
+    @describetag :graphql
+
+    @delete_insulin_mutation """
+    mutation($id: ID!) {
+      insulinRecord: deleteInsulinRecord(id: $id) {
+        id
+        insulinId
+        units
+        takenAt
+        notes
+      }
+    }
+    """
+
+    setup %{conn: conn} do
+      user = user_fixture()
+      conn = sign_in(conn, user)
+
+      settings = settings_fixture(user.id)
+      insulin = insulin_fixture(settings.id)
+
+      %{user: user, insulin: insulin, conn: conn}
+    end
+
+    test "deletes insulin record", %{insulin: insulin, conn: conn, user: user} do
+      insulin_record = insulin_record_fixture(user.id, insulin.id)
+
+      conn = execute_query(conn, @delete_insulin_mutation, %{"id" => insulin_record.id})
+
+      response = json_response(conn, 200)
+
+      assert get_in(response, ~w[data insulinRecord id]) == to_string(insulin_record.id)
+
+      refute Metrics.get_insulin(insulin_record.id)
     end
   end
 

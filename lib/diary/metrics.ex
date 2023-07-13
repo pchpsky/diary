@@ -45,7 +45,9 @@ defmodule Diary.Metrics do
   def delete_insulin(user_id, id) do
     Insulin
     |> where(id: ^id, user_id: ^user_id)
-    |> Repo.delete_all()
+    |> Repo.one()
+    |> Result.cond(&(&1 != nil), "Insulin record not found")
+    |> Result.and_then(&Repo.delete(&1))
   end
 
   def get_glucose!(id), do: Repo.get!(Glucose, id)

@@ -48,6 +48,12 @@ defmodule DiaryWeb.Schema.Metrics do
 
       resolve &MetricsResolvers.record_insulin/3
     end
+
+    field :delete_insulin_record, non_null(:insulin_record) do
+      arg :id, non_null(:id)
+
+      resolve &MetricsResolvers.delete_insulin/3
+    end
   end
 
   object :glucose_metrics_mutations do

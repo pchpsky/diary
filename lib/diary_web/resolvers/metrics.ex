@@ -33,6 +33,14 @@ defmodule DiaryWeb.Resolvers.Metrics do
     |> Result.ok()
   end
 
+  def delete_insulin(_parent, args, ctx) do
+    ctx
+    |> current_user()
+    |> Map.get(:id)
+    |> Metrics.delete_insulin(args[:id])
+    |> Result.Error.map(&render_invalid_changeset/1)
+  end
+
   def insulins_by_id(_, insulin_ids) do
     insulin_ids = Enum.uniq(insulin_ids)
 
