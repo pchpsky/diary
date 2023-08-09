@@ -63,7 +63,7 @@ defmodule Diary.Settings do
   def list_insulins(%UserSettings{id: id}), do: list_insulins(id)
 
   def list_insulins(settings_id) do
-    Repo.all(from i in Insulin, where: i.settings_id == ^settings_id, order_by: i.inserted_at)
+    Repo.all(from i in Insulin, where: i.settings_id == ^settings_id and is_nil(i.deleted_at), order_by: i.inserted_at)
   end
 
   @doc """
@@ -80,9 +80,13 @@ defmodule Diary.Settings do
       ** (Ecto.NoResultsError)
 
   """
-  def get_insulin!(id), do: Repo.get!(Insulin, id)
+  def get_insulin!(id), do: Repo.one!(get_insulin_query(id))
 
-  def get_insulin(id), do: Repo.get(Insulin, id)
+  def get_insulin(id), do: Repo.one(get_insulin_query(id))
+
+  defp get_insulin_query(id) do
+    from i in Insulin, where: i.id == ^id and is_nil(i.deleted_at)
+  end
 
   def change_insulin(insulin, attrs \\ %{}) do
     Insulin.changeset(insulin, attrs)
@@ -139,6 +143,8 @@ defmodule Diary.Settings do
   end
 
   def delete_insulin(insulin) do
-    Repo.delete(insulin)
+    insulin
+    |> Insulin.changeset(%{deleted_at: NaiveDateTime.utc_now()})
+    |> Repo.update()
   end
 end
