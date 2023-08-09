@@ -24,7 +24,11 @@ defmodule Diary.Application do
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Diary.Supervisor]
+
     Supervisor.start_link(children, opts)
+    |> tap(fn _ ->
+      Logger.put_application_level(:absinthe, :debug)
+    end)
   end
 
   # Tell Phoenix to update the endpoint configuration

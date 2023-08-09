@@ -1,5 +1,10 @@
 import Config
 
+config :logger,
+  compile_time_purge_matching: [
+    [application: :absinthe, level_lower_than: :info]
+  ]
+
 # Configure your database
 config :diary, Diary.Repo,
   username: "postgres",
