@@ -13,6 +13,7 @@ defmodule DiaryWeb.Schema do
     import_fields :get_current_user
     import_fields :settings_queries
     import_fields :insulin_metrics_queries
+    import_fields :glucose_metrics_queries
   end
 
   mutation do

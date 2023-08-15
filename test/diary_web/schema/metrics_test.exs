@@ -205,4 +205,68 @@ defmodule DiaryWeb.Schema.MetricsTest do
       assert %{"id" => "" <> _} = response["data"]["glucoseRecord"]
     end
   end
+
+  describe "query glucoseRecords" do
+    @describetag :graphql
+
+    @glucose_records_query """
+    query($limit: Int, $cursor: String) {
+      glucoseRecords(limit: $limit, cursor: $cursor) {
+        id
+        units
+        measuredAt
+        status
+        notes
+        cursor
+      }
+    }
+    """
+
+    setup %{conn: conn} do
+      user = user_fixture()
+      conn = sign_in(conn, user)
+
+      %{user: user, conn: conn}
+    end
+
+    test "returns first page", %{conn: conn, user: user} do
+      glucose_id1 =
+        glucose_record_fixture(
+          user.id,
+          %{measured_at: ~N[2023-01-01 12:10:00]}
+        )
+        |> Map.get(:id)
+        |> to_string()
+
+      glucose_id2 =
+        glucose_record_fixture(
+          user.id,
+          %{measured_at: ~N[2023-01-01 12:00:00]}
+        )
+        |> Map.get(:id)
+        |> to_string()
+
+      glucose_id3 =
+        glucose_record_fixture(
+          user.id,
+          %{measured_at: ~N[2023-01-01 11:00:00]}
+        )
+        |> Map.get(:id)
+        |> to_string()
+
+      conn = execute_query(conn, @glucose_records_query, limit: 2)
+
+      assert %{"data" => %{"glucoseRecords" => [record1, record2]}} = json_response(conn, 200)
+
+      assert %{"id" => ^glucose_id1, "cursor" => "" <> _} = record1
+
+      assert %{"id" => ^glucose_id2, "cursor" => cursor} = record2
+
+      conn = execute_query(conn, @glucose_records_query, limit: 1, cursor: cursor)
+
+      assert %{"data" => %{"glucoseRecords" => [record3]}} = json_response(conn, 200)
+
+      assert %{"id" => ^glucose_id3} = record3
+    end
+  end
 end

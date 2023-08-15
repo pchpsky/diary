@@ -9,6 +9,7 @@ defmodule Diary.Metrics.Glucose do
     field :notes, :string
     field :status, Ecto.Enum, values: [general: 0, fasting: 1, pre_meal: 2, post_meal: 3, before_sleep: 4]
     field :units, :float
+    field :cursor, :string, virtual: true
     belongs_to :user, Diary.Accounts.User
 
     timestamps()

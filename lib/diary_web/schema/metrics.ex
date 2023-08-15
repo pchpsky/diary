@@ -31,6 +31,7 @@ defmodule DiaryWeb.Schema.Metrics do
     field :measured_at, non_null(:naive_datetime)
     field :status, non_null(:glucose_record_status)
     field :notes, :string
+    field :cursor, non_null(:string)
   end
 
   object :insulin_metrics_queries do
