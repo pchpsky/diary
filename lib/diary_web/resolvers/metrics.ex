@@ -2,6 +2,7 @@ defmodule DiaryWeb.Resolvers.Metrics do
   import DiaryWeb.Schema.ContextHelpers
   import DiaryWeb.Schema.ChangesetHelpers
   alias Diary.Metrics
+  alias Diary.Query
   import Ecto.Query
 
   def record_insulin(_parent, args, ctx) do
@@ -34,15 +35,28 @@ defmodule DiaryWeb.Resolvers.Metrics do
     end)
   end
 
+  def t(ctx) do
+    current_user(ctx)
+  end
+
   def insulin_records(_parent, args, ctx) do
     user = current_user(ctx)
 
     Metrics.Insulin
-    |> Metrics.Insulin.by_user(user)
-    |> Metrics.Insulin.paginate(args[:limit] || 10, args[:cursor])
-    |> Metrics.Insulin.select_cursor()
+    |> Query.by_user(user)
+    |> Query.paginated(args[:limit] || 10, args[:cursor])
     # TODO remove when integrity ensured
     |> join(:inner, [i], is in assoc(i, :insulin))
+    |> Diary.Repo.all()
+    |> Result.ok()
+  end
+
+  def glucose_records(_parent, args, ctx) do
+    user = current_user(ctx)
+
+    Metrics.Glucose
+    |> Query.by_user(user)
+    |> Query.paginated(args[:limit] || 10, args[:cursor])
     |> Diary.Repo.all()
     |> Result.ok()
   end

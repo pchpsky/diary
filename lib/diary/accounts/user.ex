@@ -3,6 +3,17 @@ defmodule Diary.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t() :: %__MODULE__{
+          id: integer(),
+          email: String.t(),
+          password: String.t(),
+          hashed_password: String.t(),
+          confirmed_at: NaiveDateTime.t(),
+          onboarding_completed_at: NaiveDateTime.t(),
+          inserted_at: NaiveDateTime.t(),
+          updated_at: NaiveDateTime.t()
+        }
+
   @derive {Inspect, except: [:password]}
   schema "users" do
     field :email, :string

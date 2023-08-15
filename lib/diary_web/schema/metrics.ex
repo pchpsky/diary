@@ -63,6 +63,15 @@ defmodule DiaryWeb.Schema.Metrics do
     end
   end
 
+  object :glucose_metrics_queries do
+    field :glucose_records, non_null(list_of(non_null(:glucose_record))) do
+      arg :limit, :integer
+      arg :cursor, :string
+
+      resolve &MetricsResolvers.glucose_records/3
+    end
+  end
+
   object :glucose_metrics_mutations do
     field :record_glucose, non_null(:glucose_record) do
       arg :input, non_null(:glucose_record_input)

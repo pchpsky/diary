@@ -2,6 +2,8 @@ defmodule Diary.Metrics.Glucose do
   use Ecto.Schema
   import Ecto.Changeset
 
+  use Diary.Pagination, {:measured_at, :id}
+
   schema "glucose_metrics" do
     field :measured_at, :naive_datetime
     field :notes, :string
@@ -12,7 +14,6 @@ defmodule Diary.Metrics.Glucose do
     timestamps()
   end
 
-  @doc false
   def changeset(glucose, attrs) do
     glucose
     |> cast(attrs, [:units, :status, :notes, :measured_at])
