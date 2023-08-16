@@ -269,4 +269,45 @@ defmodule DiaryWeb.Schema.MetricsTest do
       assert %{"id" => ^glucose_id3} = record3
     end
   end
+
+  describe "mutation deleteGlucoseRecord" do
+    @describetag :graphql
+
+    @delete_glucose_mutation """
+    mutation($id: ID!) {
+      glucoseRecord: deleteGlucoseRecord(id: $id) {
+        id
+        units
+        measuredAt
+      }
+    }
+    """
+
+    setup %{conn: conn} do
+      user = user_fixture()
+      conn = sign_in(conn, user)
+
+      %{user: user, conn: conn}
+    end
+
+    test "deletes glucose record", %{conn: conn, user: user} do
+      glucose_record = glucose_record_fixture(user.id)
+
+      conn = execute_query(conn, @delete_glucose_mutation, %{"id" => glucose_record.id})
+
+      response = json_response(conn, 200)
+
+      assert get_in(response, ~w[data glucoseRecord id]) == to_string(glucose_record.id)
+
+      refute Metrics.get_glucose(glucose_record.id)
+    end
+
+    test "when record not found returns error", %{conn: conn} do
+      conn = execute_query(conn, @delete_glucose_mutation, %{"id" => "12345"})
+
+      response = json_response(conn, 200)
+
+      assert %{"errors" => [_]} = response
+    end
+  end
 end

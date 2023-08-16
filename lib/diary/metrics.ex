@@ -46,7 +46,7 @@ defmodule Diary.Metrics do
     Insulin
     |> where(id: ^id, user_id: ^user_id)
     |> Repo.one()
-    |> Result.cond(&(&1 != nil), "Insulin record not found")
+    |> Result.cond(&(&1 != nil), :not_found)
     |> Result.and_then(&Repo.delete(&1))
   end
 
@@ -84,10 +84,16 @@ defmodule Diary.Metrics do
     |> Repo.update()
   end
 
+  def delete_glucose(%{id: user_id}, id) do
+    delete_glucose(user_id, id)
+  end
+
   def delete_glucose(user_id, id) do
     Glucose
     |> where(id: ^id, user_id: ^user_id)
-    |> Repo.delete_all()
+    |> Repo.one()
+    |> Result.cond(&(&1 != nil), :not_found)
+    |> Result.and_then(&Repo.delete(&1))
   end
 
   def group_by_local_date(records, col, tz) do

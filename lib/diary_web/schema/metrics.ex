@@ -79,6 +79,19 @@ defmodule DiaryWeb.Schema.Metrics do
 
       resolve &MetricsResolvers.record_glucose/3
     end
+
+    field :update_glucse_record, non_null(:glucose_record) do
+      arg :id, non_null(:id)
+      arg :input, non_null(:glucose_record_input)
+
+      resolve &MetricsResolvers.update_glucose/3
+    end
+
+    field :delete_glucose_record, non_null(:glucose_record) do
+      arg :id, non_null(:id)
+
+      resolve &MetricsResolvers.delete_glucose/3
+    end
   end
 
   input_object :insulin_record_input do

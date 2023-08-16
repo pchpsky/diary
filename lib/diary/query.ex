@@ -9,6 +9,10 @@ defmodule Diary.Query do
     where(query, user_id: ^user_id)
   end
 
+  def by_id(query, id) do
+    where(query, id: ^id)
+  end
+
   def paginated(query, limit, cursor \\ nil) do
     source = source_module(query)
 

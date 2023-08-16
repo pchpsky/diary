@@ -22,10 +22,9 @@ defmodule DiaryWeb.Resolvers.Metrics do
   end
 
   def update_insulin(_parent, %{id: id, input: input}, ctx) do
-    user_id = ctx |> current_user() |> Map.get(:id)
-
     Metrics.Insulin
-    |> where([i], i.id == ^id and i.user_id == ^user_id)
+    |> Query.by_user(current_user(ctx))
+    |> Query.by_id(id)
     |> Diary.Repo.one()
     |> Result.cond(&(&1 != nil), "Insulin record not found")
     |> Result.and_then(fn insulin ->
@@ -35,8 +34,17 @@ defmodule DiaryWeb.Resolvers.Metrics do
     end)
   end
 
-  def t(ctx) do
-    current_user(ctx)
+  def update_glucose(_parent, %{id: id, input: input}, ctx) do
+    Metrics.Glucose
+    |> Query.by_user(current_user(ctx))
+    |> Query.by_id(id)
+    |> Diary.Repo.one()
+    |> Result.cond(&(&1 != nil), "Glucose record not found")
+    |> Result.and_then(fn glucose ->
+      glucose
+      |> Metrics.update_glucose(input)
+      |> Result.Error.map(&render_invalid_changeset/1)
+    end)
   end
 
   def insulin_records(_parent, args, ctx) do
@@ -66,7 +74,26 @@ defmodule DiaryWeb.Resolvers.Metrics do
     |> current_user()
     |> Map.get(:id)
     |> Metrics.delete_insulin(args[:id])
-    |> Result.Error.map(&render_invalid_changeset/1)
+    |> Result.Error.map(fn
+      :not_found ->
+        "Insulin record not found"
+
+      error ->
+        render_invalid_changeset(error)
+    end)
+  end
+
+  def delete_glucose(_parent, args, ctx) do
+    ctx
+    |> current_user()
+    |> Metrics.delete_glucose(args[:id])
+    |> Result.Error.map(fn
+      :not_found ->
+        "Glucose record not found"
+
+      error ->
+        render_invalid_changeset(error)
+    end)
   end
 
   def insulins_by_id(_, insulin_ids) do
