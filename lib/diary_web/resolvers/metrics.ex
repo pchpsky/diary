@@ -100,7 +100,7 @@ defmodule DiaryWeb.Resolvers.Metrics do
     insulin_ids = Enum.uniq(insulin_ids)
 
     Diary.Settings.Insulin
-    |> where([i], i.id in ^insulin_ids)
+    |> Query.by_id(insulin_ids)
     |> Diary.Repo.all()
     |> Map.new(&{&1.id, &1})
   end

@@ -9,6 +9,10 @@ defmodule Diary.Query do
     where(query, user_id: ^user_id)
   end
 
+  def by_id(query, ids) when is_list(ids) do
+    where(query, [t], t.id in ^ids)
+  end
+
   def by_id(query, id) do
     where(query, id: ^id)
   end
