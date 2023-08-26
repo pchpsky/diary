@@ -13,8 +13,10 @@ export default {
 
     const selected = document.getElementById(`${this.el.id}_selected`)
 
-    selected.addEventListener('selected', e => {
-      selected.innerText = e.detail.name
-    })
+    if (selected) {
+      selected.addEventListener('selected', e => {
+        selected.innerText = e.detail.name
+      })
+    }
   }
 }
