@@ -19,7 +19,10 @@ defmodule DiaryWeb do
 
   def controller do
     quote do
-      use Phoenix.Controller, namespace: DiaryWeb
+      use Phoenix.Controller,
+        namespace: DiaryWeb,
+        formats: [:html, :json],
+        layouts: [html: DiaryWeb.Layouts]
 
       import Plug.Conn
       import DiaryWeb.Gettext
@@ -50,7 +53,7 @@ defmodule DiaryWeb do
     quote do
       @opts Keyword.merge(
               [
-                layout: {DiaryWeb.LayoutView, :live}
+                layout: {DiaryWeb.Layouts, :live}
               ],
               unquote(opts)
             )
@@ -124,6 +127,30 @@ defmodule DiaryWeb do
         endpoint: DiaryWeb.Endpoint,
         router: DiaryWeb.Router,
         statics: DiaryWeb.static_paths()
+    end
+  end
+
+  def html do
+    quote do
+      use Phoenix.Component
+
+      import Phoenix.Controller,
+        only: [get_csrf_token: 0, view_module: 1, view_template: 1]
+
+      unquote(view_helpers())
+    end
+  end
+
+  defp html_helpers do
+    quote do
+      # HTML escaping functionality
+      import Phoenix.HTML
+
+      # Shortcut for generating JS commands
+      alias Phoenix.LiveView.JS
+
+      # Routes generation with the ~p sigil
+      unquote(verified_routes())
     end
   end
 

@@ -7,7 +7,7 @@ defmodule DiaryWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {DiaryWeb.LayoutView, :root}
+    plug :put_root_layout, {DiaryWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -21,7 +21,7 @@ defmodule DiaryWeb.Router do
   end
 
   pipeline :title_screen do
-    plug :put_layout, {DiaryWeb.LayoutView, :title}
+    plug :put_layout, html: {DiaryWeb.Layouts, :title}
     plug :fetch_current_user
   end
 

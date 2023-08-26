@@ -2,8 +2,5 @@
   "nixEnvSelector.nixFile": "${workspaceRoot}/shell.nix",
   "files.watcherExclude": {
     "**/target": true
-  },
-  "tailwindCSS.includeLanguages": {
-    "phoenix-heex": "html"
   }
 }
