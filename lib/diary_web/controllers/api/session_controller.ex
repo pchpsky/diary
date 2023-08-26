@@ -2,30 +2,25 @@ defmodule DiaryWeb.Api.SessionController do
   use DiaryWeb, :controller
 
   alias Diary.Accounts
-  alias Diary.Accounts.User
   alias Diary.Guardian
+
+  action_fallback DiaryWeb.FallbackController
 
   def create(conn, %{"email" => email, "password" => password})
       when is_binary(email) and is_binary(password) do
-    case Accounts.get_user_by_email_and_password(email, password) do
-      %User{} = user ->
-        sign_in(conn, user)
-
-      _ ->
-        render_invalid_login(conn)
+    with {:ok, user} <- authorize(email, password) do
+      {:ok, token, _full_claims} = Guardian.encode_and_sign(user, %{})
+      render(conn, :show, token: token)
     end
   end
 
-  def create(conn, _), do: render_invalid_login(conn)
+  def create(_, _), do: {:error, :unauthorized}
 
-  defp sign_in(conn, user) do
-    {:ok, token, _full_claims} = Guardian.encode_and_sign(user, %{})
-    render(conn, "create.json", token: token)
-  end
-
-  defp render_invalid_login(conn) do
-    conn
-    |> put_status(401)
-    |> render("error.json", message: "Invalid email or password")
+  defp authorize(email, password) do
+    Result.cond(
+      Accounts.get_user_by_email_and_password(email, password),
+      & &1,
+      :unauthorized
+    )
   end
 end

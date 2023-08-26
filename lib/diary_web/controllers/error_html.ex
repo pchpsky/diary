@@ -1,5 +1,5 @@
-defmodule DiaryWeb.ErrorView do
-  use DiaryWeb, :view
+defmodule DiaryWeb.ErrorHTML do
+  use DiaryWeb, :html
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

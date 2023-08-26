@@ -23,7 +23,7 @@ defmodule DiaryWeb.Api.SessionControllerTest do
           %{creds | password: "notavalidpass"}
         )
 
-      assert %{"message" => "Invalid email or password"} = json_response(conn, 401)
+      assert [%{"message" => "Invalid email or password"}] = json_response(conn, 401)["errors"]
     end
 
     test "when credentials are valid responds with 200", %{conn: conn, creds: creds} do

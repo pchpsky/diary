@@ -1,37 +1,12 @@
-defmodule DiaryWeb.ErrorHelpers do
-  @moduledoc """
-  Conveniences for translating and building error messages.
-  """
-
-  use Phoenix.HTML
-  use Phoenix.Component
-
-  @doc """
-  Generates tag for inlined form input errors.
-  """
-  def error_tag(form, field) do
-    assigns = %{
-      errors: Keyword.get_values(form.errors, field),
-      form: form,
-      field: field
-    }
-
-    ~H"""
-    <%= if Enum.any?(@errors) do %>
-      <label class="label" phx-feedback-for={input_id(@form, @field)}>
-        <%= Enum.map(@errors, fn error -> %>
-          <span class="label-text-alt">
-            <%= translate_error(error) %>
-          </span>
-        <% end) %>
-      </label>
-    <% end %>
-    """
+defmodule DiaryWeb.ChangesetJSON do
+  def error(%{changeset: changeset}) do
+    %{errors: translate_errors(changeset)}
   end
 
-  @doc """
-  Translates an error message using gettext.
-  """
+  defp translate_errors(changeset) do
+    Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
+  end
+
   def translate_error({msg, opts}) do
     # When using gettext, we typically pass the strings we want
     # to translate as a static argument:

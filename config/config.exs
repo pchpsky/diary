@@ -14,7 +14,10 @@ config :diary,
 config :diary, DiaryWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "dqqJIM+uWb58np2rqD2M68kMaCKsuqYo7MVRuTvRevkWR7KYHaQGHybVVJviN3kL",
-  render_errors: [view: DiaryWeb.ErrorView, accepts: ~w(html json), layout: false],
+  render_errors: [
+    formats: [html: DiaryWeb.ErrorHTML, json: DiaryWeb.ErrorJSON],
+    layout: false
+  ],
   pubsub_server: Diary.PubSub,
   live_view: [signing_salt: "Re9kaLmK"]
 
