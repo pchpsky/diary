@@ -40,10 +40,6 @@ defmodule DiaryWeb.Router do
       live "/glucose/record", RecordGlucoseLive
       live "/glucose/:id/edit", EditGlucoseLive
     end
-
-    get "/users/settings", UserSettingsController, :edit
-    put "/users/settings", UserSettingsController, :update
-    get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
   end
 
   scope "/", DiaryWeb do
