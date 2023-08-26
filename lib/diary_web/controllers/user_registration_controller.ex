@@ -16,12 +16,6 @@ defmodule DiaryWeb.UserRegistrationController do
         # TODO: remove this once there is a proper onboarding flow
         Accounts.complete_onboarding(user, NaiveDateTime.utc_now())
 
-        {:ok, _} =
-          Accounts.deliver_user_confirmation_instructions(
-            user,
-            &Routes.user_confirmation_url(conn, :confirm, &1)
-          )
-
         conn
         |> put_flash(:info, "User created successfully.")
         |> UserAuth.log_in_user(user)
