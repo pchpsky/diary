@@ -5,13 +5,6 @@
   "scripts": {
     "deploy": "NODE_ENV=production postcss css/app.css -o ../priv/static/assets/app.css"
   },
-  "devDependencies": {
-    "autoprefixer": "^10.3.4",
-    "postcss": "^8.3.6",
-    "postcss-cli": "^8.3.1",
-    "postcss-import": "^14.0.2",
-    "tailwindcss": "^2.2.15"
-  },
   "dependencies": {
     "alpinejs": "^3.3.1",
     "cleave.js": "^1.6.0",

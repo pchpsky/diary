@@ -61,6 +61,7 @@ defmodule Diary.MixProject do
       {:wallaby, "~> 0.30", runtime: false, only: :test},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
+      {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:esbuild, "~> 0.6", runtime: Mix.env() == :dev}
     ]
   end
@@ -73,28 +74,13 @@ defmodule Diary.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "cmd npm install --prefix assets"],
+      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: [
-        "assets.compile --quiet",
-        "ecto.create --quiet",
-        "ecto.migrate --quiet",
-        "test"
-      ],
-      "assets.compile": &compile_assets/1,
-      "assets.deploy": [
-        "esbuild default --minify",
-        "cmd --cd assets npm run deploy",
-        "phx.digest"
-      ]
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
+      "assets.build": ["tailwind default", "esbuild default"],
+      "assets.deploy": ["tailwind default --minify", "esbuild default --minify", "phx.digest"]
     ]
-  end
-
-  defp compile_assets(_) do
-    Mix.shell().cmd(
-      "cd assets && ./node_modules/.bin/webpack --mode development",
-      quiet: true
-    )
   end
 end

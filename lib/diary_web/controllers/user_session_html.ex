@@ -5,7 +5,7 @@ defmodule DiaryWeb.UserSessionHTML do
     ~H"""
     <%= title("Sign in") %>
 
-    <%= form_for @conn, Routes.user_session_path(@conn, :create), [as: :user], fn f -> %>
+    <%= form_for @conn, ~p"/sign_in", [as: :user], fn f -> %>
       <%= if @error_message do %>
         <%= alert_error(@error_message) %>
       <% end %>
@@ -35,7 +35,7 @@ defmodule DiaryWeb.UserSessionHTML do
     <% end %>
 
     <p class="text-center p-4">
-      <%= link("Create account", to: Routes.user_registration_path(@conn, :new), class: "link link-accent") %>
+      <%= link("Create account", to: ~p"/sign_up", class: "link link-accent") %>
     </p>
     """
   end
