@@ -55,6 +55,8 @@ COPY assets assets
 RUN cd assets && npm install
 
 # compile assets
+RUN mix assets.setup
+
 RUN mix assets.deploy
 
 RUN mix compile
