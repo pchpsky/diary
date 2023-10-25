@@ -18,7 +18,7 @@ defmodule Diary.GoogleIdToken.KeysManager do
 
   def handle_call(:get_keys, _from, state) do
     state =
-      if state.expires_at < :os.system_time(:seconds) + @refresh_skew_seconds || Enum.empty?(state.keys) do
+      if expired?(state.expires_at) || Enum.empty?(state.keys) do
         Logger.debug("Refreshing Google public keys")
 
         refresh_keys(state)
@@ -30,6 +30,10 @@ defmodule Diary.GoogleIdToken.KeysManager do
       end
 
     {:reply, state.keys, state}
+  end
+
+  defp expired?(expires_at) do
+    expires_at < :os.system_time(:seconds) + @refresh_skew_seconds
   end
 
   defp refresh_keys(state) do

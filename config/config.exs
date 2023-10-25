@@ -38,19 +38,25 @@ config :diary, Diary.Guardian,
   secret_key: "xJwSvsML7yJu/4OnXa3Ay7867ZrDL3g8HMQJU+bH9svsew5YAo5ABG11y9bb+Hzk",
   ttl: {3, :days}
 
+js_externals =
+  ~w(alpinejs flatpickr cleave.js nprogress)
+  |> Enum.map(&"--external:#{&1}")
+
 config :esbuild,
   version: "0.12.18",
   default: [
-    args: ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets),
+    args: ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets) ++ js_externals,
     cd: Path.expand("../assets", __DIR__),
     env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
   ]
 
-config :tailwind, version: "3.3.3", default: [
-  args: ~w(
+config :tailwind,
+  version: "3.3.3",
+  default: [
+    args: ~w(
     --config=tailwind.config.js
     --input=css/app.css
     --output=../priv/static/assets/app.css
   ),
-  cd: Path.expand("../assets", __DIR__)
-]
+    cd: Path.expand("../assets", __DIR__)
+  ]

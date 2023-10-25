@@ -7,13 +7,11 @@ defmodule DiaryWeb.LiveComponents do
     ~H"""
     <div class="breadcrumbs text">
       <ul>
-        <%= for breadcrumb <- Enum.drop(@breadcrumbs, -1) do %>
-          <li>
-            <%= live_redirect to: breadcrumbs_link_to(breadcrumb) do %>
-              <.breadcrumbs_title page={breadcrumb} />
-            <% end %>
-          </li>
-        <% end %>
+        <li :for={breadcrumb <- Enum.drop(@breadcrumbs, -1)}>
+          <%= live_redirect to: breadcrumbs_link_to(breadcrumb) do %>
+            <.breadcrumbs_title page={breadcrumb} />
+          <% end %>
+        </li>
         <li>
           <span>
             <.breadcrumbs_title page={List.last(@breadcrumbs)} />
@@ -66,13 +64,13 @@ defmodule DiaryWeb.LiveComponents do
     ~H"""
     <div class={"card bg-base-100 shadow-lg #{@class}"}>
       <div class="card-body">
-        <%= for title <- @title do %>
-          <h2 class={"card-title only:mb-0 #{title[:class]}"}><%= render_slot(title) %></h2>
-        <% end %>
+        <h2 :for={title <- @title} class={"card-title only:mb-0 #{title[:class]}"}>
+          <%= render_slot(title) %>
+        </h2>
         <%= render_slot(@inner_block) %>
-        <%= for actions <- @actions do %>
-          <div class={"card-actions #{actions[:class]}"}><%= render_slot(actions) %></div>
-        <% end %>
+        <div :for={actions <- @actions} class={"card-actions #{actions[:class]}"}>
+          <%= render_slot(actions) %>
+        </div>
       </div>
     </div>
     """

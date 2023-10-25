@@ -54,11 +54,9 @@ defmodule DiaryWeb.GlucoseLive do
 
   defp day_divider(assigns) do
     ~H"""
-    <%= if @date != @today do %>
-      <div class="divider">
-        <%= Timex.format!(@date, "{WDshort}, {D} {Mshort}") %>
-      </div>
-    <% end %>
+    <div class="divider">
+      <%= Timex.format!(@date, "{WDshort}, {D} {Mshort}") %>
+    </div>
     """
   end
 
