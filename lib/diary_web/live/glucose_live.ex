@@ -12,12 +12,15 @@ defmodule DiaryWeb.GlucoseLive do
     tz = socket.assigns.tz
     glucose_units = Settings.get_glucose_units(user_id)
 
-    grouped =
-      user_id
-      |> Metrics.list_glucose()
-      |> Metrics.group_by_local_date(:measured_at, tz)
+    socket =
+      socket
+      |> assign(selected_record: nil)
+      |> assign(today: Timex.today(tz))
+      |> assign(glucose_units: glucose_units)
+      |> stream_configure(:records, dom_id: &make_dom_id/1)
+      |> load_records()
 
-    {:ok, assign(socket, records: grouped, selected_record: nil, today: Timex.today(tz), glucose_units: glucose_units)}
+    {:ok, assign(socket, selected_record: nil)}
   end
 
   @impl true
@@ -38,18 +41,42 @@ defmodule DiaryWeb.GlucoseLive do
 
     Metrics.delete_insulin(user_id, id)
 
-    new_records =
-      user_id
-      |> Metrics.list_glucose()
-      |> Metrics.group_by_local_date(:measured_at, tz)
-
     socket =
       socket
+      |> stream(:records, [], reset: true)
+      |> assign(:last_record, nil)
+      |> load_records()
       |> assign(:selected_record, nil)
-      |> assign(:records, new_records)
       |> DiaryWeb.Modal.close("insulin_glucose_details")
 
     {:noreply, socket}
+  end
+
+  def handle_event("load_more", _, socket) do
+    {:noreply, load_records(socket)}
+  end
+
+  defp load_records(socket) do
+    user_id = socket.assigns.current_user.id
+    tz = socket.assigns.tz
+    last_record = socket.assigns[:last_record]
+
+    records =
+      Metrics.Glucose
+      |> Diary.Query.by_user(user_id)
+      |> Diary.Query.paginated(30, last_record && last_record.cursor)
+      |> Diary.Repo.all()
+
+    records_with_dividers =
+      if last_record do
+        insert_dividers(records, tz)
+      else
+        records |> insert_dividers(tz) |> add_first_divider(tz)
+      end
+
+    socket
+    |> assign(:last_record, List.last(records))
+    |> stream(:records, records_with_dividers)
   end
 
   defp day_divider(assigns) do
@@ -60,6 +87,35 @@ defmodule DiaryWeb.GlucoseLive do
     """
   end
 
-  defp format_units(:mmol_per_l), do: "mmol/L"
-  defp format_units(:mg_per_dl), do: "mg/dL"
+  defp make_dom_id({:record, record}), do: "record-#{record.id}"
+  defp make_dom_id({:divider, date}), do: "divider-#{date}"
+
+  defp insert_dividers(records, tz) do
+    records
+    |> Enum.chunk_every(2, 1)
+    |> Enum.flat_map(fn
+      [record] ->
+        [{:record, record}]
+
+      [record1, record2] ->
+        maybe_divider =
+          if measured_on_same_date?(record1, record2, tz),
+            do: [],
+            else: [{:divider, to_local_date(record2.measured_at, tz)}]
+
+        [{:record, record1} | maybe_divider]
+    end)
+  end
+
+  defp add_first_divider([], _tz), do: []
+
+  defp add_first_divider([{:record, first} | _] = records, tz) do
+    if Timex.today(tz) == to_local_date(first.measured_at, tz),
+      do: records,
+      else: [{:divider, to_local_date(first.measured_at, tz)} | records]
+  end
+
+  defp measured_on_same_date?(record1, record2, tz) do
+    to_local_date(record1.measured_at, tz) == to_local_date(record2.measured_at, tz)
+  end
 end
