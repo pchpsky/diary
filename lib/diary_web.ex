@@ -140,19 +140,6 @@ defmodule DiaryWeb do
     end
   end
 
-  defp html_helpers do
-    quote do
-      # HTML escaping functionality
-      import Phoenix.HTML
-
-      # Shortcut for generating JS commands
-      alias Phoenix.LiveView.JS
-
-      # Routes generation with the ~p sigil
-      unquote(verified_routes())
-    end
-  end
-
   @doc """
   When used, dispatch to the appropriate controller/view/etc.
   """

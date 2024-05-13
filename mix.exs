@@ -43,7 +43,7 @@ defmodule Diary.MixProject do
       {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:phx_gen_auth, "~> 0.6", only: [:dev], runtime: false},
       {:phoenix_live_dashboard, "~> 0.8"},
-      {:telemetry_metrics, "~> 0.6"},
+      {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.22"},
       {:jason, "~> 1.0"},

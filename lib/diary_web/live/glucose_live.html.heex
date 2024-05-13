@@ -1,35 +1,28 @@
 <.card class="mb-10">
   <div id="records" phx-update="stream" phx-viewport-bottom={@last_record && "load_more"} phx-throttle="200">
-    <div :for={{dom_id, item} <- @streams.records} id={dom_id}>
-      <%= case item do %>
-        <% {:record, record} -> %>
-          <div
-            class="flex items-center my-4 justify-between cursor-pointer"
-            phx-click="show_details"
-            phx-value-id={record.id}
-          >
-            <div class="flex items-center">
-              <DiaryWeb.GlucoseComponents.status_icon name={record.status} class="w-5 h-5 inline-block mr-2" />
-              <div>
-                <span class="font-bold">
-                  <%= GlucoseUnitsIso.from_default(record.units, @glucose_units) %>
-                </span>
-                <%= DiaryWeb.Formats.glucose_units(@glucose_units) %>
-              </div>
-            </div>
-            <div class="flex items-center">
-              <.icon :if={record.notes} name={:document_text} class="h-5 w-5 mr-2" />
-              <div class="w-16">
-                <%= record.measured_at |> to_local_datetime(@tz) |> Timex.format!("{h24}:{m}") %>
-              </div>
-            </div>
+    <Records.stream :let={record} items={@streams.records}>
+      <div
+        class="flex items-center my-4 justify-between cursor-pointer"
+        phx-click="show_details"
+        phx-value-id={record.id}
+      >
+        <div class="flex items-center">
+          <DiaryWeb.GlucoseComponents.status_icon name={record.status} class="w-5 h-5 inline-block mr-2" />
+          <div>
+            <span class="font-bold">
+              <%= GlucoseUnitsIso.from_default(record.units, @glucose_units) %>
+            </span>
+            <%= DiaryWeb.Formats.glucose_units(@glucose_units) %>
           </div>
-        <% {:divider, date} -> %>
-          <div class="divider">
-            <%= Timex.format!(date, "{WDshort}, {D} {Mshort}") %>
+        </div>
+        <div class="flex items-center">
+          <.icon :if={record.notes} name={:document_text} class="h-5 w-5 mr-2" />
+          <div class="w-16">
+            <%= record.measured_at |> to_local_datetime(@tz) |> Timex.format!("{h24}:{m}") %>
           </div>
-      <% end %>
-    </div>
+        </div>
+      </div>
+    </Records.stream>
   </div>
 </.card>
 

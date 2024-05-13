@@ -3,7 +3,7 @@
 with pkgs;
 
 let
-  elixir = beam.packages.erlangR25.elixir_1_15;
+  elixir = beam.packages.erlangR26.elixir_1_16;
 in
 
 mkShell {

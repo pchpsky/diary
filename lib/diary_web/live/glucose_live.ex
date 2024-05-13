@@ -3,8 +3,12 @@ defmodule DiaryWeb.GlucoseLive do
 
   alias Diary.Metrics
   alias Diary.Metrics.GlucoseUnitsIso
+  alias DiaryWeb.MetricsComponents.Records
+  alias DiaryWeb.MetricsComponents.Divider
+  alias DiaryWeb.MetricsComponents.Item
   alias Diary.Settings
   import Diary.Time
+  alias DiaryWeb.Formats
 
   @impl true
   def mount(_params, _session, socket) do
@@ -17,7 +21,7 @@ defmodule DiaryWeb.GlucoseLive do
       |> assign(selected_record: nil)
       |> assign(today: Timex.today(tz))
       |> assign(glucose_units: glucose_units)
-      |> stream_configure(:records, dom_id: &make_dom_id/1)
+      |> stream_configure(:records, dom_id: & &1.dom_id)
       |> load_records()
 
     {:ok, assign(socket, selected_record: nil)}
@@ -37,7 +41,6 @@ defmodule DiaryWeb.GlucoseLive do
 
   def handle_event("delete", %{"id" => id}, socket) do
     user_id = socket.assigns.current_user.id
-    tz = socket.assigns.tz
 
     Metrics.delete_insulin(user_id, id)
 
@@ -79,40 +82,41 @@ defmodule DiaryWeb.GlucoseLive do
     |> stream(:records, records_with_dividers)
   end
 
-  defp day_divider(assigns) do
-    ~H"""
-    <div class="divider">
-      <%= Timex.format!(@date, "{WDshort}, {D} {Mshort}") %>
-    </div>
-    """
+  def record_to_item(record) do
+    Item.new(record, "record-#{record.id}")
   end
 
-  defp make_dom_id({:record, record}), do: "record-#{record.id}"
-  defp make_dom_id({:divider, date}), do: "divider-#{date}"
+  def make_divider(date, tz) do
+    date
+    |> Formats.local_weekday_and_date(tz)
+    |> Divider.new("divider-#{date}")
+  end
 
   defp insert_dividers(records, tz) do
     records
     |> Enum.chunk_every(2, 1)
     |> Enum.flat_map(fn
       [record] ->
-        [{:record, record}]
+        [record_to_item(record)]
 
       [record1, record2] ->
         maybe_divider =
           if measured_on_same_date?(record1, record2, tz),
             do: [],
-            else: [{:divider, to_local_date(record2.measured_at, tz)}]
+            else: [make_divider(record2.measured_at, tz)]
 
-        [{:record, record1} | maybe_divider]
+        [record_to_item(record1) | maybe_divider]
     end)
   end
 
   defp add_first_divider([], _tz), do: []
 
-  defp add_first_divider([{:record, first} | _] = records, tz) do
-    if Timex.today(tz) == to_local_date(first.measured_at, tz),
+  defp add_first_divider([first | _] = records, tz) do
+    record = first.item
+
+    if Timex.today(tz) == to_local_date(record.measured_at, tz),
       do: records,
-      else: [{:divider, to_local_date(first.measured_at, tz)} | records]
+      else: [make_divider(record.measured_at, tz) | records]
   end
 
   defp measured_on_same_date?(record1, record2, tz) do
