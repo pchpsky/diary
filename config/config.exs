@@ -56,3 +56,5 @@ config :tailwind,
   ),
     cd: Path.expand("../assets", __DIR__)
   ]
+
+config :tesla, :adapter, Tesla.Adapter.Hackney
