@@ -65,6 +65,7 @@ defmodule DiaryWeb.Resolvers.Metrics do
     Metrics.Glucose
     |> Query.by_user(user)
     |> Query.paginated(args[:limit] || 10, args[:cursor])
+    |> filter_glucose_records(args[:filters] || %{})
     |> Diary.Repo.all()
     |> Result.ok()
   end
@@ -103,5 +104,18 @@ defmodule DiaryWeb.Resolvers.Metrics do
     |> Query.by_id(insulin_ids)
     |> Diary.Repo.all()
     |> Map.new(&{&1.id, &1})
+  end
+
+  defp filter_glucose_records(query, filters) do
+    Enum.reduce(filters, query, fn
+      {:measured_at_from, value}, query ->
+        where(query, [r], r.measured_at >= ^value)
+
+      {:measured_at_to, value}, query ->
+        where(query, [r], r.measured_at <= ^value)
+
+      _, query ->
+        query
+    end)
   end
 end

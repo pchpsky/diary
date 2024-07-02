@@ -210,8 +210,8 @@ defmodule DiaryWeb.Schema.MetricsTest do
     @describetag :graphql
 
     @glucose_records_query """
-    query($limit: Int, $cursor: String) {
-      glucoseRecords(limit: $limit, cursor: $cursor) {
+    query($limit: Int, $cursor: String, $filters: GlucoseRecordsFilters) {
+      glucoseRecords(limit: $limit, cursor: $cursor, filters: $filters) {
         id
         units
         measuredAt
@@ -267,6 +267,44 @@ defmodule DiaryWeb.Schema.MetricsTest do
       assert %{"data" => %{"glucoseRecords" => [record3]}} = json_response(conn, 200)
 
       assert %{"id" => ^glucose_id3} = record3
+    end
+
+    test "returns filtered records", %{conn: conn, user: user} do
+      glucose_id1 =
+        glucose_record_fixture(
+          user.id,
+          %{measured_at: ~N[2023-01-01 12:10:00]}
+        )
+        |> Map.get(:id)
+        |> to_string()
+
+      glucose_id2 =
+        glucose_record_fixture(
+          user.id,
+          %{measured_at: ~N[2023-01-01 12:00:00]}
+        )
+        |> Map.get(:id)
+        |> to_string()
+
+      glucose_id3 =
+        glucose_record_fixture(
+          user.id,
+          %{measured_at: ~N[2023-01-01 11:00:00]}
+        )
+        |> Map.get(:id)
+        |> to_string()
+
+      conn =
+        execute_query(conn, @glucose_records_query,
+          limit: 3,
+          filters: %{measuredAtFrom: "2023-01-01T11:00:00Z", measuredAtTo: "2023-01-01T12:00:00Z"}
+        )
+
+      assert %{"data" => %{"glucoseRecords" => [record1, record2]}} = json_response(conn, 200)
+
+      assert %{"id" => ^glucose_id2, "cursor" => "" <> _} = record1
+
+      assert %{"id" => ^glucose_id3, "cursor" => cursor} = record2
     end
   end
 

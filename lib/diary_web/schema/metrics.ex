@@ -68,6 +68,7 @@ defmodule DiaryWeb.Schema.Metrics do
     field :glucose_records, non_null(list_of(non_null(:glucose_record))) do
       arg :limit, :integer
       arg :cursor, :string
+      arg :filters, :glucose_records_filters
 
       resolve &MetricsResolvers.glucose_records/3
     end
@@ -106,6 +107,11 @@ defmodule DiaryWeb.Schema.Metrics do
     field :measured_at, non_null(:naive_datetime)
     field :status, non_null(:glucose_record_status)
     field :notes, :string
+  end
+
+  input_object :glucose_records_filters do
+    field :measured_at_from, :naive_datetime
+    field :measured_at_to, :naive_datetime
   end
 
   enum :glucose_record_status do
