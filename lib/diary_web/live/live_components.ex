@@ -8,9 +8,9 @@ defmodule DiaryWeb.LiveComponents do
     <div class="breadcrumbs text">
       <ul>
         <li :for={breadcrumb <- Enum.drop(@breadcrumbs, -1)}>
-          <%= live_redirect to: breadcrumbs_link_to(breadcrumb) do %>
+          <.link navigate={breadcrumbs_link_to(breadcrumb)}>
             <.breadcrumbs_title page={breadcrumb} />
-          <% end %>
+          </.link>
         </li>
         <li>
           <span>

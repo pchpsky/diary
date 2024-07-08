@@ -21,7 +21,7 @@ defmodule DiaryWeb.HomeLive do
 
   @impl true
   def handle_event("redirect", %{"to" => to}, socket) do
-    {:noreply, push_redirect(socket, to: to)}
+    {:noreply, push_navigate(socket, to: to)}
   end
 
   defp format_units(:mmol_per_l), do: "mmol/L"

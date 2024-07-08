@@ -38,7 +38,7 @@ defmodule DiaryWeb.RecordGlucoseLive do
 
     DiaryWeb.Toast.push(socket, "Saved.")
 
-    {:noreply, push_redirect(socket, to: "/glucose")}
+    {:noreply, push_navigate(socket, to: "/glucose")}
   end
 
   def handle_event("add_notes", %{"notes" => notes}, socket) do

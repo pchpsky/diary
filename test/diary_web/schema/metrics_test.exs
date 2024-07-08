@@ -270,7 +270,7 @@ defmodule DiaryWeb.Schema.MetricsTest do
     end
 
     test "returns filtered records", %{conn: conn, user: user} do
-      glucose_id1 =
+      _glucose_id1 =
         glucose_record_fixture(
           user.id,
           %{measured_at: ~N[2023-01-01 12:10:00]}
@@ -304,7 +304,7 @@ defmodule DiaryWeb.Schema.MetricsTest do
 
       assert %{"id" => ^glucose_id2, "cursor" => "" <> _} = record1
 
-      assert %{"id" => ^glucose_id3, "cursor" => cursor} = record2
+      assert %{"id" => ^glucose_id3, "cursor" => _} = record2
     end
   end
 
