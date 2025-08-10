@@ -8,7 +8,7 @@ config :logger,
 # Configure your database
 config :diary, Diary.Repo,
   username: "postgres",
-  password: "admin",
+  password: "postgres",
   database: "diary_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

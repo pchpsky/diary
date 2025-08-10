@@ -16,7 +16,18 @@ config :diary, DiaryWeb.Endpoint,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, level: :warning
+
+# Memory optimization for 256MB machine
+config :logger,
+  compile_time_purge_matching: [
+    [level_lower_than: :warning]
+  ]
+
+# Disable telemetry to save memory
+config :telemetry_poller, :default,
+  period: 60_000,
+  measurements: []
 
 # ## SSL Support
 #

@@ -6,12 +6,22 @@ kill_signal = "SIGTERM"
 kill_timeout = 5
 processes = []
 
-[deploy]
-  release_command = "/app/bin/migrate"
+[build]
+  dockerfile = "Dockerfile"
 
 [env]
   PHX_HOST = "pchpsky-diary.fly.dev"
   PORT = "8080"
+  ERL_AFLAGS = "-proto_dist inet6_tcp"
+  ECTO_IPV6 = "true"
+  # Memory optimization for Erlang VM
+  ERL_MAX_PORTS = "2048"
+  ERL_MAX_ETS_TABLES = "128"
+  # Reduce pool size to save memory
+  POOL_SIZE = "3"
+
+[deploy]
+  release_command = "/app/bin/migrate"
 
 [experimental]
   allowed_public_ports = []
@@ -28,6 +38,10 @@ processes = []
     hard_limit = 25
     soft_limit = 20
     type = "connections"
+
+  # Memory limits to prevent OOM
+  [services.memory]
+    limit = "256MB"
 
   [[services.ports]]
     force_https = true

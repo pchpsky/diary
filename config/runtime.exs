@@ -37,7 +37,10 @@ if config_env() == :prod do
     ssl: false,
     socket_options: [:inet6],
     url: database_url,
-    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "3"),
+    # Memory optimization for database connections
+    queue_target: 5000,
+    queue_interval: 10_000
 
   secret_key_base =
     System.get_env("SECRET_KEY_BASE") ||
@@ -60,6 +63,40 @@ if config_env() == :prod do
       port: port
     ],
     secret_key_base: secret_key_base
+
+  # Erlang VM memory optimization for production
+  config :kernel,
+    # Reduce the number of ports to save memory
+    inet_dist_listen_min: 9100,
+    inet_dist_listen_max: 9105
+
+  # Configure the application for memory efficiency
+  config :diary,
+    # Enable garbage collection optimization
+    gc_interval: 10_000,
+    # Reduce memory usage for processes
+    max_restarts: 2,
+    max_seconds: 3
+
+  # Aggressive memory optimization for 256MB machine
+  config :logger,
+    level: :warning,
+    compile_time_purge_matching: [
+      [level_lower_than: :warning]
+    ]
+
+  # Disable telemetry to save memory
+  config :telemetry_poller, :default,
+    period: 60_000,
+    measurements: []
+
+  # Optimize Phoenix for low memory
+  config :phoenix,
+    :json_library, Jason
+
+  # Reduce LiveView memory usage
+  config :phoenix_live_view,
+    signing_salt: secret_key_base
 
   telegram_bot_token =
     System.get_env("TELEGRAM_BOT_TOKEN") ||
