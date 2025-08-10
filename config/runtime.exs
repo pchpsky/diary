@@ -91,8 +91,7 @@ if config_env() == :prod do
     measurements: []
 
   # Optimize Phoenix for low memory
-  config :phoenix,
-    :json_library, Jason
+  config :phoenix, :json_library, Jason
 
   # Reduce LiveView memory usage
   config :phoenix_live_view,

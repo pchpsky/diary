@@ -64,8 +64,7 @@ defmodule Diary.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:esbuild, "~> 0.6", runtime: Mix.env() == :dev},
-      {:libcluster_ec2_tag_strategy,
-       git: "https://github.com/kenzhengguan/libcluster_ec2_tag_strategy.git"}
+      {:libcluster_ec2_tag_strategy, git: "https://github.com/kenzhengguan/libcluster_ec2_tag_strategy.git"}
     ]
   end
 
