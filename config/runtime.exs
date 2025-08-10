@@ -65,10 +65,7 @@ if config_env() == :prod do
     secret_key_base: secret_key_base
 
   # Erlang VM memory optimization for production
-  config :kernel,
-    # Reduce the number of ports to save memory
-    inet_dist_listen_min: 9100,
-    inet_dist_listen_max: 9105
+  # Note: kernel configuration moved to config.exs to avoid runtime configuration issues
 
   # Configure the application for memory efficiency
   config :diary,

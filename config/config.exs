@@ -58,3 +58,9 @@ config :tailwind,
   ]
 
 config :tesla, :adapter, Tesla.Adapter.Hackney
+
+# Erlang VM memory optimization for production
+# Configure kernel distribution ports to reduce memory usage
+config :kernel,
+  inet_dist_listen_min: 9100,
+  inet_dist_listen_max: 9105
